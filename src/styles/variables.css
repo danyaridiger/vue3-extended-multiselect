@@ -1,0 +1,50 @@
+.extended__multiselect-wrapper,
+.extended__multiselect-wrapper--disabled {
+  --basic-color: #708090;
+  --basic-transparent: rgba(112, 128, 144, 0.6);
+  --cancel: #B22222;
+  --cancel-backgound-color: rgba(179, 33, 33, 0.1);
+  --dark-slate-blue: #483D8B;
+  --dark-slate-blue-transparent: rgba(72, 61, 139, 0.6);
+  --dark-slate-grey: #2F4F4F;
+  --dark-slate-grey-transparent: rgba(47, 79, 79, 0.6);
+  --disabled: rgba(176, 176, 176, 0.6);
+  --hover-color: #FFFFFF;
+  --loader-color: #00BFFF;
+  --strict: #000000;
+  --strict-transparent: rgba(0, 0, 0, 0.6);
+  --teal: #008080;
+  --teal-transparent: rgba(0, 128, 128, 0.6);
+  
+  --block-border-radius: 4px;
+  --block-cancel-padding: 4px;
+  --block-gap: 6px;
+  --block-padding: 1px 3px 1px 7px;
+  --border-radius: 6px;
+  --border-radius-small: 3px;
+  --cancel-padding: 3px 8px;
+  --grid-columns: 1fr 36px 36px;
+  --grid-rows: 1fr 36px;
+  --half-size: 50%;
+  --icon-size-block: 14px;
+  --icon-size-large: 18px;
+  --icon-size-medium: 15px;
+  --icon-size-small: 12px;
+  --increaser-padding: 3px 7px;
+  --max-size: 100%;
+  --min-block-height: 25px;
+  --options-padding: 6px 0;
+  --outer-gap: 10px;
+  --root-padding: 6px 10px;
+  --toggle-icon-gap: 1px;
+  --wide-text: 700;
+  --wrapper-padding: 5px 10px;
+
+  --border: 1px solid;
+  --default-cursor: default;
+  --icons-align-self: start;
+  --icons-justify-self: center;
+  --pointer-cursor: pointer;
+  --wrapper-transition: border-top-left-radius 250ms ease 0s, border-top-right-radius 250ms ease 0s,
+                        border-bottom-left-radius 250ms ease-out, border-bottom-right-radius 250ms ease-out;
+}

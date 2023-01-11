@@ -1,0 +1,166 @@
+<template>
+  <div
+    aria-label="Clear options list"
+    id="extended__multiselect-cancel"
+    role="button"
+    :class="classes"
+    :tabindex="increasedTabindex"
+    @click.stop="cancel"
+    @keypress.stop="cancel"
+  >
+    <img
+      alt=""
+      v-if="!loading"
+      :class="iconSizeClass"
+      :src="cancelIcon"
+    />
+    <extended-multiselect-loader
+      v-else
+      :icon-filter="iconFilter"
+      :icon-size="iconSize"
+    />
+  </div>
+</template>
+
+<script setup>
+import {
+  computed,
+  defineProps,
+  inject,
+  ref,
+  toRefs,
+} from "vue";
+
+import useCancel from "../composition/cancel";
+import useImagePath from "../composition/image-path";
+import useSizes from "../composition/sizes";
+
+import ExtendedMultiselectLoader from "./ExtendedMultiselectLoader.vue";
+
+const props = defineProps({
+  /**
+   * Blocks cancel button
+   * @property {boolean} disabled
+   */
+  disabled: {
+    type: Boolean,
+    required: true,
+  },
+
+  /**
+   * Assigns unique identifier of extended multiselect
+   * for each event
+   * @property {string} emitterUniqueId
+   */
+  emitterUniqueId: {
+    type: String,
+    required: true,
+  },
+
+  /**
+   * Defines a svg-filter for icons
+   * @property {string} iconFilter
+   */
+  iconFilter: {
+    type: String,
+    required: true,
+  },
+      
+  /**
+   * Provides size to create special size-class 
+   * for each kind of icon
+   * @property {string} iconSize
+   */
+  iconSize: {
+    type: String,
+    required: true,
+  },
+
+  /**
+   * Replaces cancel button with loader
+   * @property {boolean} loading
+   */
+  loading: {
+    type: Boolean,
+    required: true,
+  },
+
+  /**
+   * Determines whether to clear current value of search field
+   * @property {boolean} showSearchField
+   */
+  showSearchField: {
+    type: Boolean,
+    required: true,
+  },
+
+  /**
+   * Defines "tabindex" attribute of cancel button
+   * @default null
+   * @property {number|null} tabindex
+   */
+  tabindex: {
+    type: Number,
+    default: null,
+  },
+
+  /**
+   * List of selected options
+   * @property {Array} selectedOptions
+   */
+  selectedOptions: {
+    type: Array,
+    required: true,
+  },
+});
+
+const setSearchValue = inject("setSearchValue");
+const setSearchPattern = inject("setSearchPattern");
+
+const {
+  disabled,
+  emitterUniqueId,
+  iconFilter,
+  iconSize,
+  loading,
+  selectedOptions,
+  showSearchField,
+  tabindex,
+} = toRefs(props);
+
+const { createImagePath } = useImagePath();
+
+const cancelIcon = ref(createImagePath("cancel.svg"));
+
+const { cancel } = useCancel(
+  disabled,
+  showSearchField,
+  selectedOptions,
+  emitterUniqueId,
+  setSearchValue,
+  setSearchPattern,
+);
+const { iconSizeClass } = useSizes(iconSize);
+
+/**
+ * Toggles classes of component if "loading"
+ * or "disabled" props equals true
+ * @function
+ * @returns {string} class
+ */
+const classes = computed(() => {
+  return (loading.value || disabled.value)
+   ? "extended__multiselect-cancel--disabled"
+   : "extended__multiselect-cancel";
+});
+
+/**
+ * Sets "tabindex" attibute of clear button based on
+ * given tabindex
+ * @function
+ * @returns {number} tabindex
+ */
+const increasedTabindex = computed(() => {
+  return tabindex.value ? tabindex.value + 2 : 0;
+});
+</script>
