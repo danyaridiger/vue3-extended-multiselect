@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.4.0**
+Current `vue3-extended-multiselect` version: **1.4.1**
 
 ***
 
@@ -106,31 +106,39 @@ Adding descriptive comments for some types in typings.
 * Replacing package-lock.json file with new one.
 
 ### 1.1.2 (2022-12-10)
+
 * Replacing dev-dependency "@vue/cli-plugin-eslint" with its latest version.
 
 ### 1.1.3 (2022-12-11)
+
 * Adding "searchByField" optional prop.
 * Adding unit-test for new optional prop.
 
 ### 1.1.4 (2022-12-13)
+
 * Adding "optionCreateLabel" to expose as utility.
 * Fix bug with wrong name of label field
 
 ### 1.1.5 (2022-12-14)
+
 * Fix bug with empty raw options list when using async loader.
 
 ### 1.1.6 (2022-12-14)
+
 * Fix bug with extra call of async loader by changing value of search field.
 * Adding new internal prop "externalOptionsLoader" to ExtendedMultiselectInput.
 * Searching for options by async loader is moved to in separate method.
 
 ### 1.1.7 (2022-12-15)
+
 * Adding "disableByField" prop for determination of field in options of type "object" which value will be used to disable such options.
 
 ### 1.1.8 (2022-12-18)
+
 * Changing default value of "toggleIcon" prop to "base-arrow".
 
 ### 1.2.0 (2022-12-20)
+
 * Adding "uuid" dependency
 * Removal of "id" attribute of extended multiselect wrapper.
 * Removal of "querySelector" usage in ExtendedMultiselect component. Switching to using event emitter.
@@ -138,26 +146,36 @@ Adding descriptive comments for some types in typings.
 * Fix bug with undefined class in extended multiselect wrapper class list.
 
 ### 1.2.1 (2022-12-21)
+
 * Moving transitions of "border-radius" css-property from computed property to css variable.
 
 ### 1.2.2 (2022-12-21)
+
 * Removal of excess "transition" css-property.
 
 ### 1.2.3 (2022-12-22)
+
 * Fix bug with excess bottom offset of options list when prop "toggleAppearanceSide" is set to "atop".
 * Supplementation of some css-variables.
 
 ### 1.2.4 (2022-12-22)
+
 * Fix bug of too wide extended multiselect with long single selected option.
 
 ### 1.3.0 (2023-01-11)
+
 * Adding "autoSelectSearchValue" optional prop.
 * Adding unit-test for new optional prop.
 * Fix bug with setting search pattern when deselecting of all options.
 * Fix bug with selected options display when prop "toggleOptionsBySelect" is set to false.
 
-### 1.4.0 (2023-01-11)
+### 1.4.0 (2023-01-14)
+
 * Removal of dependency "mitt".
 * Adding LocalEmitter.js file with simplified event emitter instead of dependency "mitt".
 * Changing event types in some of props unit-tests.
 * Fix bug with toggle restriction in custom slots.
+
+### 1.4.1 (2023-01-14)
+
+Small fixes in documentation.
