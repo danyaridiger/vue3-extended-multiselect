@@ -420,7 +420,7 @@ describe("props", () => {
     let inputWrapper = wrapper.find("input");
 
     await inputWrapper.setValue(globalThis.SEARCH_VALUE);
-    await fireEvent.click(toggleWrapper.element);
+    await fireEvent.blur(inputWrapper.element);
 
     expect(inputWrapper.element.value).toEqual(globalThis.SEARCH_VALUE);
 
@@ -430,7 +430,7 @@ describe("props", () => {
     inputWrapper = wrapper.find("input");
 
     await inputWrapper.setValue(globalThis.SEARCH_VALUE);
-    await fireEvent.click(toggleWrapper.element);
+    await fireEvent.blur(inputWrapper.element);
 
     expect(inputWrapper.element.value).toHaveLength(0);
   });

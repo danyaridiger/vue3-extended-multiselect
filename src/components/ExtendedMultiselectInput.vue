@@ -622,6 +622,7 @@ onBeforeMount(() => {
   });
 
   emitter.on(`extended:select-option-${emitterUniqueId.value}`, (option) => {
+
     if (toggleOptionsBySelect.value) {
       rollUp();
     }

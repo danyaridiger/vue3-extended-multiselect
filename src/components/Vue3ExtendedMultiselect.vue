@@ -254,7 +254,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich
- * @version 1.3.0
+ * @version 1.4.0
  */
 
 const props = defineProps({
@@ -1446,7 +1446,7 @@ const toggleBlockRestrictor = (mouseEvent) => {
   }
 
   if (generalRestriction) {
-    emitter.emit(`extended:skip-block-blur`);
+    emitter.emit(`extended:skip-block-blur-${emitterUniqueId.value}`);
     return true;
   }
 
@@ -1485,16 +1485,25 @@ const toggleCustomRestrictor = (mouseEvent, blockType) => {
  * @returns {Array} classes
  */
 const toggleDetector = (mouseEvent, pattern, mode) => {
-  const target = mouseEvent.target;
+  let target = mouseEvent.target;
 
   let filteredHasToggle = Array.prototype.filter.call(target.classList, (className) => {
     return pattern.test(className) === true;
   });
 
-  if (!filteredHasToggle.length && mode && target.parentNode) {
-    filteredHasToggle = Array.prototype.filter.call(target.parentNode.classList, (className) => {
+  while(
+    target
+    && (target.classList 
+      && !target.classList.contains("extended__multiselect-wrapper") 
+      || !target.classList.length)
+    && mode
+    && !filteredHasToggle.length
+  ) {
+    filteredHasToggle = Array.prototype.filter.call(target.classList, (className) => {
       return pattern.test(className) === true;
     });
+
+    target = target.parentNode;
   }
 
   return filteredHasToggle;

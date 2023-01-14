@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.3.0**
+Current `vue3-extended-multiselect` version: **1.4.0**
 
 ***
 
@@ -155,3 +155,9 @@ Adding descriptive comments for some types in typings.
 * Adding unit-test for new optional prop.
 * Fix bug with setting search pattern when deselecting of all options.
 * Fix bug with selected options display when prop "toggleOptionsBySelect" is set to false.
+
+### 1.4.0 (2023-01-11)
+* Removal of dependency "mitt".
+* Adding LocalEmitter.js file with simplified event emitter instead of dependency "mitt".
+* Changing event types in some of props unit-tests.
+* Fix bug with toggle restriction in custom slots.

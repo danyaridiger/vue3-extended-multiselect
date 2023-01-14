@@ -1,3 +1,3 @@
-import mitt from 'mitt';
+import LocalEmitter from "./LocalEmitter";
 
-export default mitt();
+export default new LocalEmitter();
