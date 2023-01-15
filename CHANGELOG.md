@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.4.1**
+Current `vue3-extended-multiselect` version: **1.4.2**
 
 ***
 
@@ -179,3 +179,7 @@ Adding descriptive comments for some types in typings.
 ### 1.4.1 (2023-01-14)
 
 Small fixes in documentation.
+
+### 1.4.2 (2023-01-15)
+
+Regenerating of .nvmrc file.
