@@ -48,16 +48,6 @@ const props = defineProps({
   },
 
   /**
-   * Assigns unique identifier of extended multiselect
-   * for each event
-   * @property {string} emitterUniqueId
-   */
-  emitterUniqueId: {
-    type: String,
-    required: true,
-  },
-
-  /**
    * Defines a svg-filter for icons
    * @property {string} iconFilter
    */
@@ -112,6 +102,15 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+
+  /**
+   * Reactive instance of LocalEmitter class
+   * @property {object} emitter
+   */
+  emitter: {
+    type: Object,
+    required: true,
+  },
 });
 
 const setSearchValue = inject("setSearchValue");
@@ -119,7 +118,7 @@ const setSearchPattern = inject("setSearchPattern");
 
 const {
   disabled,
-  emitterUniqueId,
+  emitter,
   iconFilter,
   iconSize,
   loading,
@@ -136,7 +135,7 @@ const { cancel } = useCancel(
   disabled,
   showSearchField,
   selectedOptions,
-  emitterUniqueId,
+  emitter,
   setSearchValue,
   setSearchPattern,
 );

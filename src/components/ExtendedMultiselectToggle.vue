@@ -138,16 +138,6 @@ const props = defineProps({
   },
 
   /**
-   * Assigns unique identifier of extended multiselect
-   * for each event
-   * @property {string} emitterUniqueId
-   */
-  emitterUniqueId: {
-    type: String,
-    required: true,
-  },
-
-  /**
    * Determines toggle icon to be used in default toggle slot
    * @property {string} toggleIcon
    */
@@ -165,12 +155,21 @@ const props = defineProps({
     type: Number,
     default: null,
   },
+
+  /**
+   * Reactive instance of LocalEmitter class
+   * @property {object} emitter
+   */
+  emitter: {
+    type: Object,
+    required: true,
+  },
 });
 
 const {
   disabled,
   dropdownActive,
-  emitterUniqueId,
+  emitter,
   iconFilter,
   iconSize,
   loading,
@@ -184,7 +183,7 @@ const { toggleSlotClass, toggleOptionsList } = useToggle(
   loading, 
   disabled, 
   null,
-  emitterUniqueId,
+  emitter,
 );
 const { iconSizeClass } = useSizes(iconSize);
 

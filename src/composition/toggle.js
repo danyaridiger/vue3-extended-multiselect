@@ -1,8 +1,6 @@
 import { computed, readonly } from "vue";
 
-import emitter from "../events/emitter"
-
-export default function useToggle(loading, disabled, internalLoader, emitterUniqueId) {
+export default function useToggle(loading, disabled, internalLoader, emitter) {
   /**
    * Toggles classes of slots if "loading"
    * or "disabled" props equals true
@@ -24,7 +22,7 @@ export default function useToggle(loading, disabled, internalLoader, emitterUniq
   const toggleOptionsList = (event) => {
     if (event && event.code === "Tab") return;
       
-    emitter.emit(`extended:toggle-options-${emitterUniqueId.value}`);
+    emitter.value.emit("extended:toggle-options");
   };
 
   return {

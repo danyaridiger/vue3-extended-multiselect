@@ -36,7 +36,6 @@
           :search-filter-active="searchFilterActive"
           :toggling-saves-search-value="togglingSavesSearchValue"
           :toggle-options-by-select="toggleOptionsBySelect"
-          :emitter-unique-id="emitterUniqueId"
           :placeholder="placeholder"
           :show-search-field="showSearchField"
           :empty-objects-placeholder="emptyObjectsPlaceholder"
@@ -48,6 +47,7 @@
           :restricted-options-length="restrictedOptionsLength"
           :toggle-multiple-blocks-limit="toggleMultipleBlocksLimit"
           :selected-options="selectedOptions"
+          :emitter="emitter"
           :create-custom-option-label="createCustomOptionLabel"
           :create-option-placeholder="createOptionPlaceholder"
           :external-options-loader="externalOptionsLoader"
@@ -99,10 +99,10 @@
           :disabled="inputDisabled"
           :dropdown-active="dropdownActive"
           :loading="internalLoading"
-          :emitter-unique-id="emitterUniqueId"
           :icon-filter="iconFilter"
           :icon-size="iconSize"
           :toggle-icon="toggleIcon"
+          :emitter="emitter"
         />
       </slot>
       <slot
@@ -115,10 +115,10 @@
           :disabled="inputDisabled"
           :show-search-field="showSearchField"
           :loading="internalLoading"
-          :emitter-unique-id="emitterUniqueId"
           :icon-filter="iconFilter"
           :icon-size="iconSize"
           :selected-options="selectedOptions"
+          :emitter="emitter"
         />
       </slot>
     </div>
@@ -140,7 +140,6 @@
         :chosen-toggle-appearance-side="chosenToggleAppearanceSide"
         :create-option-type="createOptionType"
         :disable-by-field="disableByField"
-        :emitter-unique-id="emitterUniqueId"
         :empty-objects-placeholder="emptyObjectsPlaceholder"
         :label="label"
         :search-by-field="searchByField"
@@ -158,6 +157,7 @@
         :special-keys-block="specialKeysBlock"
         :preselected-option="preselectedOption"
         :preselected-options="preselectedOptions"
+        :emitter="emitter"
         :create-custom-option-label="createCustomOptionLabel"
       >
         <template
@@ -226,8 +226,6 @@ import {
 } from "vue";
 
 import { directive as vClickOutside } from "vue3-click-away"; 
-import emitter from "../events/emitter";
-import { v4 } from "uuid";
 
 import {
   themeTypes,
@@ -244,6 +242,7 @@ import {
 import useToggle from "../composition/toggle";
 import useCancel from "../composition/cancel";
 import useLabels from "../composition/labels";
+import useEmitter from "../composition/emitter";
 import usePreselectedOptions from "../composition/preselected-options";
 import useSearchValue from "../composition/search-value";
 
@@ -254,7 +253,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich
- * @version 1.4.2
+ * @version 1.5.0
  */
 
 const props = defineProps({
@@ -890,7 +889,6 @@ const inputDisabled = ref(false);
 const internalLoader = ref(false);
 const externalOptionsLoader = ref(null);
 const chosenToggleAppearanceSide = ref(null);
-const emitterUniqueId = ref(v4());
 const rawOptions = ref([]);
 const selectedOptions = ref([]);
 const togglePattern = /^extended__multiselect-toggle/i;
@@ -940,17 +938,18 @@ provide("searchState", searchState);
 provide("setSearchValue", setSearchValue);
 provide("setSearchPattern", setSearchPattern);
 
+const { emitter } = useEmitter();
 const { toggleOptionsList } = useToggle(
   loading,
   disabled,
   internalLoader,
-  emitterUniqueId,
+  emitter,
 );
 const { cancel } = useCancel(
   disabled,
   showSearchField,
   selectedOptions,
-  emitterUniqueId,
+  emitter,
   setSearchValue,
   setSearchPattern,
 );
@@ -1138,7 +1137,7 @@ watch(disabled, (value) => {
  */
 watch(dropdownActive, (value) => {
   if (!value) {
-    emitter.emit(`extended:rollup-options-${emitterUniqueId.value}`);
+    emitter.value.emit("extended:rollup-options");
   }
 });
 
@@ -1167,7 +1166,7 @@ watch(selectedOptions, (value) => {
   }
 
   if (resetSearchByValue.value) {
-    emitter.emit(`extended:clear-field-${emitterUniqueId.value}`);
+    emitter.value.emit("extended:clear-field");
   }
 }, { deep: true });
 
@@ -1195,7 +1194,7 @@ const activeEmitter = () => {
  * @emits "extended:rollup-options"
  */
 const clickOutside = () => {
-  emitter.emit(`extended:rollup-options-${emitterUniqueId.value}`);
+  emitter.value.emit("extended:rollup-options");
 };
 
 /**
@@ -1262,7 +1261,7 @@ const fieldFocus = (mouseEvent) => {
   if (filteredHasCancel.length) return;
   if (filteredHasToggle.length && dropdownActive.value === false) return;
       
-  emitter.emit(`extended:field-focus-${emitterUniqueId.value}`);
+  emitter.value.emit("extended:field-focus");
 };
 
 /**
@@ -1286,7 +1285,7 @@ const loadOptionsByExternalLoader = (pattern) => {
  * @emits extended:reset-index
  */
 const resetEnterIndex = () => {
-  emitter.emit(`extended:reset-index-${emitterUniqueId.value}`);
+  emitter.value.emit("extended:reset-index");
 };
 
 /**
@@ -1296,7 +1295,7 @@ const resetEnterIndex = () => {
  */
 const rollUp = () => {
   dropdownActive.value = false;
-  emitter.emit(`extended:rollup-options-${emitterUniqueId.value}`);
+  emitter.value.emit("extended:rollup-options");
 };
 
 /**
@@ -1306,7 +1305,7 @@ const rollUp = () => {
  * @param {KeyboardEvent} keyboardEvent - KeyboardEvent instance
  */
 const selectByEnter = (keyboardEvent) => {
-  emitter.emit(`extended:select-enter-${emitterUniqueId.value}`, keyboardEvent);
+  emitter.value.emit("extended:select-enter", keyboardEvent);
 };
 
 /**
@@ -1329,7 +1328,7 @@ const setPreselectedOption = () => {
   const isObjectOrArray = typeof preselectedOption.value === "object";
   const label = createLabel(isObjectOrArray, preselectedOption.value);
 
-  emitter.emit(`extended:select-option-${emitterUniqueId.value}`, {
+  emitter.value.emit("extended:select-option", {
     label,
     option: preselectedOption.value,
   });
@@ -1359,7 +1358,7 @@ const setPreselectedOptions = async () => {
 
       allOptionsWereSelected++;
 
-      emitter.emit(`extended:select-option-${emitterUniqueId.value}`, {
+      emitter.value.emit("extended:select-option", {
         label,
         option: preselectedOption,
       });
@@ -1446,7 +1445,7 @@ const toggleBlockRestrictor = (mouseEvent) => {
   }
 
   if (generalRestriction) {
-    emitter.emit(`extended:skip-block-blur-${emitterUniqueId.value}`);
+    emitter.value.emit("extended:skip-block-blur");
     return true;
   }
 
@@ -1567,7 +1566,7 @@ const toggleRestrictor = (mouseEvent) => {
   const filteredHasToggle = toggleDetector(mouseEvent, togglePattern);
 
   if (filteredHasToggle.length && dropdownActive.value) {
-    emitter.emit(`extended:skip-blur-${emitterUniqueId.value}`);
+    emitter.value.emit("extended:skip-blur");
   }
 };
 
@@ -1591,18 +1590,18 @@ const toggleRestrictor = (mouseEvent) => {
 onBeforeMount(() => {
   chosenToggleAppearanceSide.value = toggleAppearanceSide.value;
 
-  emitter.on(`extended:rollup-options-${emitterUniqueId.value}`, () => {
+  emitter.value.on("extended:rollup-options", () => {
     if (!dropdownActive.value) return;
 
     closeEmitter();
     dropdownActive.value = false;
   });
 
-  emitter.on(`extended:toggle-options-${emitterUniqueId.value}`, () => {
+  emitter.value.on("extended:toggle-options", () => {
     toggleOptions();
   });
 
-  emitter.on(`extended:select-option-${emitterUniqueId.value}`, (option) => {
+  emitter.value.on("extended:select-option", (option) => {
     const eventData = simpleEvents.value
      ? option.option
      : createEventFields(option.option, "option");
@@ -1625,7 +1624,7 @@ onBeforeMount(() => {
     }
   });
 
-  emitter.on(`extended:deselect-option-${emitterUniqueId.value}`, (payload) => {
+  emitter.value.on("extended:deselect-option", (payload) => {
     if (multiple.value && (payload && !payload.clearAll)) {
       const deselectedOption = selectedOptions.value[payload.index];
 
@@ -1648,11 +1647,11 @@ onBeforeMount(() => {
     }
     
     if (toggleOptionsBySelect.value) {
-      emitter.emit(`extended:rollup-options-${emitterUniqueId.value}`);
+      emitter.value.emit("extended:rollup-options");
     }
   });
 
-  emitter.on(`extended:clean-options-${emitterUniqueId.value}`, (selectedOptions) => {
+  emitter.value.on("extended:clean-options", (selectedOptions) => {
     const eventData = simpleEvents.value
      ? selectedOptions.value 
      : createEventFields(selectedOptions, "options");
@@ -1664,7 +1663,7 @@ onBeforeMount(() => {
     emit("clean", eventData);
   });
 
-  emitter.on(`extended:create-option-${emitterUniqueId.value}`, (createdOption) => {
+  emitter.value.on("extended:create-option", (createdOption) => {
     const eventData = simpleEvents.value
      ? createdOption
      : createEventFields(createdOption, "option");
@@ -1678,7 +1677,7 @@ onBeforeMount(() => {
     emit("option-created", eventData);
   });
 
-  emitter.on(`extended:increase-display-${emitterUniqueId.value}`, (limit) => {
+  emitter.value.on("extended:increase-display", (limit) => {
     const eventData = simpleEvents.value ? limit : createEventFields(limit, "limit");
 
     /**
@@ -1690,7 +1689,7 @@ onBeforeMount(() => {
     emit("increase", eventData);
   });
 
-  emitter.on(`extended:search-pattern-changed-${emitterUniqueId.value}`, (pattern) => {
+  emitter.value.on("extended:search-pattern-changed", (pattern) => {
     const eventData = simpleEvents.value
      ? pattern 
      : createEventFields(pattern, "pattern");
@@ -1727,7 +1726,7 @@ onMounted(() => {
     dropdownActive.value = true;
   }
 
-  emitter.on(`extended:expand-options-${emitterUniqueId.value}`, () => {
+  emitter.value.on("extended:expand-options", () => {
     if (dropdownActive.value === true) return;
       
     toggleAppearanceRestrictorActivate();
@@ -1736,7 +1735,7 @@ onMounted(() => {
     dropdownActive.value = true;
   });
 
-  emitter.on(`extended:loader-pattern-changed-${emitterUniqueId.value}`, (pattern) => {
+  emitter.value.on("extended:loader-pattern-changed", (pattern) => {
     loadOptionsByExternalLoader(pattern);
   });
 });

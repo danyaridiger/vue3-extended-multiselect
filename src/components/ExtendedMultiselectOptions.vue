@@ -104,8 +104,6 @@ import {
   toRefs,
 } from "vue";
 
-import emitter from '../events/emitter';
-
 import usePreselectedOptions from "../composition/preselected-options";
 import useLabels from "../composition/labels";
 
@@ -213,16 +211,6 @@ const props = defineProps({
    * @property {string} disableByField
    */
   disableByField: {
-    type: String,
-    required: true,
-  },
-
-  /**
-   * Assigns unique identifier of extended multiselect
-   * for each event
-   * @property {string} emitterUniqueId
-   */
-  emitterUniqueId: {
     type: String,
     required: true,
   },
@@ -390,6 +378,15 @@ const props = defineProps({
   },
 
   /**
+   * Reactive instance of LocalEmitter class
+   * @property {object} emitter
+   */
+  emitter: {
+    type: Object,
+    required: true,
+  },
+
+  /**
    * Creates custom label for every option in options list
    * @property {Function} createCustomOptionLabel
    */
@@ -435,7 +432,7 @@ const {
   createOptionType,
   disableByField,
   disabledPrimitiveOptionsConverted,
-  emitterUniqueId,
+  emitter,
   emptyObjectsPlaceholder,
   highlightOptions,
   label,
@@ -720,7 +717,7 @@ const createNewOption = () => {
   }
 
   options.value.unshift(newOption);
-  emitter.emit(`extended:create-option-${emitterUniqueId.value}`, newOption);
+  emitter.value.emit("extended:create-option", newOption);
 
   if (autoSelectCreatedOption.value) {
     selectOption(newOption, { target: { id: "extended__multiselect" } });
@@ -986,7 +983,7 @@ const optionHighlightClasses = (option) => {
  * @param {MouseEvent|KeyboardEvent} clickEvent - MouseEvent or KeyboardEvent instance
  */
 const selectOption = (option, clickEvent) => {
-  emitter.emit(`extended:trigger-selection-${emitterUniqueId.value}`, false);
+  emitter.value.emit("extended:trigger-selection", false);
 
   if (!clickEvent) return;
   if (keyBlocker(clickEvent)) return;
@@ -1001,7 +998,7 @@ const selectOption = (option, clickEvent) => {
     const optionDeselected = lookForObjectOptions(option);
 
     if (!optionDeselected) {
-      emitter.emit(`extended:deselect-option-${emitterUniqueId.value}`);
+      emitter.value.emit("extended:deselect-option");
       return;
     }
   }
@@ -1031,15 +1028,15 @@ const selectOptionEmitter = (option) => {
       
   if (multiple.value) {
     if (clearBySelectWhenMultiple.value) {
-      emitter.emit(`extended:clear-field-${emitterUniqueId.value}`);
+      emitter.value.emit("extended:clear-field");
     }
 
-    emitter.emit(`extended:select-option-${emitterUniqueId.value}`, {
+    emitter.value.emit("extended:select-option", {
       label,
       option,
      });
   } else {
-    emitter.emit(`extended:select-option-${emitterUniqueId.value}`, {
+    emitter.value.emit("extended:select-option", {
       label,
       option,
     });
@@ -1078,7 +1075,7 @@ const showCurrentMarker = (option) => {
  */
 const triggerOptionBeforeSelection = () => {
   if (fieldWasShown.value) {
-    emitter.emit(`extended:trigger-selection-${emitterUniqueId.value}`, true);
+    emitter.value.emit("extended:trigger-selection", true);
   }
 };
 
@@ -1099,18 +1096,18 @@ onBeforeMount(() => {
     console.warn("vue-extended-multiselect: «label» property can not be of type «object»");
   }
 
-  emitter.on(`extended:select-enter-${emitterUniqueId.value}`, (keyboardEvent) => {
+  emitter.value.on("extended:select-enter", (keyboardEvent) => {
     if (!enterIndex.value) return;
 
     const option = availableOptions.value[enterIndex.value];
     selectOption(option, keyboardEvent);
   });
 
-  emitter.on(`extended:renew-field-forwarding-${emitterUniqueId.value}`, (value) => {
+  emitter.value.on("extended:renew-field-forwarding", (value) => {
     fieldWasShown.value = value;
   });
 
-  emitter.on(`extended:reset-index-${emitterUniqueId.value}`, () => {
+  emitter.value.on("extended:reset-index", () => {
     enterIndex.value = null;
   });
 });

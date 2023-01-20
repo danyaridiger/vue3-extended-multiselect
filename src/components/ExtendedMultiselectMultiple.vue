@@ -57,8 +57,6 @@ import {
   watch,
 } from "vue";
 
-import emitter from "../events/emitter";
-
 import useImagePath from "../composition/image-path";
 import useLabels from "../composition/labels";
 
@@ -79,16 +77,6 @@ const props = defineProps({
    */
   disabled: {
     type: Boolean,
-    required: true,
-  },
-
-  /**
-   * Assigns unique identifier of extended multiselect
-   * for each event
-   * @property {string} emitterUniqueId
-   */
-  emitterUniqueId: {
-    type: String,
     required: true,
   },
 
@@ -166,6 +154,15 @@ const props = defineProps({
   },
 
   /**
+   * Reactive instance of LocalEmitter class
+   * @property {object} emitter
+   */
+  emitter: {
+    type: Object,
+    required: true,
+  },
+
+  /**
    * Current theme of extended-multiselect
    * used in class definition
    * @property {string} themeType
@@ -179,7 +176,7 @@ const props = defineProps({
 const {
   createCustomOptionLabel,
   disabled,
-  emitterUniqueId,
+  emitter,
   emptyObjectsPlaceholder,
   label,
   increaseDisplayBy,
@@ -297,7 +294,7 @@ const overLimitOptionsCount = computed(() => {
 const deselectBlock = (index) => {
   if (loading.value || disabled.value) return;
 
-  emitter.emit(`extended:deselect-option-${emitterUniqueId.value}`, { index });
+  emitter.value.emit("extended:deselect-option", { index });
 };
 
 /**
@@ -309,7 +306,7 @@ const deselectBlock = (index) => {
  */
 const showMoreOptions = () => {
   optionsLimitIncreaser.value += increaseDisplayBy.value;
-  emitter.emit(`extended:increase-display-${emitterUniqueId.value}`, optionsLimitIncreaser.value);
+  emitter.value.emit(`extended:increase-display`, optionsLimitIncreaser.value);
 };
 
 /**

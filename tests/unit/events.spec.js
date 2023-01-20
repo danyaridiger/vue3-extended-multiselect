@@ -9,8 +9,6 @@ import {
   createNewOptionsWrapper,
 } from "../utils/utils";
 
-import emitter from "../../src/events/emitter";
-
 import Vue3ExtendedMultiselect from "../../src/components/Vue3ExtendedMultiselect.vue";
 import ExtendedMultiselectInput from "../../src/components/ExtendedMultiselectInput.vue";
 import ExtendedMultiselectMultiple from "../../src/components/ExtendedMultiselectMultiple.vue";
@@ -25,8 +23,8 @@ describe("events", () => {
     
     wrapper = await mountComponent(Vue3ExtendedMultiselect, true, propsData);
 
-    emitter.emit(
-      `extended:search-pattern-changed-${wrapper.vm.emitterUniqueId}`, 
+    wrapper.vm.emitter.emit(
+      "extended:search-pattern-changed", 
       globalThis.SEARCH_VALUE,
     );
 

@@ -37,7 +37,6 @@
       :disabled="disabled"
       :loading="loading"
       :toggle-multiple-blocks-limit="toggleMultipleBlocksLimit"
-      :emitter-unique-id="emitterUniqueId"
       :empty-objects-placeholder="emptyObjectsPlaceholder"
       :label="label"
       :multiple-blocks-limit-message="multipleBlocksLimitMessage"
@@ -45,6 +44,7 @@
       :increase-display-by="increaseDisplayBy"
       :multipleBlocksLimit="multipleBlocksLimit"
       :selected-options="selectedOptions"
+      :emitter="emitter"
       :create-custom-option-label="createCustomOptionLabel"
     >
       <template #optionBlock="{ label, deselectBlock, index }">
@@ -76,7 +76,6 @@
       :disabled="disabled"
       :loading="loading"
       :toggle-multiple-blocks-limit="toggleMultipleBlocksLimit"
-      :emitter-unique-id="emitterUniqueId"
       :empty-objects-placeholder="emptyObjectsPlaceholder"
       :label="label"
       :multiple-blocks-limit-message="multipleBlocksLimitMessage"
@@ -84,6 +83,7 @@
       :increase-display-by="increaseDisplayBy"
       :multipleBlocksLimit="multipleBlocksLimit"
       :selected-options="selectedOptions"
+      :emitter="emitter"
       :create-custom-option-label="createCustomOptionLabel"
     >
       <template #optionBlock="{ label, deselectBlock, index }">
@@ -149,7 +149,6 @@ import {
 } from "vue";
 
 import { debounce } from "lodash-es";
-import emitter from "../events/emitter";
 
 import ExtendedMultiselectMultiple from "./ExtendedMultiselectMultiple.vue";
 
@@ -271,16 +270,6 @@ const props = defineProps({
   },
 
   /**
-   * Assigns unique identifier of extended multiselect
-   * for each event
-   * @property {string} emitterUniqueId
-   */
-  emitterUniqueId: {
-    type: String,
-    required: true,
-  },
-
-  /**
    * Placeholder used in internal options filters
    * and provided to ExtendedMultiselectMultiple child component
    * @property {string} emptyObjectsPlaceholder
@@ -349,6 +338,15 @@ const props = defineProps({
   },
 
   /**
+   * Reactive instance of LocalEmitter class
+   * @property {object} emitter
+   */
+  emitter: {
+    type: Object,
+    required: true,
+  },
+
+  /**
    * Provides function that creates custom label for
    * block with selected option to ExtendedMultiselectMultiple 
    * child component
@@ -395,7 +393,7 @@ const searchState = inject("searchState");
 const setSearchValue = inject("setSearchValue");
 const setSearchPattern = inject("setSearchPattern");
 
-const emitterUniqueId = toRef(props, "emitterUniqueId");
+const emitter = toRef(props, "emitter");
 
 const blurSkip = ref(false);
 const reversePrevented = ref(false);
@@ -410,9 +408,9 @@ const searchDebounce = ref(debounce(() => {
   const searchPattern = searchValue.value ? new RegExp(`${searchValue.value}`, "i") : null;
         
   if (externalOptionsLoader.value) {
-    emitter.emit(`extended:loader-pattern-changed-${emitterUniqueId.value}`, searchValue.value);
+    emitter.value.emit("extended:loader-pattern-changed", searchValue.value);
   } else {
-    emitter.emit(`extended:search-pattern-changed-${emitterUniqueId.value}`, searchValue.value);
+    emitter.value.emit("extended:search-pattern-changed", searchValue.value);
     setSearchPattern(searchPattern);
   }
 }, 250));
@@ -498,7 +496,7 @@ watch(searchFieldForwarding, (value) => {
   if (value && autoSelectSearchValue.value && !multiple.value && singleLabel.value) {
     searchValue.value = singleLabel.value;
   }
-  emitter.emit(`extended:renew-field-forwarding-${emitterUniqueId.value}`, value);
+  emitter.value.emit("extended:renew-field-forwarding", value);
 });
 
 /**
@@ -534,7 +532,7 @@ const expand = () => {
   if (disabled.value) return;
       
   searchFieldFocused.value = true;
-  emitter.emit(`extended:expand-options-${emitterUniqueId.value}`);
+  emitter.value.emit("extended:expand-options");
 };
 
 /**
@@ -583,7 +581,7 @@ const rollUp = () => {
   blurSkipByBlock.value = 0;
   blurSkipByToggleIcon.value = 0;
 
-  emitter.emit(`extended:rollup-options-${emitterUniqueId.value}`, true);
+  emitter.value.emit("extended:rollup-options", true);
 };
 
 /**
@@ -608,7 +606,7 @@ const search = () => {
  * @listens extended:trigger-selection
  */
 onBeforeMount(() => {
-  emitter.on(`extended:rollup-options-${emitterUniqueId.value}`, (internalRollup) => {
+  emitter.value.on("extended:rollup-options", (internalRollup) => {
     if (blurSkip.value === true) {
       blurSkip.value = false;
       return;
@@ -621,7 +619,7 @@ onBeforeMount(() => {
     rollUp();
   });
 
-  emitter.on(`extended:select-option-${emitterUniqueId.value}`, (option) => {
+  emitter.value.on("extended:select-option", (option) => {
 
     if (toggleOptionsBySelect.value) {
       rollUp();
@@ -634,7 +632,7 @@ onBeforeMount(() => {
     }
   });
 
-  emitter.on(`extended:deselect-option-${emitterUniqueId.value}`, () => {
+  emitter.value.on("extended:deselect-option", () => {
     if (multiple.value) {
       return;
     } else {
@@ -642,27 +640,27 @@ onBeforeMount(() => {
     }
   });
 
-  emitter.on(`extended:clean-options-${emitterUniqueId.value}`, () => {
+  emitter.value.on("extended:clean-options", () => {
     searchValue.value = null;
   });
 
-  emitter.on(`extended:clear-field-${emitterUniqueId.value}`, () => {
+  emitter.value.on("extended:clear-field", () => {
     searchValue.value = null;
   });
 
-  emitter.on(`extended:skip-blur-${emitterUniqueId.value}`, () => {
+  emitter.value.on("extended:skip-blur", () => {
     blurSkipByToggleIcon.value++;
   });
 
-  emitter.on(`extended:skip-block-blur-${emitterUniqueId.value}`, () => {
+  emitter.value.on("extended:skip-block-blur", () => {
     blurSkipByBlock.value++;
   });
 
-  emitter.on(`extended:skip-block-blur-zeroing-${emitterUniqueId.value}`, () => {
+  emitter.value.on("extended:skip-block-blur-zeroing", () => {
     blurSkipByBlock.value = 0;
   });
 
-  emitter.on(`extended:trigger-selection-${emitterUniqueId.value}`, (triggerState) => {
+  emitter.value.on("extended:trigger-selection", (triggerState) => {
     if (!toggleOptionsBySelect.value) {
       searchFieldFocused.value = false;
     }
@@ -675,7 +673,7 @@ onBeforeMount(() => {
  * @listens extended:field-focus
  */
 onMounted(() => {
-  emitter.on(`extended:field-focus-${emitterUniqueId.value}`, () => {
+  emitter.value.on("extended:field-focus", () => {
     if (showSearchField.value) {
       nextTick(() => {
         extendedInput.value.focus();

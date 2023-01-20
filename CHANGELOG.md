@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.4.2**
+Current `vue3-extended-multiselect` version: **1.5.0**
 
 ***
 
@@ -178,8 +178,17 @@ Adding descriptive comments for some types in typings.
 
 ### 1.4.1 (2023-01-14)
 
-Small fixes in documentation.
+* Small fixes in documentation.
 
 ### 1.4.2 (2023-01-15)
 
-Regenerating of .nvmrc file.
+* Regenerating of .nvmrc file.
+
+### 1.5.0 (2023-01-21)
+
+* Removal of dependency "uuid".
+* Adding "events" prop to child components using LocalEmitter.
+* Adding emitter.js file to composition directory with reactive LocalEmitter instace.
+* Removal of "emitterUniqueId" prop from child components.
+* Removal of emitter.js file from events directory.
+* Changing event emitter invocations in some of unit tests. 

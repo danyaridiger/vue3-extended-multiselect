@@ -1,12 +1,10 @@
-import emitter from "../events/emitter";
-
 import useSearchValue from './search-value';
 
 export default function useCancel(
   disabled, 
   showSearchField, 
   selectedOptions, 
-  emitterUniqueId,
+  emitter,
   setSearchValue,
   setSearchPattern,
 ) {
@@ -21,15 +19,15 @@ export default function useCancel(
   const cancel = () => {
     if (disabled.value) return;
       
-    emitter.emit(`extended:skip-block-blur-zeroing-${emitterUniqueId.value}`);
-    emitter.emit(`extended:deselect-option-${emitterUniqueId.value}`, { 
+    emitter.value.emit("extended:skip-block-blur-zeroing");
+    emitter.value.emit("extended:deselect-option", { 
       index: null,
       clearAll: true,
     });
       
     if (!showSearchField.value) return;
 
-    emitter.emit(`extended:clean-options-${emitterUniqueId.value}`, selectedOptions.value);
+    emitter.value.emit("extended:clean-options", selectedOptions.value);
 
     setSearchValue(null);
     setSearchPattern(null);
