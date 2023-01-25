@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.5.0**
+Current `vue3-extended-multiselect` version: **1.5.1**
 
 ***
 
@@ -52,8 +52,8 @@ Adding descriptive comments for some types in typings.
 
 ### 0.2.0 (2022-12-07)
 
-* Fix bug with hidden "noOptions" slot when list of available options is empty.
-* Fix warning with incorrect array type reactive field initialization.
+* Fixing bug with hidden "noOptions" slot when list of available options is empty.
+* Fixing warning with incorrect array type reactive field initialization.
 * Adding .eslintignore file.
 * Replacing some of default exports with common exports.
 * Arranging CSS-variabled in alphabetical order.
@@ -98,8 +98,8 @@ Adding descriptive comments for some types in typings.
 * Adding "vue3-click-away" dependency.
 * Adding "transformIgnorePatterns" section in jest.config.js.
 * Replacing "clickOutside" function in "onMounted" hook with "v-click-outside" directive.
-* Fix bug with rolling up options list when "toggleOptionsBySelect" prop is set to false.
-* Fix bug with reaching "optionsWrapper" ref before initialization.
+* Fixing bug with rolling up options list when "toggleOptionsBySelect" prop is set to false.
+* Fixing bug with reaching "optionsWrapper" ref before initialization.
 
 ### 1.1.1 (2022-12-10)
 
@@ -117,15 +117,15 @@ Adding descriptive comments for some types in typings.
 ### 1.1.4 (2022-12-13)
 
 * Adding "optionCreateLabel" to expose as utility.
-* Fix bug with wrong name of label field
+* Fixing bug with wrong name of label field
 
 ### 1.1.5 (2022-12-14)
 
-* Fix bug with empty raw options list when using async loader.
+* Fixing bug with empty raw options list when using async loader.
 
 ### 1.1.6 (2022-12-14)
 
-* Fix bug with extra call of async loader by changing value of search field.
+* Fixing bug with extra call of async loader by changing value of search field.
 * Adding new internal prop "externalOptionsLoader" to ExtendedMultiselectInput.
 * Searching for options by async loader is moved to in separate method.
 
@@ -142,8 +142,8 @@ Adding descriptive comments for some types in typings.
 * Adding "uuid" dependency
 * Removal of "id" attribute of extended multiselect wrapper.
 * Removal of "querySelector" usage in ExtendedMultiselect component. Switching to using event emitter.
-* Fix bug with bound event emitters between two extended multiselects.
-* Fix bug with undefined class in extended multiselect wrapper class list.
+* Fixing bug with bound event emitters between two extended multiselects.
+* Fixing bug with undefined class in extended multiselect wrapper class list.
 
 ### 1.2.1 (2022-12-21)
 
@@ -155,26 +155,26 @@ Adding descriptive comments for some types in typings.
 
 ### 1.2.3 (2022-12-22)
 
-* Fix bug with excess bottom offset of options list when prop "toggleAppearanceSide" is set to "atop".
+* Fixing bug with excess bottom offset of options list when prop "toggleAppearanceSide" is set to "atop".
 * Supplementation of some css-variables.
 
 ### 1.2.4 (2022-12-22)
 
-* Fix bug of too wide extended multiselect with long single selected option.
+* Fixing bug of too wide extended multiselect with long single selected option.
 
 ### 1.3.0 (2023-01-11)
 
 * Adding "autoSelectSearchValue" optional prop.
 * Adding unit-test for new optional prop.
-* Fix bug with setting search pattern when deselecting of all options.
-* Fix bug with selected options display when prop "toggleOptionsBySelect" is set to false.
+* Fixing bug with setting search pattern when deselecting of all options.
+* Fixing bug with selected options display when prop "toggleOptionsBySelect" is set to false.
 
 ### 1.4.0 (2023-01-14)
 
 * Removal of dependency "mitt".
 * Adding LocalEmitter.js file with simplified event emitter instead of dependency "mitt".
 * Changing event types in some of props unit-tests.
-* Fix bug with toggle restriction in custom slots.
+* Fixing bug with toggle restriction in custom slots.
 
 ### 1.4.1 (2023-01-14)
 
@@ -191,4 +191,8 @@ Adding descriptive comments for some types in typings.
 * Adding emitter.js file to composition directory with reactive LocalEmitter instace.
 * Removal of "emitterUniqueId" prop from child components.
 * Removal of emitter.js file from events directory.
-* Changing event emitter invocations in some of unit tests. 
+* Changing event emitter invocations in some of unit tests.
+
+### 1.5.1 (2023-01-25)
+
+* Fixing bug with missing toggle on option click in single selection.

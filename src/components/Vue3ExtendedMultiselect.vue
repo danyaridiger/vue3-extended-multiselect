@@ -253,7 +253,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich
- * @version 1.5.0
+ * @version 1.5.1
  */
 
 const props = defineProps({
@@ -1428,21 +1428,24 @@ const toggleBlockRestrictor = (mouseEvent) => {
   let generalRestriction;
   let filteredCustomSelf;
   const filteredHasBlock = toggleDetector(mouseEvent, /^extended__multiselect-block/i, true);
+  const filteredHasSlot = toggleDetector(mouseEvent, /^extended__multiselect-options(?!_option)/i, true)
   const filteredSelf = toggleDetector(mouseEvent, /^extended__multiselect-clear/i);
       
-  if (filteredSelf || filteredHasBlock) {
+  if (filteredSelf.length || filteredHasBlock.length || filteredHasSlot.length) {
     filteredCustomSelf = true;
   } else {
     filteredCustomSelf = toggleCustomRestrictor(mouseEvent);
   }
 
   if (extendedMultiselectToggle.value) {
-    generalRestriction = (filteredHasBlock && dropdownActive.value && filteredCustomSelf)
+    generalRestriction = (filteredHasBlock.length && dropdownActive.value && filteredCustomSelf)
      || (filteredSelf && dropdownActive.value && filteredCustomSelf);
   } else {
-    generalRestriction = (filteredHasBlock && dropdownActive.value)
+    generalRestriction = (filteredHasBlock.length && dropdownActive.value)
      || (filteredSelf && dropdownActive.value);
   }
+
+  console.info(generalRestriction)
 
   if (generalRestriction) {
     emitter.value.emit("extended:skip-block-blur");
@@ -1493,7 +1496,8 @@ const toggleDetector = (mouseEvent, pattern, mode) => {
   while(
     target
     && (target.classList 
-      && !target.classList.contains("extended__multiselect-wrapper") 
+      && !target.classList.contains("extended__multiselect-wrapper")
+      && !target.classList.contains("extended__multiselect-options_container")
       || !target.classList.length)
     && mode
     && !filteredHasToggle.length

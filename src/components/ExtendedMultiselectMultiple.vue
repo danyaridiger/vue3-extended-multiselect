@@ -306,7 +306,7 @@ const deselectBlock = (index) => {
  */
 const showMoreOptions = () => {
   optionsLimitIncreaser.value += increaseDisplayBy.value;
-  emitter.value.emit(`extended:increase-display`, optionsLimitIncreaser.value);
+  emitter.value.emit("extended:increase-display", optionsLimitIncreaser.value);
 };
 
 /**
