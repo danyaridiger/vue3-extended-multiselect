@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.5.2**
+Current `vue3-extended-multiselect` version: **1.5.3**
 
 ***
 
@@ -200,3 +200,8 @@ Adding descriptive comments for some types in typings.
 ### 1.5.2 (2023-01-25)
 
 * Fixing bug with empty class list in toggle restrictor when "disabled" prop equals true.
+
+### 1.5.3 (2023-01-25)
+
+* Fixing bug with incorrect setting of preselected options from v-model.
+* Fixing bug with incompatible single preselected option.

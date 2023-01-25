@@ -253,7 +253,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich
- * @version 1.5.2
+ * @version 1.5.3
  */
 
 const props = defineProps({
@@ -909,6 +909,7 @@ const {
   label,
   loading,
   loaderIconFilter,
+  modelValue,
   multiple,
   options,
   optionsCountRestriction,
@@ -1312,25 +1313,29 @@ const selectByEnter = (keyboardEvent) => {
  * Sets preselected option provided by "preselectedOption" prop
  * @function
  * @emits extended:select-option
+ * @param {UnionPropType} preselectedOption - option to be selected
  */
-const setPreselectedOption = () => {
-  const availableOptionType = optionTypeRestrictor(preselectedOption.value);
+const setPreselectedOption = (preselectedOption) => {
+  const availableOptionType = optionTypeRestrictor(preselectedOption);
   const mappedOptions = restrictedOptions.value.map((restrictedOption) => {
     return JSON.stringify(restrictedOption);
   });
         
   if (!availableOptionType) return;
-  if (!mappedOptions.includes(JSON.stringify(preselectedOption.value)) && showInsertWarnings.value) {
-    console.warn("vue-extended-multiselect: option in «preselectedOption» property should be the same as analogue in «options» property");
+  if (!mappedOptions.includes(JSON.stringify(preselectedOption))) {
+    if (showInsertWarnings.value) {
+      console.warn("vue-extended-multiselect: option in «preselectedOption» property should be the same as analogue in «options» property");
+    }
+
     return;
   }
 
-  const isObjectOrArray = typeof preselectedOption.value === "object";
-  const label = createLabel(isObjectOrArray, preselectedOption.value);
+  const isObjectOrArray = typeof preselectedOption === "object";
+  const label = createLabel(isObjectOrArray, preselectedOption);
 
   emitter.value.emit("extended:select-option", {
     label,
-    option: preselectedOption.value,
+    option: preselectedOption,
   });
 };
 
@@ -1339,14 +1344,15 @@ const setPreselectedOption = () => {
  * if "multiple" prop equals true
  * @function
  * @emits extended:select-option
+ * @param {Array} preselectedOptions - options to be selected
  */
-const setPreselectedOptions = async () => {
+const setPreselectedOptions = async (preselectedOptions) => {
   let allOptionsWereSelected = 0;
   const mappedOptions = restrictedOptions.value.map((restrictedOption) => {
     return JSON.stringify(restrictedOption);
   });
 
-  preselectedOptions.value.forEach((preselectedOption) => {
+  preselectedOptions.forEach((preselectedOption) => {
     const availableOptionType = optionTypeRestrictor(preselectedOption);
 
     if (!preselectedOption || !availableOptionType) return;
@@ -1365,22 +1371,38 @@ const setPreselectedOptions = async () => {
     }
   });
 
-  if (allOptionsWereSelected !== preselectedOptions.value.length && showInsertWarnings.value) {
+  if (allOptionsWereSelected !== preselectedOptions.length && showInsertWarnings.value) {
     console.warn("vue-extended-multiselect: options in «preselectedOptions» property should be the same as analogues in «options» property");
   }
 };
 
 /**
  * Determines conditions that control preselected options installattion
+ * if "modelValue" prop is defined
+ * @function
+ */
+const setPreselectedOptionsByModelValue = () => {
+  if (!modelValue.value) return;
+
+  if (Array.isArray(modelValue.value) && multiple.value) {
+    setPreselectedOptions(modelValue.value);
+  } else {
+    setPreselectedOption(modelValue.value);
+  }
+}
+
+/**
+ * Determines conditions that control preselected options installattion
+ * by "preselectedOption" and "preselectedOptions" props
  * @function
  */
 const setPreselectedOptionsByConditions = () => {
   if (preselectedOption.value && !multiple.value) {
-    setPreselectedOption();
+    setPreselectedOption(preselectedOption.value);
   }
 
   if (preselectedOptions.value && multiple.value) {
-    setPreselectedOptions();
+    setPreselectedOptions(preselectedOptions.value);
   }
 };
 
@@ -1720,6 +1742,8 @@ onMounted(() => {
     rawOptions.value = options.value;
     setPreselectedOptionsByConditions();
   }
+
+  setPreselectedOptionsByModelValue();
 
   if (
     defaultExpanded.value 
