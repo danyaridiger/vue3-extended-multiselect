@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.5.1**
+Current `vue3-extended-multiselect` version: **1.5.2**
 
 ***
 
@@ -196,3 +196,7 @@ Adding descriptive comments for some types in typings.
 ### 1.5.1 (2023-01-25)
 
 * Fixing bug with missing toggle on option click in single selection.
+
+### 1.5.2 (2023-01-25)
+
+* Fixing bug with empty class list in toggle restrictor when "disabled" prop equals true.
