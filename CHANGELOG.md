@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.5.3**
+Current `vue3-extended-multiselect` version: **1.5.4**
 
 ***
 
@@ -205,3 +205,7 @@ Adding descriptive comments for some types in typings.
 
 * Fixing bug with incorrect setting of preselected options from v-model.
 * Fixing bug with incompatible single preselected option.
+
+### 1.5.4 (2023-01-25)
+
+* Removal of restrictions for preselected options from v-model.

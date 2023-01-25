@@ -253,7 +253,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich
- * @version 1.5.3
+ * @version 1.5.4
  */
 
 const props = defineProps({
@@ -1314,15 +1314,16 @@ const selectByEnter = (keyboardEvent) => {
  * @function
  * @emits extended:select-option
  * @param {UnionPropType} preselectedOption - option to be selected
+ * @param {boolean} restriction - restriction of preselected option
  */
-const setPreselectedOption = (preselectedOption) => {
+const setPreselectedOption = (preselectedOption, restriction = true) => {
   const availableOptionType = optionTypeRestrictor(preselectedOption);
   const mappedOptions = restrictedOptions.value.map((restrictedOption) => {
     return JSON.stringify(restrictedOption);
   });
         
   if (!availableOptionType) return;
-  if (!mappedOptions.includes(JSON.stringify(preselectedOption))) {
+  if (!mappedOptions.includes(JSON.stringify(preselectedOption)) && restriction) {
     if (showInsertWarnings.value) {
       console.warn("vue-extended-multiselect: option in «preselectedOption» property should be the same as analogue in «options» property");
     }
@@ -1345,8 +1346,9 @@ const setPreselectedOption = (preselectedOption) => {
  * @function
  * @emits extended:select-option
  * @param {Array} preselectedOptions - options to be selected
+ * @param {boolean} restriction - restriction of preselected options
  */
-const setPreselectedOptions = async (preselectedOptions) => {
+const setPreselectedOptions = async (preselectedOptions, restriction = true) => {
   let allOptionsWereSelected = 0;
   const mappedOptions = restrictedOptions.value.map((restrictedOption) => {
     return JSON.stringify(restrictedOption);
@@ -1358,7 +1360,7 @@ const setPreselectedOptions = async (preselectedOptions) => {
     if (!preselectedOption || !availableOptionType) return;
     if (selectedOptions.value.includes(preselectedOption)) return;
 
-    if (mappedOptions.includes(JSON.stringify(preselectedOption))) {
+    if (mappedOptions.includes(JSON.stringify(preselectedOption)) || !restriction) {
       const isObjectOrArray = typeof option === "object";
       const label = createLabel(isObjectOrArray, preselectedOption);
 
@@ -1385,9 +1387,9 @@ const setPreselectedOptionsByModelValue = () => {
   if (!modelValue.value) return;
 
   if (Array.isArray(modelValue.value) && multiple.value) {
-    setPreselectedOptions(modelValue.value);
+    setPreselectedOptions(modelValue.value, false);
   } else {
-    setPreselectedOption(modelValue.value);
+    setPreselectedOption(modelValue.value, false);
   }
 }
 
