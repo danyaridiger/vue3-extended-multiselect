@@ -5,6 +5,7 @@
 .extended__multiselect-wrapper--disabled {
   position: relative;
   width: var(--max-size);
+  height: var(--max-size);
   cursor: var(--pointer-cursor);
 }
 
@@ -156,6 +157,7 @@
 
 .extended__multiselect-block > span {
   word-break: break-all;
+  white-space: pre-line;
 }
 
 .extended__multiselect-input {

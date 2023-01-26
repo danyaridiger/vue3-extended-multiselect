@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.5.4**
+Current `vue3-extended-multiselect` version: **1.5.5**
 
 ***
 
@@ -209,3 +209,7 @@ Adding descriptive comments for some types in typings.
 ### 1.5.4 (2023-01-25)
 
 * Removal of restrictions for preselected options from v-model.
+
+### 1.5.5 (2023-01-26)
+
+* Changing some option block styles.
