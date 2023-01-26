@@ -253,7 +253,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich
- * @version 1.5.5
+ * @version 1.5.6
  */
 
 const props = defineProps({
@@ -1269,14 +1269,15 @@ const fieldFocus = (mouseEvent) => {
  * Initialises options list loading by external async method
  * @function
  * @param {string} pattern - value of search field
+ * @param {boolean} initialValue - preselected options flag
  */
-const loadOptionsByExternalLoader = (pattern) => {
+const loadOptionsByExternalLoader = (pattern, initialValue) => {
   internalLoader.value = true;
   externalOptionsLoader.value = options.value;
   options.value(pattern).then(options => {
     rawOptions.value = options;
     internalLoader.value = false;
-    setPreselectedOptionsByConditions();
+    if (initialValue) setPreselectedOptionsByConditions();
   });
 };
 
@@ -1739,7 +1740,7 @@ onBeforeMount(() => {
  */
 onMounted(() => {
   if (typeof options.value === "function") {
-    loadOptionsByExternalLoader();
+    loadOptionsByExternalLoader(null, true);
   } else {
     rawOptions.value = options.value;
     setPreselectedOptionsByConditions();
@@ -1766,7 +1767,7 @@ onMounted(() => {
   });
 
   emitter.value.on("extended:loader-pattern-changed", (pattern) => {
-    loadOptionsByExternalLoader(pattern);
+    loadOptionsByExternalLoader(pattern, false);
   });
 });
 

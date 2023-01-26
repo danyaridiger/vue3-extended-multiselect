@@ -539,7 +539,7 @@ const classes = computed(() => {
  */
 const emptyOptionsList = computed(() => {
   return (!options.value.length || !options.value.filter((option) => !!option).length
-   || !availableOptions.value.length) && !(createOnTheGo.value && searchState.searchValue);
+   || !availableOptions.value.length) && !searchState.searchValue;
 });
 
 /**

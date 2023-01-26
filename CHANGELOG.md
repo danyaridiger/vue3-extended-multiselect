@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.5.5**
+Current `vue3-extended-multiselect` version: **1.5.6**
 
 ***
 
@@ -213,3 +213,8 @@ Adding descriptive comments for some types in typings.
 ### 1.5.5 (2023-01-26)
 
 * Changing some option block styles.
+
+### 1.5.6 (2023-01-26)
+
+* Fixing bug with "noOption" slot being displayed when search field value is not empty.
+* Fixing bug with reload of preselected options when using external loader.
