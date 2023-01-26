@@ -253,7 +253,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich
- * @version 1.5.6
+ * @version 1.5.7
  */
 
 const props = defineProps({
@@ -886,7 +886,6 @@ const emit = defineEmits([
 
 const dropdownActive = ref(false);
 const inputDisabled = ref(false);
-const internalLoader = ref(false);
 const externalOptionsLoader = ref(null);
 const chosenToggleAppearanceSide = ref(null);
 const rawOptions = ref([]);
@@ -943,7 +942,6 @@ const { emitter } = useEmitter();
 const { toggleOptionsList } = useToggle(
   loading,
   disabled,
-  internalLoader,
   emitter,
 );
 const { cancel } = useCancel(
@@ -1065,7 +1063,7 @@ const expanded = computed(() => {
  * @returns {boolean} loading
  */
 const internalLoading = computed(() => {
-  return loading.value || internalLoader.value;
+  return loading.value;
 });
 
 /**
@@ -1272,11 +1270,9 @@ const fieldFocus = (mouseEvent) => {
  * @param {boolean} initialValue - preselected options flag
  */
 const loadOptionsByExternalLoader = (pattern, initialValue) => {
-  internalLoader.value = true;
   externalOptionsLoader.value = options.value;
   options.value(pattern).then(options => {
     rawOptions.value = options;
-    internalLoader.value = false;
     if (initialValue) setPreselectedOptionsByConditions();
   });
 };

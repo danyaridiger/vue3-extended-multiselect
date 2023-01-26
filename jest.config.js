@@ -5,7 +5,7 @@ module.exports = {
   },
   expand: true,
   displayName: {
-    name: "vue3-extended-multiselect",
+    name: "vue3-extended-multiselect 1.5.7",
     color: "bgGreen",
   },
   extraGlobals: [],

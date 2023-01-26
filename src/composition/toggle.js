@@ -1,6 +1,6 @@
 import { computed, readonly } from "vue";
 
-export default function useToggle(loading, disabled, internalLoader, emitter) {
+export default function useToggle(loading, disabled, emitter) {
   /**
    * Toggles classes of slots if "loading"
    * or "disabled" props equals true
@@ -8,7 +8,7 @@ export default function useToggle(loading, disabled, internalLoader, emitter) {
    * @returns {string} class
    */
   const toggleSlotClass = computed(() => {
-    return loading.value || disabled.value || (internalLoader && internalLoader.value)
+    return loading.value || disabled.value
      ? "extended__multiselect-toggle--disabled"
      : "extended__multiselect-toggle";
   });

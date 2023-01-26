@@ -180,9 +180,8 @@ const {
 const { createImagePath } = useImagePath();
 
 const { toggleSlotClass, toggleOptionsList } = useToggle(
-  loading, 
-  disabled, 
-  null,
+  loading,
+  disabled,
   emitter,
 );
 const { iconSizeClass } = useSizes(iconSize);
