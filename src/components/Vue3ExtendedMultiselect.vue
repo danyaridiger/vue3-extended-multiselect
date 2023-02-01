@@ -29,7 +29,7 @@
           :translate="attrs.translate"
           :auto-select-search-value="autoSelectSearchValue"
           :create-on-the-go="createOnTheGo"
-          :disabled="inputDisabled"
+          :disabled="disabled"
           :dropdown-active="dropdownActive"
           :loading="internalLoading"
           :multiple="multiple"
@@ -96,7 +96,7 @@
         <extended-multiselect-toggle
           ref="extendedMultiselectToggle"
           :tabindex="attrs.tabindex"
-          :disabled="inputDisabled"
+          :disabled="disabled"
           :dropdown-active="dropdownActive"
           :loading="internalLoading"
           :icon-filter="iconFilter"
@@ -112,7 +112,7 @@
         <extended-multiselect-cancel
           v-if="showClearIcon"
           :tabindex="attrs.tabindex"
-          :disabled="inputDisabled"
+          :disabled="disabled"
           :show-search-field="showSearchField"
           :loading="internalLoading"
           :icon-filter="iconFilter"
@@ -133,6 +133,7 @@
         :create-on-the-go="createOnTheGo"
         :disabled-primitive-options-converted="disabledPrimitiveOptionsConverted"
         :highlight-options="highlightOptions"
+        :loading="internalLoading"
         :multiple="multiple"
         :selected-options-shown="selectedOptionsShown"
         :show-insert-warnings="showInsertWarnings"
@@ -253,7 +254,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.5.8
+ * @version 1.5.9
  */
 
 const props = defineProps({
@@ -885,7 +886,6 @@ const emit = defineEmits([
 ]);
 
 const dropdownActive = ref(false);
-const inputDisabled = ref(false);
 const externalOptionsLoader = ref(null);
 const chosenToggleAppearanceSide = ref(null);
 const rawOptions = ref([]);
@@ -1114,19 +1114,10 @@ const tabindexIfSearch = computed(() => {
  * @returns {string} class
  */
 const wrapperClasses = computed(() => {
-  return inputDisabled.value && !internalLoading.value
+  return disabled.value && !internalLoading.value
    ? "extended__multiselect-wrapper--disabled"
    : "extended__multiselect-wrapper";
 });
-
-/**
- * Disables search field if "disabled" prop equals true
- * @function
- * @param {boolean} value - "disabled" prop
- */
-watch(disabled, (value) => {
-  inputDisabled.value = value;
-}, { immediate: true });
 
 /**
  * Forcibly rolls up dropdown options list by changing "dropdownActive" flag
@@ -1139,17 +1130,6 @@ watch(dropdownActive, (value) => {
     emitter.value.emit("extended:rollup-options");
   }
 });
-
-/**
- * Disables search field if "loading" prop equals true
- * @function
- * @param {boolean} value - "loading" prop
- */
-watch(internalLoading, (value) => {
-  if (disabled.value) return;
-
-  inputDisabled.value = value;
-}, { immediate: true });
 
 /**
  * Clears value of search field after changing selected option/options
@@ -1242,7 +1222,7 @@ const createEventFields = (field, fieldName) => {
  * @param {MouseEvent} mouseEvent - MouseEvent instance
  */
 const fieldFocus = (mouseEvent) => {
-  if (internalLoading.value || disabled.value) return;
+  if (disabled.value) return;
 
   if (!toggleOptionsBySelect.value) {
     const customFilteredOptions = toggleOptionsRestrictor(mouseEvent);
@@ -1745,9 +1725,8 @@ onMounted(() => {
   setPreselectedOptionsByModelValue();
 
   if (
-    defaultExpanded.value 
-    && !inputDisabled.value 
-    && !internalLoading.value
+    defaultExpanded.value
+    && !disabled.value
     && typeof options.value !== "function"
   ) {
     dropdownActive.value = true;

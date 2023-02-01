@@ -164,7 +164,9 @@ describe("props", () => {
 
   it("correctly handles 'loading' prop value", async () => {
     const propsData = {
+      defaultExpanded: true,
       loading: true,
+      options: globalThis.OPTIONS,
     };
 
     wrapper = await mountComponent(Vue3ExtendedMultiselect, false, propsData);
@@ -173,6 +175,13 @@ describe("props", () => {
     
     expect(loaderWrapper.exists()).toBeTruthy();
     expect(loaderWrapper.isVisible()).toBeTruthy();
+
+    await mockOptionSelection(wrapper);
+
+    const inputWrapper = wrapper.findComponent(ExtendedMultiselectInput);
+    const selectedOptionWrapper = inputWrapper.find(".extended__multiselect-block");
+
+    expect(selectedOptionWrapper.text()).toHaveLength(0);
   });
 
 

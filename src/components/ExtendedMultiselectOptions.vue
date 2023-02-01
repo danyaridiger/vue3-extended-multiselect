@@ -150,6 +150,16 @@ const props = defineProps({
   },
 
   /**
+   * Determines "loading" state of component
+   * that disables option selection
+   * @property {boolean} loading
+   */
+  loading: {
+    type: Boolean,
+    required: true,
+  },
+
+  /**
    * Determines whether to use functionality of
    * multiple select
    * @property {boolean} multiple
@@ -435,6 +445,7 @@ const {
   emitter,
   emptyObjectsPlaceholder,
   highlightOptions,
+  loading,
   label,
   searchByField,
   maxOptionsCount,
@@ -702,6 +713,8 @@ const compareWithSelected = (calculatedOptionLabel) => {
  * @emits extended:create-option
  */
 const createNewOption = () => {
+  if (loading.value) return;
+
   let newOption;
 
   switch(createOptionType.value) {
@@ -983,10 +996,12 @@ const optionHighlightClasses = (option) => {
  * @param {MouseEvent|KeyboardEvent} clickEvent - MouseEvent or KeyboardEvent instance
  */
 const selectOption = (option, clickEvent) => {
+
   emitter.value.emit("extended:trigger-selection", false);
 
   if (!clickEvent) return;
   if (keyBlocker(clickEvent)) return;
+  if (loading.value) return;
   if (maxOptionsWereSelected.value) return;
   if (option[disableByField.value] || defineDisabledOption(option)) return;
   if (

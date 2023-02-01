@@ -10,7 +10,10 @@
         :index="index"
         :deselect-block="deselectBlock"
       >
-        <div :class="classes">
+        <div 
+          :class="classes"
+          :style="styles"
+        >
           <span>{{ optionCreateLabel(option) }}</span>
           <div 
             class="extended__multiselect-block_cancel-wrapper"
@@ -270,6 +273,16 @@ const overLimitOptionsCount = computed(() => {
   if (selectedOptions.value.length <= multipleBlocksLimit.value) return null;
 
   return selectedOptions.value.length - multipleBlocksLimit.value;
+});
+
+/**
+ * Defines styles for "padding-right" css-property 
+ * of every option block
+ * @function
+ * @returns {Object|null} styles
+ */
+const styles = computed(() => {
+  return loading.value ? { paddingRight: "7px" } : null;
 });
 
 /**

@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.5.8**
+Current `vue3-extended-multiselect` version: **1.5.9**
 
 ***
 
@@ -223,6 +223,11 @@ Adding descriptive comments for some types in typings.
 
 * Removal of internal loading state because of using "lodash.debounce".
 
-### 1.5.8 (2023-01-01)
+### 1.5.8 (2023-02-01)
 
 * Adding CONTRIBUTING.md file.
+
+### 1.5.9 (2023-02-01)
+
+* "loading" prop no longer disables search field.
+* Changing value of css-variable "--min-block-height" from 25px to 26px.

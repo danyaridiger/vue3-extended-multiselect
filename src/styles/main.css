@@ -347,6 +347,7 @@
   border-radius: var(--block-border-radius);
   padding: var(--block-padding);
   gap: var(--block-gap);
+  min-height: var(--min-block-height);
 }
 
 .extended__multiselect-options_option:hover,
