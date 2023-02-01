@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.5.7**
+Current `vue3-extended-multiselect` version: **1.5.8**
 
 ***
 
@@ -222,3 +222,7 @@ Adding descriptive comments for some types in typings.
 ### 1.5.7 (2023-01-26)
 
 * Removal of internal loading state because of using "lodash.debounce".
+
+### 1.5.8 (2023-01-01)
+
+* Adding CONTRIBUTING.md file.
