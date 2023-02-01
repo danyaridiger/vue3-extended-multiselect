@@ -254,7 +254,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.5.9
+ * @version 1.5.10
  */
 
 const props = defineProps({
@@ -529,9 +529,6 @@ const props = defineProps({
   emptyObjectsPlaceholder: {
     type: String,
     default: "Empty Object/Array",
-    validator(value) {
-      return !!value;
-    },
   },
 
   /**
@@ -1498,14 +1495,19 @@ const toggleDetector = (mouseEvent, pattern, mode) => {
     target
     && (target.classList 
       && !target.classList.contains("extended__multiselect-wrapper")
-      && !target.classList.contains("extended__multiselect-options_container")
-      || target.classList && !target.classList.length)
+      || target.classList 
+      && !target.classList.length)
     && mode
     && !filteredHasToggle.length
   ) {
     filteredHasToggle = Array.prototype.filter.call(target.classList, (className) => {
       return pattern.test(className) === true;
     });
+
+    if (target.classList.contains("extended__multiselect-options_container")) {
+      filteredHasToggle.push("extended__multiselect-options_container");
+      return filteredHasToggle;
+    }
 
     target = target.parentNode;
   }

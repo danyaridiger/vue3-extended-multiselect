@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.5.9**
+Current `vue3-extended-multiselect` version: **1.5.10**
 
 ***
 
@@ -231,3 +231,8 @@ Adding descriptive comments for some types in typings.
 
 * "loading" prop no longer disables search field.
 * Changing value of css-variable "--min-block-height" from 25px to 26px.
+
+### 1.5.10 (2023-02-01)
+
+* Fixing bug with field focus when selecting an option.
+* Removal of validator from "emptyObjectsPlaceholder" prop.
