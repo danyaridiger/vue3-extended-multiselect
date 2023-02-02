@@ -256,7 +256,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.6.0
+ * @version 1.6.1
  */
 
 const props = defineProps({
@@ -1435,13 +1435,13 @@ const toggleAppearanceRestrictorActivate = () => {
  * @param {MouseEvent} mouseEvent - MouseEvent instance
  * @returns {boolean} toggling
  */
-const toggleBlockRestrictor = (mouseEvent) => {
+ const toggleBlockRestrictor = (mouseEvent) => {
   let generalRestriction;
   let filteredCustomSelf;
   const filteredHasBlock = toggleDetector(mouseEvent, /^extended__multiselect-block/i, true);
   const filteredHasSlot = toggleDetector(mouseEvent, /^extended__multiselect-options(?!_option)/i, true)
   const filteredSelf = toggleDetector(mouseEvent, /^extended__multiselect-clear/i);
-      
+
   if (filteredSelf.length || filteredHasBlock.length || filteredHasSlot.length) {
     filteredCustomSelf = true;
   } else {
@@ -1499,6 +1499,7 @@ const toggleCustomRestrictor = (mouseEvent, blockType) => {
  */
 const toggleDetector = (mouseEvent, pattern, mode) => {
   let target = mouseEvent.target;
+  const optionPattern = /^extended__multiselect-options_option/i;
 
   let filteredHasToggle = Array.prototype.filter.call(target.classList, (className) => {
     return pattern.test(className) === true;
@@ -1516,6 +1517,10 @@ const toggleDetector = (mouseEvent, pattern, mode) => {
     filteredHasToggle = Array.prototype.filter.call(target.classList, (className) => {
       return pattern.test(className) === true;
     });
+
+    if (Array.prototype.some.call(target.classList, (className) => {
+      return optionPattern.test(className);
+    })) return [];
 
     if (target.classList.contains("extended__multiselect-options_container")) {
       filteredHasToggle.push("extended__multiselect-options_container");

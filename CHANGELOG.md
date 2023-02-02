@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.6.0**
+Current `vue3-extended-multiselect` version: **1.6.1**
 
 ***
 
@@ -242,3 +242,7 @@ Adding descriptive comments for some types in typings.
 * Adding "showDeselectIconLoader" optional prop.
 * Adding loader icon to deselect button of multiple option blocks depending on "showDeselectIconLoader" optional prop.
 * Changing styles of multiple option blocks.
+
+### 1.6.1 (2023-02-02)
+
+* Fixing bug with not clotting options list when single option was selected.
