@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.6.3**
+Current `vue3-extended-multiselect` version: **1.6.4**
 
 ***
 
@@ -254,3 +254,7 @@ Adding descriptive comments for some types in typings.
 ### 1.6.3 (2023-02-02)
 
 * Fixing bug with duplicate options when using an external loader.
+
+### 1.6.4 (2023-02-02)
+
+* Fixing bug with duplication of selected and found options.

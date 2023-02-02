@@ -866,7 +866,7 @@ const lookForObjectOptions = (option) => {
     if (Array.isArray(option) && !!option.length) {
       calculatedOptionLabel = option.join(", ");
     } else {
-      const hasLabel = Object.getOwnPropertyNames(option).includes("label");
+      const hasLabel = Object.getOwnPropertyNames(option).includes(label.value);
 
       if (hasLabel) {
         calculatedOptionLabel = typeof option[label.value] === "object" 
