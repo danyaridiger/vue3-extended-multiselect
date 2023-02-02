@@ -569,10 +569,6 @@ const multipleBlur = () => {
     searchFieldFocused.value = false;
     return;
   }
-
-  if (blurSkipByBlock.value < 1) {
-    searchFieldFocused.value = false;
-  }
 };
 
 /**
