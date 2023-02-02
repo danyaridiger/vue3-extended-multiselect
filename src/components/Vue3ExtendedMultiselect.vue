@@ -32,8 +32,10 @@
           :disabled="disabled"
           :dropdown-active="dropdownActive"
           :loading="internalLoading"
+          :icon-filter="iconFilter"
           :multiple="multiple"
           :search-filter-active="searchFilterActive"
+          :show-deselect-icon-loader="showDeselectIconLoader"
           :toggling-saves-search-value="togglingSavesSearchValue"
           :toggle-options-by-select="toggleOptionsBySelect"
           :placeholder="placeholder"
@@ -254,7 +256,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.5.10
+ * @version 1.6.0
  */
 
 const props = defineProps({
@@ -408,6 +410,17 @@ const props = defineProps({
   showClearIcon: {
     type: Boolean,
     default: false,
+  },
+
+  /**
+   * Determines whether to show loader icon in multiple
+   * options block if "loading" prop equals true
+   * @default true
+   * @property {boolean} showDeselectIconLoader
+   */
+  showDeselectIconLoader: {
+    type: Boolean,
+    default: true,
   },
 
   /**

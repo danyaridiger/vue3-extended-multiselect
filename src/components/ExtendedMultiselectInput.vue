@@ -36,6 +36,8 @@
       :style="multipleBlocksMargin"
       :disabled="disabled"
       :loading="loading"
+      :icon-filter="iconFilter"
+      :show-deselect-icon-loader="showDeselectIconLoader"
       :toggle-multiple-blocks-limit="toggleMultipleBlocksLimit"
       :empty-objects-placeholder="emptyObjectsPlaceholder"
       :label="label"
@@ -75,6 +77,8 @@
     <extended-multiselect-multiple
       :disabled="disabled"
       :loading="loading"
+      :icon-filter="iconFilter"
+      :show-deselect-icon-loader="showDeselectIconLoader"
       :toggle-multiple-blocks-limit="toggleMultipleBlocksLimit"
       :empty-objects-placeholder="emptyObjectsPlaceholder"
       :label="label"
@@ -230,6 +234,17 @@ const props = defineProps({
   },
 
   /**
+   * Determines whether to show loader icon in multiple
+   * options block if "loading" prop equals true
+   * @default true
+   * @property {boolean} showDeselectIconLoader
+   */
+   showDeselectIconLoader: {
+    type: Boolean,
+    default: true,
+  },
+
+  /**
    * Determines whether to allow user to increase limit of shown 
    * elements with selected options by special icon
    * @property {boolean} toggleMultipleBlocksLimit
@@ -280,10 +295,19 @@ const props = defineProps({
   },
 
   /**
+   * Defines a svg-filter for icons
+   * @property {string} iconFilter
+   */
+  iconFilter: {
+    type: String,
+    required: true,
+  },
+
+  /**
    * Determines field of option which will be displayed as label
    * @property {string} label
    */
-   label: {
+  label: {
     type: String,
     required: true,
   },
@@ -317,7 +341,7 @@ const props = defineProps({
   },
 
   /**
-   * Provides limit of option blocks amount
+   * Provides limit of multiple option blocks amount
    * to ExtendedMultiselectMultiple child component
    * @default null
    * @property {number} multipleBlocksLimit
@@ -447,7 +471,7 @@ const appropriatePlaceholder = computed(() => {
 });
 
 /**
- * Sets "margin-top" css property to multiple options block
+ * Sets "margin-top" css property to multiple option blocks
  * if search field is shown
  * @function
  * @returns {Object|null} margin-top

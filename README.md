@@ -1,4 +1,4 @@
-# vue3-extended-multiselect v1.5.10
+# vue3-extended-multiselect v1.6.0
 
 ***
 
@@ -52,6 +52,7 @@ Prop name | Prop type | Prop appointment | Prop default value | Prop values
 **simpleEvents**|Boolean|Switches full payload of extended multiselect events.|true|&mdash;|
 **selected<br/>Options<br/>Shown**|Boolean|Determines whether to show selected options in options list.|false|&mdash;|
 **showClearIcon**|Boolean|Allows user to deselect all options by special icon.|false|&mdash;|
+**showDeselect<br/>IconLoader**|Boolean|Determines whether to show loader icon in multiple options block if "loading" prop equals true|true|&mdash;|
 **showInsert<br/>Warnings**|Boolean|Determines whether to show useful internal warnings in console.|false|&mdash;|
 **showMarker**|Boolean|Determines whether to show slot with special marker beside option in options list.|false|&mdash;|
 **showSearch<br/>Field**|Boolean|Determines whether to show search field which allows user to search for options with internal search.|true|&mdash;|

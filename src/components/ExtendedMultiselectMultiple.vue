@@ -10,20 +10,20 @@
         :index="index"
         :deselect-block="deselectBlock"
       >
-        <div 
-          :class="classes"
-          :style="styles"
-        >
+        <div :class="classes">
           <span>{{ optionCreateLabel(option) }}</span>
-          <div 
-            class="extended__multiselect-block_cancel-wrapper"
-            v-if="!loading"
-          >
+          <div :class="deselectClasses">
             <img
               alt=""
               class="extended__multiselect_deselect-block-icon"
+              v-if="!showLoaderIcon"
               :src="deselectImage"
               @click.stop="deselectBlock(index)"
+            />
+            <extended-multiselect-loader
+              v-else
+              :icon-filter="iconFilter"
+              icon-size="deselect"
             />
           </div>
         </div>
@@ -62,6 +62,8 @@ import {
 
 import useImagePath from "../composition/image-path";
 import useLabels from "../composition/labels";
+
+import ExtendedMultiselectLoader from "./ExtendedMultiselectLoader.vue";
 
 const props = defineProps({
   /**
@@ -130,11 +132,31 @@ const props = defineProps({
   },
 
   /**
+   * Determines whether to show loader icon in multiple
+   * options block if "loading" prop equals true
+   * @default true
+   * @property {boolean} showDeselectIconLoader
+   */
+  showDeselectIconLoader: {
+    type: Boolean,
+    default: true,
+  },
+
+  /**
    * Allows to increase limit of displayed selected option blocks
    * @property {boolean} toggleMultipleBlocksLimit 
    */
   toggleMultipleBlocksLimit: {
     type: Boolean,
+    required: true,
+  },
+
+  /**
+   * Defines a svg-filter for icons
+   * @property {string} iconFilter
+   */
+   iconFilter: {
+    type: String,
     required: true,
   },
 
@@ -184,6 +206,7 @@ const {
   label,
   increaseDisplayBy,
   loading,
+  showDeselectIconLoader,
   multipleBlocksLimit,
   selectedOptions,
   themeType,
@@ -225,6 +248,18 @@ const classes = computed(() => {
     default: 
       return `${basicClassName}-basic`;
   }
+});
+
+/**
+ * Defines class for every deselect/loader icon in multiple
+ * option blocks depends on "loading" prop
+ * @function
+ * @returns {string} class
+ */
+const deselectClasses = computed(() => {
+  return loading.value
+   ? "extended__multiselect-block_cancel-wrapper--loading"
+   : "extended__multiselect-block_cancel-wrapper";
 });
 
 /**
@@ -276,13 +311,13 @@ const overLimitOptionsCount = computed(() => {
 });
 
 /**
- * Defines styles for "padding-right" css-property 
- * of every option block
+ * Determines whether to show loader icon if "loading" prop equals true
+ * or show multiple option blocks as usual
  * @function
- * @returns {Object|null} styles
+ * @returns {boolean} restriction
  */
-const styles = computed(() => {
-  return loading.value ? { paddingRight: "7px" } : null;
+const showLoaderIcon = computed(() => {
+  return showDeselectIconLoader.value ? loading.value : false;
 });
 
 /**

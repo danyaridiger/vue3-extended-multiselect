@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.5.10**
+Current `vue3-extended-multiselect` version: **1.6.0**
 
 ***
 
@@ -236,3 +236,9 @@ Adding descriptive comments for some types in typings.
 
 * Fixing bug with field focus when selecting an option.
 * Removal of validator from "emptyObjectsPlaceholder" prop.
+
+### 1.6.0 (2023-02-02)
+
+* Adding "showDeselectIconLoader" optional prop.
+* Adding loader icon to deselect button of multiple option blocks depending on "showDeselectIconLoader" optional prop.
+* Changing styles of multiple option blocks.

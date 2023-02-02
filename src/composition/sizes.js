@@ -34,6 +34,8 @@ export default function useSizes(iconSize) {
           return `${basicIconSize}-medium`;
         case "small":
           return `${basicIconSize}-small`;
+        case "deselect":
+          return `${basicIconSize}-deselect`;
         default:
           return `${basicIconSize}-large`;
       }
