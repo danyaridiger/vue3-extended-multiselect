@@ -406,6 +406,17 @@ const props = defineProps({
   },
 
   /**
+   * Loader function provided by user.
+   * @property {Function} externalOptionsLoader
+   * @default null
+   * @param {string} value - value of search field
+   */
+  externalOptionsLoader: {
+    type: Function,
+    default: null,
+  },
+
+  /**
    * Option which should be selected by default
    * if "multiple" prop equals false
    * @property {UnionPropType|null} preselectedOption
@@ -462,6 +473,7 @@ const {
   themeType,
   toggleMaxHeight,
   toggleMinHeight,
+  externalOptionsLoader,
 } = toRefs(props);
 
 const { createLabel, optionTypeRestrictor } = usePreselectedOptions(
@@ -1009,7 +1021,7 @@ const selectOption = (option, clickEvent) => {
     || clickEvent.target.id === "extended__multiselect-cancel"
   ) return;
 
-  if (selectedOptionsShown.value) {
+  if (selectedOptionsShown.value || externalOptionsLoader.value) {
     const optionDeselected = lookForObjectOptions(option);
 
     if (!optionDeselected) {

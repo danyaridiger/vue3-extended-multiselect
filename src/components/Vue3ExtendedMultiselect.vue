@@ -162,6 +162,7 @@
         :preselected-options="preselectedOptions"
         :emitter="emitter"
         :create-custom-option-label="createCustomOptionLabel"
+        :external-options-loader="externalOptionsLoader"
       >
         <template
           v-if="slots.listHeader"
@@ -256,7 +257,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.6.2
+ * @version 1.6.3
  */
 
 const props = defineProps({
