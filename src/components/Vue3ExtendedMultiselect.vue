@@ -91,38 +91,42 @@
           </template>
         </extended-multiselect-input>
       </div>
-      <slot 
-        name="toggle"
-        :toggle-options-list="toggleOptionsList"
-      >
-        <extended-multiselect-toggle
-          ref="extendedMultiselectToggle"
-          :tabindex="attrs.tabindex"
-          :disabled="disabled"
-          :dropdown-active="dropdownActive"
-          :loading="internalLoading"
-          :icon-filter="iconFilter"
-          :icon-size="iconSize"
-          :toggle-icon="toggleIcon"
-          :emitter="emitter"
-        />
-      </slot>
-      <slot
-        name="cancel"
-        :cancel="cancel"
-      >
-        <extended-multiselect-cancel
-          v-if="showClearIcon"
-          :tabindex="attrs.tabindex"
-          :disabled="disabled"
-          :show-search-field="showSearchField"
-          :loading="internalLoading"
-          :icon-filter="iconFilter"
-          :icon-size="iconSize"
-          :selected-options="selectedOptions"
-          :emitter="emitter"
-        />
-      </slot>
+      <div class="extended__multiselect-toggle_wrapper">
+        <slot 
+          name="toggle"
+          :toggle-options-list="toggleOptionsList"
+        >
+          <extended-multiselect-toggle
+            ref="extendedMultiselectToggle"
+            :tabindex="attrs.tabindex"
+            :disabled="disabled"
+            :dropdown-active="dropdownActive"
+            :loading="internalLoading"
+            :icon-filter="iconFilter"
+            :icon-size="iconSize"
+            :toggle-icon="toggleIcon"
+            :emitter="emitter"
+          />
+        </slot>
+      </div>
+      <div class="extended__multiselect-cancel_wrapper">
+        <slot
+          name="cancel"
+          :cancel="cancel"
+        >
+          <extended-multiselect-cancel
+            v-if="showClearIcon"
+            :tabindex="attrs.tabindex"
+            :disabled="disabled"
+            :show-search-field="showSearchField"
+            :loading="internalLoading"
+            :icon-filter="iconFilter"
+            :icon-size="iconSize"
+            :selected-options="selectedOptions"
+            :emitter="emitter"
+          />
+        </slot>
+    </div>
     </div>
     <transition
       name="extended-toggle"
@@ -257,7 +261,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.6.4
+ * @version 1.6.5
  */
 
 const props = defineProps({
@@ -901,7 +905,7 @@ const externalOptionsLoader = ref(null);
 const chosenToggleAppearanceSide = ref(null);
 const rawOptions = ref([]);
 const selectedOptions = ref([]);
-const togglePattern = /^extended__multiselect-toggle/i;
+const togglePattern = /^extended__multiselect-toggle_wrapper/i;
 
 /**
  * Element references
@@ -1243,14 +1247,14 @@ const fieldFocus = (mouseEvent) => {
 
   const customFilteredCancel = toggleCustomRestrictor(mouseEvent, 2);
   const customFilteredSelf = toggleCustomRestrictor(mouseEvent, 1);
-  const filteredHasCancel = toggleDetector(mouseEvent, /^extended__multiselect-cancel/i);
+  const filteredHasCancel = toggleDetector(mouseEvent, /^extended__multiselect-cancel_wrapper/i);
   const filteredHasToggle = toggleDetector(mouseEvent, togglePattern);
 
   if (customFilteredCancel) return;
   if (customFilteredSelf && dropdownActive.value === false) return;
   if (filteredHasCancel.length) return;
   if (filteredHasToggle.length && dropdownActive.value === false) return;
-      
+
   emitter.value.emit("extended:field-focus");
 };
 
@@ -1441,7 +1445,7 @@ const toggleAppearanceRestrictorActivate = () => {
   let filteredCustomSelf;
   const filteredHasBlock = toggleDetector(mouseEvent, /^extended__multiselect-block/i, true);
   const filteredHasSlot = toggleDetector(mouseEvent, /^extended__multiselect-options(?!_option)/i, true)
-  const filteredSelf = toggleDetector(mouseEvent, /^extended__multiselect-clear/i);
+  const filteredSelf = toggleDetector(mouseEvent, /^extended__multiselect-clear/i, true);
 
   if (filteredSelf.length || filteredHasBlock.length || filteredHasSlot.length) {
     filteredCustomSelf = true;
@@ -1525,6 +1529,11 @@ const toggleDetector = (mouseEvent, pattern, mode) => {
 
     if (target.classList.contains("extended__multiselect-options_container")) {
       filteredHasToggle.push("extended__multiselect-options_container");
+      return filteredHasToggle;
+    }
+
+    if (target.classList.contains("extended__multiselect-toggle_wrapper")) {
+      filteredHasToggle.push("extended__multiselect-toggle_wrapper");
       return filteredHasToggle;
     }
 

@@ -217,8 +217,8 @@
   transform: rotate(0deg);
 }
 
-.extended__multiselect-toggle,
-.extended__multiselect-cancel {
+.extended__multiselect-toggle_wrapper,
+.extended__multiselect-cancel_wrapper {
   align-self: var(--icons-align-self);
   justify-self: var(--icons-justify-self);
   cursor: var(--pointer-cursor);
