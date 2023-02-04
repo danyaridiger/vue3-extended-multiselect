@@ -16,31 +16,31 @@
       :class="classesSummary"
       :src="icon"
     />
-    <extended-multiselect-loader 
+    <extended-multiselect-loader
       v-else
       :icon-filter="iconFilter"
       :icon-size="iconSize"
     />
     <svg
-      version="1.1" 
-      xmlns="http://www.w3.org/2000/svg" 
-      xmlns:xlink="http://www.w3.org/1999/xlink" 
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
       width="0"
       height="0"
-    >  
+    >
       <defs>
-        <filter 
-          x="0" 
-          y="0" 
-          width="1" 
-          height="1" 
+        <filter
+          x="0"
+          y="0"
+          width="1"
+          height="1"
           id="basicFilter"
         >
           <feFlood flood-color="#BDBDBD"/>
-          <feComposite 
-            out="SourceGraphic" 
-            in2="SourceGraphic" 
-            operator="in" 
+          <feComposite
+            out="SourceGraphic"
+            in2="SourceGraphic"
+            operator="in"
           />
         </filter>
         <filter 

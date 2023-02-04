@@ -317,6 +317,26 @@ describe("props", () => {
   });
 
 
+  it("correctly handles 'showDeselectIconLoader' prop value", async () => {
+    const propsData = {
+      defaultExpanded: true,
+      loading: true,
+      multiple: true,
+      showDeselectIconLoader: true,
+      preselectedOptions: [globalThis.OPTIONS[0]],
+      options: globalThis.OPTIONS,
+    };
+
+    wrapper = await mountComponent(Vue3ExtendedMultiselect, false, propsData);
+
+    const multipleWrapper = wrapper.find(".extended__multiselect-block--multiple");
+    const loaderWrapper = multipleWrapper.findComponent(ExtendedMultiselectLoader).find("img");
+
+    expect(loaderWrapper.exists()).toBeTruthy();
+    expect(loaderWrapper.isVisible()).toBeTruthy();
+  });
+
+
   it("correctly handles 'showInsertWarnings' prop value", async () => {
     const propsData = {
       defaultExpanded: true,

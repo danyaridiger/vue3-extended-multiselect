@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.6.5**
+Current `vue3-extended-multiselect` version: **1.6.6**
 
 ***
 
@@ -262,3 +262,7 @@ Adding descriptive comments for some types in typings.
 ### 1.6.5 (2023-02-03)
 
 * Fixing bug with not clotting options list when slots were used.
+
+### 1.6.6 (2023-02-03)
+
+* Adding unit-test for "showDeselectIconLoader" optional prop.
