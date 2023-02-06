@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.6.6**
+Current `vue3-extended-multiselect` version: **1.7.0**
 
 ***
 
@@ -266,3 +266,9 @@ Adding descriptive comments for some types in typings.
 ### 1.6.6 (2023-02-03)
 
 * Adding unit-test for "showDeselectIconLoader" optional prop.
+
+### 1.7.0 (2023-02-06)
+
+* Adding "extended-click-outside" dependency.
+* Changing "typescript" dependency version to "~4.1.0".
+* Removal of "vue3-click-away" dependency.

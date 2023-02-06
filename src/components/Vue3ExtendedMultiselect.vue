@@ -1,11 +1,11 @@
 <template>
   <section
     aria-owns="extended-search-field"
+    ref="extendedMultiselectWrapper"
     role="combobox"
     :aria-roledescription="roledescription"
     :class="wrapperClasses"
     :tabindex="tabindexIfSearch"
-    v-click-outside="clickOutside"
     @click.stop.left="fieldFocus"
     @click.stop.middle="fieldFocus"
     @keyup.stop.esc="rollUp"
@@ -233,8 +233,6 @@ import {
   watch,
 } from "vue";
 
-import { directive as vClickOutside } from "vue3-click-away"; 
-
 import {
   themeTypes,
   loaderThemeTypes,
@@ -251,6 +249,7 @@ import useToggle from "../composition/toggle";
 import useCancel from "../composition/cancel";
 import useLabels from "../composition/labels";
 import useEmitter from "../composition/emitter";
+import useClickOutside from "../composition/click-outside";
 import usePreselectedOptions from "../composition/preselected-options";
 import useSearchValue from "../composition/search-value";
 
@@ -261,7 +260,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.6.6
+ * @version 1.7.0
  */
 
 const props = defineProps({
@@ -912,6 +911,7 @@ const togglePattern = /^extended__multiselect-toggle_wrapper/i;
  */
 const extendedMultiselect = ref(null);
 const extendedMultiselectToggle = ref(null);
+const extendedMultiselectWrapper = ref(null);
 
 const {
   defaultExpanded,
@@ -954,6 +954,7 @@ provide("setSearchValue", setSearchValue);
 provide("setSearchPattern", setSearchPattern);
 
 const { emitter } = useEmitter();
+const { clickOutside } = useClickOutside();
 const { toggleOptionsList } = useToggle(
   loading,
   disabled,
@@ -1180,15 +1181,6 @@ const activeEmitter = () => {
    * @property {string} inputId - id of search field set by "id" prop
    */
   emit("active", eventData);
-};
-
-/**
- * Handler for "v-click-outside" directive
- * @function
- * @emits "extended:rollup-options"
- */
-const clickOutside = () => {
-  emitter.value.emit("extended:rollup-options");
 };
 
 /**
@@ -1773,6 +1765,10 @@ onMounted(() => {
 
   emitter.value.on("extended:loader-pattern-changed", (pattern) => {
     loadOptionsByExternalLoader(pattern, false);
+  });
+
+  clickOutside.value.init(extendedMultiselectWrapper.value, () => {
+    emitter.value.emit("extended:rollup-options");
   });
 });
 

@@ -1,6 +1,6 @@
 {
   "name": "vue3-extended-multiselect",
-  "version": "1.6.5",
+  "version": "1.6.6",
   "description": "Extended multiselect component for applications based on Vue 3 framework",
   "keywords": [
     "multiselect",
@@ -23,9 +23,9 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "extended-click-outside": "^1.1.0",
     "lodash-es": "^4.17.21",
-    "vue": "^3.0.0",
-    "vue3-click-away": "^1.2.4"
+    "vue": "^3.0.0"
   },
   "devDependencies": {
     "@testing-library/vue": "^6.6.1",
@@ -40,7 +40,7 @@
     "babel-plugin-transform-import-meta": "^2.2.0",
     "eslint": "^7.2.0",
     "eslint-plugin-vue": "^7.0.0",
-    "typescript": "~3.9.3",
+    "typescript": "~4.1.0",
     "vue-jest": "^5.0.0-0"
   }
 }
