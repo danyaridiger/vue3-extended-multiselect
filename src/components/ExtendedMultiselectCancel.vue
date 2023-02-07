@@ -5,7 +5,7 @@
     role="button"
     :class="classes"
     :tabindex="increasedTabindex"
-    @click.stop="cancel"
+    @click="cancel"
     @keypress.stop="cancel"
   >
     <img

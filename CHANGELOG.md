@@ -270,5 +270,11 @@ Adding descriptive comments for some types in typings.
 ### 1.7.0 (2023-02-06)
 
 * Adding "extended-click-outside" dependency.
+* Adding click-outside.js file with to composition director with extended-click-outside-instanse.
 * Changing "typescript" dependency version to "~4.1.0".
 * Removal of "vue3-click-away" dependency.
+
+### 1.7.1 (2023-02-07)
+
+* Adding instance.js file with noт-reactive instance of local event emitter.
+* Fixing bug with not clotting options list when clicking on another instance.

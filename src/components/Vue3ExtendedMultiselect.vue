@@ -245,6 +245,8 @@ import {
   UnionPropType,
 } from "../sets/sets";
 
+import localEmitter from "../events/instance.js";
+
 import useToggle from "../composition/toggle";
 import useCancel from "../composition/cancel";
 import useLabels from "../composition/labels";
@@ -260,7 +262,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.7.0
+ * @version 1.7.1
  */
 
 const props = defineProps({
@@ -1229,6 +1231,8 @@ const createEventFields = (field, fieldName) => {
  * @param {MouseEvent} mouseEvent - MouseEvent instance
  */
 const fieldFocus = (mouseEvent) => {
+  rollupInstanses();
+
   if (disabled.value) return;
 
   if (!toggleOptionsBySelect.value) {
@@ -1281,6 +1285,15 @@ const resetEnterIndex = () => {
 const rollUp = () => {
   dropdownActive.value = false;
   emitter.value.emit("extended:rollup-options");
+};
+
+/**
+ * Rolls up dropdown options lists of other instances
+ * @function
+ * @emits extended:rollup-instances
+ */
+const rollupInstanses = () => {
+  localEmitter.emit("extended:rollup-instances", extendedMultiselectWrapper.value);
 };
 
 /**
@@ -1734,6 +1747,7 @@ onBeforeMount(() => {
 /**
  * "onMounted" hook of the Vue3ExtendedMultiselect component
  * @listens extended:expand-options
+ * @listens extended:rollup-instances
  * @listens extended:loader-pattern-changed
  */
 onMounted(() => {
@@ -1769,6 +1783,12 @@ onMounted(() => {
 
   clickOutside.value.init(extendedMultiselectWrapper.value, () => {
     emitter.value.emit("extended:rollup-options");
+  });
+
+  localEmitter.on("extended:rollup-instances", (instanceRef) => {
+    if (instanceRef !== extendedMultiselectWrapper.value) {
+      emitter.value.emit("extended:rollup-options");
+    }
   });
 });
 
