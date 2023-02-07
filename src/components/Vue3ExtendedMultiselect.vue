@@ -262,7 +262,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.7.3
+ * @version 1.7.4
  */
 
 const props = defineProps({
@@ -898,7 +898,8 @@ const emit = defineEmits([
   "option-created",
   "pattern-changed",
   "select",
-  "update:modelValue"
+  "update:modelValue",
+  "update:wrapper"
 ]);
 
 const dropdownActive = ref(false);
@@ -1387,6 +1388,7 @@ const setPreselectedOptions = async (preselectedOptions, restriction = true) => 
  * Determines conditions that control preselected options installattion
  * if "modelValue" prop is defined
  * @function
+ * @emits update:wrapper
  * @param {boolean} withRemoval - removal of selected options flag
  */
 const setPreselectedOptionsByModelValue = (withRemoval = false) => {
@@ -1405,6 +1407,11 @@ const setPreselectedOptionsByModelValue = (withRemoval = false) => {
   }
 
   if (withRemoval) {
+    const eventData = simpleEvents.value
+     ? selectedOptions.value
+     : createEventFields(selectedOptions.value, "options");
+
+    emit("update:wrapper", eventData);
     selectedOptionsWatcher.value = watch(selectedOptions, (value) => {
       if (multiple.value) {
         emit("update:modelValue", value);
