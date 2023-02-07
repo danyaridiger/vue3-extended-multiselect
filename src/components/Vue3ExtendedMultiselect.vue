@@ -262,7 +262,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.7.1
+ * @version 1.7.2
  */
 
 const props = defineProps({
@@ -1231,8 +1231,6 @@ const createEventFields = (field, fieldName) => {
  * @param {MouseEvent} mouseEvent - MouseEvent instance
  */
 const fieldFocus = (mouseEvent) => {
-  rollupInstanses();
-
   if (disabled.value) return;
 
   if (!toggleOptionsBySelect.value) {
@@ -1599,6 +1597,8 @@ const toggleOptionsRestrictor = (mouseEvent) => {
  * @param {MouseEvent} mouseEvent - MouseEvent instance
  */
 const toggleRestrictor = (mouseEvent) => {
+  rollupInstanses();
+
   const targetContentBlock = toggleBlockRestrictor(mouseEvent);
 
   if (targetContentBlock) return;

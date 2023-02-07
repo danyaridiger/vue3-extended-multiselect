@@ -278,3 +278,7 @@ Adding descriptive comments for some types in typings.
 
 * Adding instance.js file with noт-reactive instance of local event emitter.
 * Fixing bug with not clotting options list when clicking on another instance.
+
+### 1.7.2 (2023-02-07)
+
+* Changing event type to collapse the list of options when clicking on another instance.
