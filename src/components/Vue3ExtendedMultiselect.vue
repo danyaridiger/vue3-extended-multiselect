@@ -262,7 +262,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.7.2
+ * @version 1.7.3
  */
 
 const props = defineProps({
@@ -904,6 +904,7 @@ const emit = defineEmits([
 const dropdownActive = ref(false);
 const externalOptionsLoader = ref(null);
 const chosenToggleAppearanceSide = ref(null);
+const selectedOptionsWatcher = ref(null);
 const rawOptions = ref([]);
 const selectedOptions = ref([]);
 const togglePattern = /^extended__multiselect-toggle_wrapper/i;
@@ -1150,21 +1151,11 @@ watch(dropdownActive, (value) => {
 });
 
 /**
- * Clears value of search field after changing selected option/options
- * if "resetSearchByValue" prop equals true
+ * Changes selected options based on external modelValue changes
  * @function
- * @emits extended:clear-field
  */
-watch(selectedOptions, (value) => {
-  if (multiple.value) {
-    emit("update:modelValue", value);
-  } else {
-    emit("update:modelValue", value[0]);
-  }
-
-  if (resetSearchByValue.value) {
-    emitter.value.emit("extended:clear-field");
-  }
+watch(modelValue, () => {
+  setPreselectedOptionsByModelValue(true);
 }, { deep: true });
 
 /**
@@ -1265,6 +1256,25 @@ const loadOptionsByExternalLoader = (pattern, initialValue) => {
     if (initialValue) setPreselectedOptionsByConditions();
   });
 };
+
+/**
+ * Makes removal of selected options based on external modelValue changes
+ * @function
+ * @param {boolean} single - "multiple" prop flag
+ */
+const removeSelectedOptions = (single = false) => {
+  if (!single) {
+    const modelValueMapped = modelValue.value.map((option) => {
+      return JSON.stringify(option);
+    });
+
+    selectedOptions.value = selectedOptions.value.filter((option) => {
+      return modelValueMapped.includes(JSON.stringify(option));
+    });
+  } else {
+    if (!modelValue.value) cancel();
+  }
+}
 
 /**
  * Emits event whose listener resets index of "enter" key pressing
@@ -1377,14 +1387,35 @@ const setPreselectedOptions = async (preselectedOptions, restriction = true) => 
  * Determines conditions that control preselected options installattion
  * if "modelValue" prop is defined
  * @function
+ * @param {boolean} withRemoval - removal of selected options flag
  */
-const setPreselectedOptionsByModelValue = () => {
-  if (!modelValue.value) return;
+const setPreselectedOptionsByModelValue = (withRemoval = false) => {
+  if (!modelValue.value && !withRemoval) return;
 
-  if (Array.isArray(modelValue.value) && multiple.value) {
+  if (withRemoval) selectedOptionsWatcher.value();
+
+  if (multiple.value) {
+    if (withRemoval) removeSelectedOptions();
+
     setPreselectedOptions(modelValue.value, false);
   } else {
+    if (withRemoval) removeSelectedOptions(true);
+
     setPreselectedOption(modelValue.value, false);
+  }
+
+  if (withRemoval) {
+    selectedOptionsWatcher.value = watch(selectedOptions, (value) => {
+      if (multiple.value) {
+        emit("update:modelValue", value);
+      } else {
+        emit("update:modelValue", value[0]);
+      }
+
+      if (resetSearchByValue.value) {
+        emitter.value.emit("extended:clear-field");
+      }
+    }, { deep: true });
   }
 }
 
@@ -1628,6 +1659,18 @@ const toggleRestrictor = (mouseEvent) => {
  * @listens extended:search-pattern-changed
  */
 onBeforeMount(() => {
+  selectedOptionsWatcher.value = watch(selectedOptions, (value) => {
+    if (multiple.value) {
+      emit("update:modelValue", value);
+    } else {
+      emit("update:modelValue", value[0]);
+    }
+
+    if (resetSearchByValue.value) {
+      emitter.value.emit("extended:clear-field");
+    }
+  }, { deep: true });
+
   chosenToggleAppearanceSide.value = toggleAppearanceSide.value;
 
   emitter.value.on("extended:rollup-options", () => {

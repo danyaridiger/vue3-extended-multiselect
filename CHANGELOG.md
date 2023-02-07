@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.7.0**
+Current `vue3-extended-multiselect` version: **1.7.3**
 
 ***
 
@@ -282,3 +282,7 @@ Adding descriptive comments for some types in typings.
 ### 1.7.2 (2023-02-07)
 
 * Changing event type to collapse the list of options when clicking on another instance.
+
+### 1.7.3 (2023-02-07)
+
+* Fixing bug with disabled removal of selected options based on external modelValue changes.
