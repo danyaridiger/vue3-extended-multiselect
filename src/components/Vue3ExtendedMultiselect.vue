@@ -262,7 +262,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.7.4
+ * @version 1.7.5
  */
 
 const props = defineProps({
@@ -1564,10 +1564,6 @@ const toggleDetector = (mouseEvent, pattern, mode) => {
       return pattern.test(className) === true;
     });
 
-    if (Array.prototype.some.call(target.classList, (className) => {
-      return optionPattern.test(className);
-    })) return [];
-
     if (target.classList.contains("extended__multiselect-options_container")) {
       filteredHasToggle.push("extended__multiselect-options_container");
       return filteredHasToggle;
@@ -1644,6 +1640,7 @@ const toggleRestrictor = (mouseEvent) => {
   const filteredHasToggle = toggleDetector(mouseEvent, togglePattern);
 
   if (filteredHasToggle.length && dropdownActive.value) {
+
     emitter.value.emit("extended:skip-blur");
   }
 };

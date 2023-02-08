@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.7.4**
+Current `vue3-extended-multiselect` version: **1.7.5**
 
 ***
 
@@ -290,3 +290,7 @@ Adding descriptive comments for some types in typings.
 ### 1.7.4 (2023-02-07)
  
 * Adding "update:wrapper" event.
+
+### 1.7.5 (2023-02-08)
+
+* Removal of excess condition in toggle restriction.
