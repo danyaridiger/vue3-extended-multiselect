@@ -42,3 +42,4 @@ export type IncreaseEvent = number | Limit;
 export type OptionCreatedEvent = UnionOptionType | SingleOption;
 export type PatternChangedEvent = string | PatternChanged;
 export type SelectEvent = OptionCreatedEvent;
+export type UpdateWrapperEvent = OptionsList;

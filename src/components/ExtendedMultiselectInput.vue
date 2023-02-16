@@ -152,7 +152,7 @@ import {
   watch,
 } from "vue";
 
-import { debounce } from "lodash-es";
+import useDebounce from "../composition/debounce";
 
 import ExtendedMultiselectMultiple from "./ExtendedMultiselectMultiple.vue";
 
@@ -419,6 +419,8 @@ const setSearchPattern = inject("setSearchPattern");
 
 const emitter = toRef(props, "emitter");
 
+const { DebounceConstructor } = useDebounce();
+
 const blurSkip = ref(false);
 const reversePrevented = ref(false);
 const searchFieldFocused = ref(false);
@@ -428,9 +430,8 @@ const singleLabel = ref("");
 const blurSkipByToggleIcon = ref(0);
 const blurSkipByBlock = ref(0);
 const labelBlocks = ref([]);
-const searchDebounce = ref(debounce(() => {
+const searchDebounce = ref(new DebounceConstructor.value(() => {
   const searchPattern = searchValue.value ? new RegExp(`${searchValue.value}`, "i") : null;
-        
   if (externalOptionsLoader.value) {
     emitter.value.emit("extended:loader-pattern-changed", searchValue.value);
   } else {
@@ -609,7 +610,7 @@ const rollUp = () => {
  * @function
  */
 const search = () => {
-  searchDebounce.value();
+  searchDebounce.value.start();
 };
 
 /**

@@ -1,6 +1,6 @@
 {
   "name": "vue3-extended-multiselect",
-  "version": "1.7.5",
+  "version": "1.8.0",
   "description": "Extended multiselect component for applications based on Vue 3 framework",
   "keywords": [
     "multiselect",
@@ -24,7 +24,6 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "extended-click-outside": "^1.1.0",
-    "lodash-es": "^4.17.21",
     "vue": "^3.0.0"
   },
   "devDependencies": {

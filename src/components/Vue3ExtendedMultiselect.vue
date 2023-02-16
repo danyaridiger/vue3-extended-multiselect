@@ -245,7 +245,7 @@ import {
   UnionPropType,
 } from "../sets/sets";
 
-import localEmitter from "../events/instance.js";
+import localEmitter from "../tools/instance.js";
 
 import useToggle from "../composition/toggle";
 import useCancel from "../composition/cancel";
@@ -262,7 +262,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.7.5
+ * @version 1.8.0
  */
 
 const props = defineProps({

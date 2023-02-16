@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.7.5**
+Current `vue3-extended-multiselect` version: **1.8.0**
 
 ***
 
@@ -294,3 +294,12 @@ Adding descriptive comments for some types in typings.
 ### 1.7.5 (2023-02-08)
 
 * Removal of excess condition in toggle restriction.
+
+### 1.8.0 (2023-02-15)
+
+* Adding tools directory.
+* Adding Debounce.js file with debounce tool.
+* Adding type for "update-wrapper" event.
+* Adding tools.spec.js file with unit-tests for tools.
+* Moving local emitter files to tools directory.
+* Removal of "lodash-es" dependency.
