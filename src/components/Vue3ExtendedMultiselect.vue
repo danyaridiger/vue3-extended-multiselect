@@ -262,7 +262,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.8.0
+ * @version 1.8.1
  */
 
 const props = defineProps({
@@ -903,6 +903,7 @@ const emit = defineEmits([
 ]);
 
 const dropdownActive = ref(false);
+const skipNextUpdate = ref(false);
 const externalOptionsLoader = ref(null);
 const chosenToggleAppearanceSide = ref(null);
 const selectedOptionsWatcher = ref(null);
@@ -1087,6 +1088,17 @@ const internalLoading = computed(() => {
 });
 
 /**
+ * Defines mapped list of previously restricted options
+ * @function
+ * @returns {Array} options
+ */
+const mappedOptions = computed(() => {
+  return restrictedOptions.value.map((restrictedOption) => {
+    return JSON.stringify(restrictedOption);
+  });
+});
+
+/**
  * Defines a list of options filtered by maximal admissible options amount
  * @function
  * @returns {Array} options
@@ -1156,6 +1168,11 @@ watch(dropdownActive, (value) => {
  * @function
  */
 watch(modelValue, () => {
+  if (skipNextUpdate.value) {
+    skipNextUpdate.value = false;
+    return;
+  }
+
   setPreselectedOptionsByModelValue(true);
 }, { deep: true });
 
@@ -1324,12 +1341,15 @@ const selectByEnter = (keyboardEvent) => {
  */
 const setPreselectedOption = (preselectedOption, restriction = true) => {
   const availableOptionType = optionTypeRestrictor(preselectedOption);
-  const mappedOptions = restrictedOptions.value.map((restrictedOption) => {
-    return JSON.stringify(restrictedOption);
+  const mappedSelectedOptions = selectedOptions.value.map((selectedOption) => {
+    return JSON.stringify(selectedOption);
   });
         
   if (!availableOptionType) return;
-  if (!mappedOptions.includes(JSON.stringify(preselectedOption)) && restriction) {
+  if (
+    (!mappedOptions.value.includes(JSON.stringify(preselectedOption)) && restriction)
+    && !mappedSelectedOptions.includes(JSON.stringify(preselectedOption))
+  ) {
     if (showInsertWarnings.value) {
       console.warn("vue-extended-multiselect: option in «preselectedOption» property should be the same as analogue in «options» property");
     }
@@ -1356,8 +1376,8 @@ const setPreselectedOption = (preselectedOption, restriction = true) => {
  */
 const setPreselectedOptions = async (preselectedOptions, restriction = true) => {
   let allOptionsWereSelected = 0;
-  const mappedOptions = restrictedOptions.value.map((restrictedOption) => {
-    return JSON.stringify(restrictedOption);
+  const mappedSelectedOptions = selectedOptions.value.map((selectedOption) => {
+    return JSON.stringify(selectedOption);
   });
 
   preselectedOptions.forEach((preselectedOption) => {
@@ -1366,7 +1386,10 @@ const setPreselectedOptions = async (preselectedOptions, restriction = true) => 
     if (!preselectedOption || !availableOptionType) return;
     if (selectedOptions.value.includes(preselectedOption)) return;
 
-    if (mappedOptions.includes(JSON.stringify(preselectedOption)) || !restriction) {
+    if (
+      (mappedOptions.value.includes(JSON.stringify(preselectedOption)) || !restriction)
+      && !mappedSelectedOptions.includes(JSON.stringify(preselectedOption))
+    ) {
       const isObjectOrArray = typeof option === "object";
       const label = createLabel(isObjectOrArray, preselectedOption);
 
@@ -1407,11 +1430,14 @@ const setPreselectedOptionsByModelValue = (withRemoval = false) => {
   }
 
   if (withRemoval) {
-    const eventData = simpleEvents.value
-     ? selectedOptions.value
-     : createEventFields(selectedOptions.value, "options");
+    if (multiple.value) {
+      emit("update:modelValue", selectedOptions.value);
+    } else {
+      emit("update:modelValue", selectedOptions.value[0]);
+    }
 
-    emit("update:wrapper", eventData);
+    skipNextUpdate.value = true;
+
     selectedOptionsWatcher.value = watch(selectedOptions, (value) => {
       if (multiple.value) {
         emit("update:modelValue", value);

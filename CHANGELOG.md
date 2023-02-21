@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.8.0**
+Current `vue3-extended-multiselect` version: **1.8.1**
 
 ***
 
@@ -303,3 +303,8 @@ Adding descriptive comments for some types in typings.
 * Adding tools.spec.js file with unit-tests for tools.
 * Moving local emitter files to tools directory.
 * Removal of "lodash-es" dependency.
+
+### 1.8.1 (2023-02-21)
+
+* Removal of "update:wrapper" event.
+* Fixing bug with incorrect v-model updating in custom wrappers.

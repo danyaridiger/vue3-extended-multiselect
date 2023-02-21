@@ -1,4 +1,4 @@
-# vue3-extended-multiselect v1.8.0
+# vue3-extended-multiselect v1.8.1
 
 ***
 
@@ -122,7 +122,6 @@ Event name | Event appointment | Listener method | Simplified event payload | Fi
 **active**|Dropdown options list expanding.|@active|&mdash;|``inputId`` — id of search field set by "id" prop|
 **close**|Rolling up dropdown options list.|@close|``options`` — array of selected options|``options`` — array of selected options,<br/>``inputId`` — id of search field set by "id" prop|
 **increase**|Increasing current limit of displayed elements with selected options.|@increase|``limit`` — current limit of options to be shown next|``limit`` — current limit of options to be shown next,<br/>``inputId`` — id of search field set by "id" prop|
-**update:wrapper**|Notifies wrapper component that inner modelValue has been updated by external modelValue update|@update:wrapper|``options`` — array of selected options|``options`` — array of selected options,<br/>``inputId`` — id of search field set by "id" prop|
 
 ## Styling with css
 
