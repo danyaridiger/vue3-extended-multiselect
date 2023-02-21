@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.8.1**
+Current `vue3-extended-multiselect` version: **1.8.2**
 
 ***
 
@@ -308,3 +308,7 @@ Adding descriptive comments for some types in typings.
 
 * Removal of "update:wrapper" event.
 * Fixing bug with incorrect v-model updating in custom wrappers.
+
+### 1.8.2 (2023-02-21)
+
+* Fixing bug with non-updating modelValue by handling preselected options.

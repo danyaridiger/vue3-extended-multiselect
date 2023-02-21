@@ -262,7 +262,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.8.1
+ * @version 1.8.2
  */
 
 const props = defineProps({
@@ -1430,20 +1430,12 @@ const setPreselectedOptionsByModelValue = (withRemoval = false) => {
   }
 
   if (withRemoval) {
-    if (multiple.value) {
-      emit("update:modelValue", selectedOptions.value);
-    } else {
-      emit("update:modelValue", selectedOptions.value[0]);
-    }
+    updateModelValue();
 
     skipNextUpdate.value = true;
 
     selectedOptionsWatcher.value = watch(selectedOptions, (value) => {
-      if (multiple.value) {
-        emit("update:modelValue", value);
-      } else {
-        emit("update:modelValue", value[0]);
-      }
+      updateModelValue();
 
       if (resetSearchByValue.value) {
         emitter.value.emit("extended:clear-field");
@@ -1460,10 +1452,20 @@ const setPreselectedOptionsByModelValue = (withRemoval = false) => {
 const setPreselectedOptionsByConditions = () => {
   if (preselectedOption.value && !multiple.value) {
     setPreselectedOption(preselectedOption.value);
+
+    if (selectedOptions.value.length) {
+      updateModelValue();
+    }
   }
 
   if (preselectedOptions.value && multiple.value) {
+    const initialLength = selectedOptions.value.length;
+
     setPreselectedOptions(preselectedOptions.value);
+
+    if (initialLength !== selectedOptions.value.length) {
+      updateModelValue();
+    }
   }
 };
 
@@ -1672,6 +1674,20 @@ const toggleRestrictor = (mouseEvent) => {
 };
 
 /**
+ * Triggers modelValue updating when v-model has 
+ * been changed programmatically
+ * @function
+ * @emits update:modelValue
+ */
+const updateModelValue = () => {
+  if (multiple.value) {
+    emit("update:modelValue", selectedOptions.value);
+  } else {
+    emit("update:modelValue", selectedOptions.value[0]);
+  }
+}
+
+/**
  * "onBeforeMount" hook of the Vue3ExtendedMultiselect component
  * @emits select
  * @emits clean
@@ -1690,11 +1706,7 @@ const toggleRestrictor = (mouseEvent) => {
  */
 onBeforeMount(() => {
   selectedOptionsWatcher.value = watch(selectedOptions, (value) => {
-    if (multiple.value) {
-      emit("update:modelValue", value);
-    } else {
-      emit("update:modelValue", value[0]);
-    }
+    updateModelValue();
 
     if (resetSearchByValue.value) {
       emitter.value.emit("extended:clear-field");
