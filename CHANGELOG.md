@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.8.2**
+Current `vue3-extended-multiselect` version: **1.8.3**
 
 ***
 
@@ -312,3 +312,7 @@ Adding descriptive comments for some types in typings.
 ### 1.8.2 (2023-02-21)
 
 * Fixing bug with non-updating modelValue by handling preselected options.
+
+### 1.8.3 (2023-02-23)
+
+* fixing bug with placeholder disappearing on blur.

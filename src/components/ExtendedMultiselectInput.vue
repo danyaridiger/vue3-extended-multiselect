@@ -21,7 +21,7 @@
     />
     <div
       class="extended__multiselect-block"
-      v-show="!searchFieldForwarding && !multiple"
+      v-show="!searchFieldForwarding && !multiple && !placeholderBlockShown"
       @click.stop="expand"
     >
       <slot 
@@ -31,6 +31,12 @@
         <span>{{ singleLabel }}</span>
       </slot>
     </div>
+    <span
+      v-if="placeholderBlockShown"
+      class="extended__multiselect-placeholder"
+    >
+      {{ appropriatePlaceholder }}
+    </span>
     <extended-multiselect-multiple
       v-show="multiple && !!selectedOptions.length"
       :style="multipleBlocksMargin"
@@ -456,6 +462,7 @@ const {
   placeholder,
   searchFilterActive,
   showSearchField,
+  selectedOptions,
   toggleOptionsBySelect,
   togglingSavesSearchValue,
 } = toRefs(props);
@@ -479,6 +486,19 @@ const appropriatePlaceholder = computed(() => {
  */
 const multipleBlocksMargin = computed(() => {
   return searchFieldForwarding.value ? { marginTop: "4px" } : null;
+});
+
+/**
+ * Determines whether to show placeholder block
+ * @function
+ * @returns {boolean} display
+ */
+const placeholderBlockShown = computed(() => {
+  if (selectedOptions.value.length || searchFieldForwarding.value) {
+    return false;
+  }
+
+  return true;
 });
 
 /**

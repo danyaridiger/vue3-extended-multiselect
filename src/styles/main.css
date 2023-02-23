@@ -453,3 +453,8 @@
   border-color: transparent;
   padding: var(--increaser-padding);
 }
+
+.extended__multiselect-placeholder {
+  color: var(--placeholder);
+  margin-left: 2px;
+}
