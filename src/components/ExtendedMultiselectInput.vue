@@ -22,7 +22,7 @@
     <div
       class="extended__multiselect-block"
       v-show="!searchFieldForwarding && !multiple && !placeholderBlockShown"
-      @click.stop="expand"
+      @click="expand"
     >
       <slot 
         name="labelBlock"
