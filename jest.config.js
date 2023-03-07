@@ -5,7 +5,7 @@ module.exports = {
   },
   expand: true,
   displayName: {
-    name: "vue3-extended-multiselect 1.8.4",
+    name: "vue3-extended-multiselect 1.8.5",
     color: "bgGreen",
   },
   extraGlobals: [],
@@ -44,6 +44,7 @@ module.exports = {
   resetModules: true,
   resetMocks: true,
   rootDir: "./",
+  setupFiles: ["<rootDir>/tests/utils/mocks"],
   slowTestThreshold: 20,
   testEnvironment: "jsdom",
   testLocationInResults: true,

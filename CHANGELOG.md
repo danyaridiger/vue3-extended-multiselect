@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.8.4**
+Current `vue3-extended-multiselect` version: **1.8.5**
 
 ***
 
@@ -320,3 +320,8 @@ Adding descriptive comments for some types in typings.
 ### 1.8.4 (2023-02-23)
 
 * Fixing bug with single select input focus.
+
+### 1.8.5 (2023-03-07)
+
+* Adding "resize-observer-polyfill" dev-dependency.
+* Fixing bug with options wrapper resize when "toggleAppearanceSide" prop is set to "atop".

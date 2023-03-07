@@ -98,8 +98,10 @@ import {
   computed,
   defineProps,
   inject,
+  nextTick,
   onBeforeMount,
   onMounted,
+  reactive,
   ref,
   toRefs,
 } from "vue";
@@ -434,7 +436,7 @@ const setSearchPattern = inject("setSearchPattern");
 const fieldWasShown = ref(false);
 const atopWithScroll = ref(null);
 const enterIndex = ref(null);
-const heightFromMounted = ref(null);
+const heightFromMounted = reactive({});
 const underWithScroll = ref(null);
 
 /**
@@ -685,11 +687,42 @@ const showCreateNewOptionBlock = computed(() => {
 const styles = computed(() => {
   return [
     heightFromProps.value, 
-    heightFromMounted.value, 
+    heightFromMounted, 
     atopWithScroll.value, 
     underWithScroll.value
   ];
 });
+
+/**
+ * Toggles "border-bottm-right-radius", "border-bottm-right-radius" 
+ * and "top" css-properties of options wrapper
+ */
+const calculateTopOffset = (afterLoading = false) => {
+  nextTick(() => {
+    const offsetHeight = optionsWrapper.value.offsetHeight;
+    const scrollHeight = optionsWrapper.value.scrollHeight;
+
+    if (chosenToggleAppearanceSide.value === "atop") {
+      if (!optionsWrapper.value) return;
+
+      if (scrollHeight > offsetHeight) {
+        atopWithScroll.value = {
+          borderTopRightRadius: 0,
+        };
+      }
+
+      if (toggleMaxHeight.value >= offsetHeight || afterLoading) {
+        heightFromMounted.top = `-${offsetHeight - 1}px`;
+      }
+    } else {
+      if (scrollHeight > offsetHeight) {
+        underWithScroll.value = {
+          borderBottomRightRadius: 0,
+        };
+      }
+    }
+  });
+};
 
 /**
  * Restricts repeated selection of option
@@ -1143,27 +1176,8 @@ onBeforeMount(() => {
  * "onMounted" hook of ExtendedMultiselectOptions component
  */
 onMounted(() => {
-  const offsetHeight = optionsWrapper.value.offsetHeight;
-  const scrollHeight = optionsWrapper.value.scrollHeight;
-
-  if (chosenToggleAppearanceSide.value === "atop") {
-    if (scrollHeight > offsetHeight) {
-      atopWithScroll.value = {
-        borderTopRightRadius: 0,
-      };
-    }
-
-    if (toggleMaxHeight.value > offsetHeight) {
-      heightFromMounted.value = {
-        top: `-${offsetHeight - 1}px`,
-      };
-    }
-  } else {
-    if (scrollHeight > offsetHeight) {
-      underWithScroll.value = {
-        borderBottomRightRadius: 0,
-      };
-    }
-  }
+  new ResizeObserver(() => {
+    calculateTopOffset();
+  }).observe(optionsWrapper.value);
 });
 </script>

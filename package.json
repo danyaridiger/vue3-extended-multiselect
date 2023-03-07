@@ -1,6 +1,6 @@
 {
   "name": "vue3-extended-multiselect",
-  "version": "1.8.4",
+  "version": "1.8.5",
   "description": "Extended multiselect component for applications based on Vue 3 framework",
   "keywords": [
     "multiselect",
@@ -39,6 +39,7 @@
     "babel-plugin-transform-import-meta": "^2.2.0",
     "eslint": "^7.2.0",
     "eslint-plugin-vue": "^7.0.0",
+    "resize-observer-polyfill": "^1.5.1",
     "typescript": "~4.1.0",
     "vue-jest": "^5.0.0-0"
   }
