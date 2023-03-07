@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.8.5**
+Current `vue3-extended-multiselect` version: **1.8.6**
 
 ***
 
@@ -325,3 +325,7 @@ Adding descriptive comments for some types in typings.
 
 * Adding "resize-observer-polyfill" dev-dependency.
 * Fixing bug with options wrapper resize when "toggleAppearanceSide" prop is set to "atop".
+
+### 1.8.6 (2023-03-07)
+
+* fixing bug with undefined "offsetHeight" variable.

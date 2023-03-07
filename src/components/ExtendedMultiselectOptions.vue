@@ -699,6 +699,8 @@ const styles = computed(() => {
  */
 const calculateTopOffset = (afterLoading = false) => {
   nextTick(() => {
+    if (!optionsWrapper.value) return;
+    
     const offsetHeight = optionsWrapper.value.offsetHeight;
     const scrollHeight = optionsWrapper.value.scrollHeight;
 
