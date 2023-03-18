@@ -143,6 +143,30 @@ describe("props", () => {
   });
 
 
+  it("correctly handles 'dropdownDisabled' prop value", async () => {
+    const propsData = {
+      dropdownDisabled: true,
+    };
+
+    wrapper = await mountComponent(Vue3ExtendedMultiselect, false, propsData);
+
+    const toggleWrapper = wrapper.find("#extended__multiselect-toggle");
+    const inputWrapper = wrapper.findComponent(ExtendedMultiselectInput);
+
+    await fireEvent.click(toggleWrapper.element);
+
+    let optionsWrapper = wrapper.findComponent(ExtendedMultiselectOptions);
+
+    expect(optionsWrapper.exists()).toBeFalsy();
+
+    await fireEvent.click(inputWrapper.element);
+
+    optionsWrapper = wrapper.findComponent(ExtendedMultiselectOptions);
+
+    expect(optionsWrapper.exists()).toBeFalsy();
+  });
+
+
   it("correctly handles 'highlightOptions' prop value", async () => {
     const propsData = {
       defaultExpanded: true,

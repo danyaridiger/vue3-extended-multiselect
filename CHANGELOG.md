@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.8.6**
+Current `vue3-extended-multiselect` version: **1.9.0**
 
 ***
 
@@ -240,6 +240,7 @@ Adding descriptive comments for some types in typings.
 ### 1.6.0 (2023-02-02)
 
 * Adding "showDeselectIconLoader" optional prop.
+* Adding unit-test for new optional prop.
 * Adding loader icon to deselect button of multiple option blocks depending on "showDeselectIconLoader" optional prop.
 * Changing styles of multiple option blocks.
 
@@ -329,3 +330,10 @@ Adding descriptive comments for some types in typings.
 ### 1.8.6 (2023-03-07)
 
 * fixing bug with undefined "offsetHeight" variable.
+
+### 1.9.0 (2023-03-18)
+
+* Adding "dropdownDisabled" optional prop.
+* Adding unit-test for new optional prop.
+* Adding some new css-variabled.
+* Removal of excess type from types.

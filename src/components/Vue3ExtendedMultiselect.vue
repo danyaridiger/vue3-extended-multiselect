@@ -262,7 +262,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.8.6
+ * @version 1.9.0
  */
 
 const props = defineProps({
@@ -324,6 +324,16 @@ const props = defineProps({
    * @property {boolean} disabled
    */
   disabled: {
+    type: Boolean,
+    default: false,
+  },
+
+  /**
+   * Disables dropdown toggle
+   * @default false
+   * @property {boolean} dropdownDisabled
+   */
+  dropdownDisabled: {
     type: Boolean,
     default: false,
   },
@@ -921,6 +931,7 @@ const extendedMultiselectWrapper = ref(null);
 const {
   defaultExpanded,
   disabled,
+  dropdownDisabled,
   disabledPrimitiveOptions,
   emptyObjectsPlaceholder,
   errorBorderColor,
@@ -1614,7 +1625,7 @@ const toggleDetector = (mouseEvent, pattern, mode) => {
  * @function
  */
 const toggleOptions = () => {
-  if (internalLoading.value || disabled.value) return;
+  if (internalLoading.value || disabled.value || dropdownDisabled.value) return;
 
   toggleAppearanceRestrictorActivate();
 
@@ -1854,7 +1865,7 @@ onMounted(() => {
   }
 
   emitter.value.on("extended:expand-options", () => {
-    if (dropdownActive.value === true) return;
+    if (dropdownActive.value || dropdownDisabled.value) return;
       
     toggleAppearanceRestrictorActivate();
     activeEmitter();

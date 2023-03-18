@@ -694,8 +694,10 @@ const styles = computed(() => {
 });
 
 /**
- * Toggles "border-bottm-right-radius", "border-bottm-right-radius" 
+ * Toggles "border-bottom-right-radius", "border-bottom-right-radius" 
  * and "top" css-properties of options wrapper
+ * @function
+ * @param {boolean} afterLoading - loading state flag
  */
 const calculateTopOffset = (afterLoading = false) => {
   nextTick(() => {
@@ -705,8 +707,6 @@ const calculateTopOffset = (afterLoading = false) => {
     const scrollHeight = optionsWrapper.value.scrollHeight;
 
     if (chosenToggleAppearanceSide.value === "atop") {
-      if (!optionsWrapper.value) return;
-
       if (scrollHeight > offsetHeight) {
         atopWithScroll.value = {
           borderTopRightRadius: 0,

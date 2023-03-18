@@ -1,4 +1,4 @@
-# vue3-extended-multiselect v1.8.6
+# vue3-extended-multiselect v1.9.0
 
 ***
 
@@ -43,6 +43,7 @@ Prop name | Prop type | Prop appointment | Prop default value | Prop values
 **createOnThe<br/>Go**|Boolean|Allows user to create new options from search field.|false|&mdash;|
 **default<br/>Expanded**|Boolean|Determines whether options list should be expanded by default.|false|&mdash;|
 **disabled**|Boolean|Disables extended multiselect.|false|&mdash;|
+**dropdownDisabled**|Boolean|Disables dropdown toggle.|false|&mdash;|
 **highlight<br/>Options**|Boolean|Switches options highlighting while hovering.|true|&mdash;|
 **loading**|Boolean|Switches loading state of extended multiselect.|false|&mdash;|
 **multiple**|Boolean|Allows user to select multiple options.|false|&mdash;|
@@ -167,6 +168,7 @@ Vue3 extended multiselect provides following css-variables:
   --toggle-icon-gap: 1px;
   --wide-text: 700;
   --wrapper-padding: 5px 10px;
+  --z-index-options: 10;
 
   --border: 1px solid;
   --default-cursor: default;

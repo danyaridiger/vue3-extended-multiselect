@@ -88,7 +88,7 @@
   user-select: none;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
-  z-index: 100;
+  z-index: var(--z-index-options);
   border-bottom-right-radius: var(--border-radius);
   border-bottom-left-radius: var(--border-radius);
   width: var(--max-size);
