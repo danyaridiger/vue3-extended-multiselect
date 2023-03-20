@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.9.0**
+Current `vue3-extended-multiselect` version: **1.9.1**
 
 ***
 
@@ -337,3 +337,7 @@ Adding descriptive comments for some types in typings.
 * Adding unit-test for new optional prop.
 * Adding some new css-variabled.
 * Removal of excess type from types.
+
+### 1.9.1 (2023-03-20)
+
+* Fixing bug with "pattern-changed" event with a call to the internal loader method.

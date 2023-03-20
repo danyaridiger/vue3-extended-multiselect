@@ -262,7 +262,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.9.0
+ * @version 1.9.1
  */
 
 const props = defineProps({
@@ -1713,6 +1713,7 @@ const updateModelValue = () => {
  * @listens extended:clean-options
  * @listens extended:create-option
  * @listens extended:increase-display
+ * @listens extended:loader-pattern-changed
  * @listens extended:search-pattern-changed
  */
 onBeforeMount(() => {
@@ -1823,6 +1824,20 @@ onBeforeMount(() => {
      * @property {limit} - current limit of options to be shown next
      */
     emit("increase", eventData);
+  });
+
+  emitter.value.on("extended:loader-pattern-changed", (pattern) => {
+    const eventData = simpleEvents.value
+     ? pattern 
+     : createEventFields(pattern, "pattern");
+
+    /**
+     * @event pattern-changed
+     * @type {Object}
+     * @property {string} inputId - id of search field set by "id" prop
+     * @property {pattern} - pattern of internal search for available options
+     */
+    emit("pattern-changed", eventData);
   });
 
   emitter.value.on("extended:search-pattern-changed", (pattern) => {

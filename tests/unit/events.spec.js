@@ -5,7 +5,8 @@ import {
   SEARCH_PATTERN,
 } from "../utils/mount";
 import { 
-  mockOptionSelection, 
+  mockOptionSelection,
+  mockOptionsLoader,
   createNewOptionsWrapper,
 } from "../utils/utils";
 
@@ -29,6 +30,16 @@ describe("events", () => {
     );
 
     expect(wrapper.emitted()['pattern-changed'][0][0]).toEqual(globalThis.SEARCH_VALUE);
+
+    propsData.options = mockOptionsLoader;
+    wrapper = await mountComponent(Vue3ExtendedMultiselect, true, propsData);
+
+    wrapper.vm.emitter.emit(
+      "extended:loader-pattern-changed", 
+      globalThis.SEARCH_VALUE_WITH_RESULTS,
+    );
+
+    expect(wrapper.emitted()['pattern-changed'][0][0]).toEqual(globalThis.SEARCH_VALUE_WITH_RESULTS);
   });
 
 
