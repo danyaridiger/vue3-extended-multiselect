@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.9.1**
+Current `vue3-extended-multiselect` version: **1.9.2**
 
 ***
 
@@ -341,3 +341,8 @@ Adding descriptive comments for some types in typings.
 ### 1.9.1 (2023-03-20)
 
 * Fixing bug with "pattern-changed" event with a call to the internal loader method.
+
+### 1.9.2 (2023-03-22)
+
+* Fixing bug with always fixed "height" css-property of option block.
+* Setting default value of "anyOptionWrapperBlockHeight" optional prop to "auto".

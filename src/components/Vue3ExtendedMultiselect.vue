@@ -46,7 +46,6 @@
           :theme-type="themeType"
           :increase-display-by="increaseDisplayBy"
           :multipleBlocksLimit="multipleBlocksLimit"
-          :restricted-options-length="restrictedOptionsLength"
           :toggle-multiple-blocks-limit="toggleMultipleBlocksLimit"
           :selected-options="selectedOptions"
           :emitter="emitter"
@@ -262,7 +261,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.9.1
+ * @version 1.9.2
  */
 
 const props = defineProps({
@@ -681,16 +680,6 @@ const props = defineProps({
   },
 
   /**
-   * Defines "height" css-property for each option in options list
-   * @default 30
-   * @property {number} anyOptionWrapperBlockHeight
-   */
-  anyOptionWrapperBlockHeight: {
-    type: Number,
-    default: 30,
-  },
-
-  /**
    * Defines gap which increases limit of displayed elements with selected options
    * @default 5
    * @property {number} increaseDisplayBy
@@ -877,6 +866,17 @@ const props = defineProps({
   multipleBlocksLimitMessage: {
     type: Function,
     default: (number) => `and ${number} more items`,
+  },
+
+  
+  /**
+   * Defines "height" css-property for each option in options list
+   * @default 30
+   * @property {number} anyOptionWrapperBlockHeight
+   */
+  anyOptionWrapperBlockHeight: {
+    type: [Number, String],
+    default: "auto",
   },
 
   /**
@@ -1120,16 +1120,6 @@ const restrictedOptions = computed(() => {
   return optionsCountRestriction.value
    ? rawOptions.value.filter((option, index) => index + 1 <= optionsCountRestriction.value)
    : rawOptions.value;
-});
-
-/**
- * Determines length of options list after filtering by
- * maximal admissible options amount
- * @function
- * @returns {number} length
- */
-const restrictedOptionsLength = computed(() => {
-  return restrictedOptions.value.length;
 });
 
 /**
@@ -1888,8 +1878,8 @@ onMounted(() => {
     dropdownActive.value = true;
   });
 
-  emitter.value.on("extended:loader-pattern-changed", (pattern) => {
-    loadOptionsByExternalLoader(pattern, false);
+  emitter.value.on("extended:loader-pattern-changed", async (pattern) => {
+    await loadOptionsByExternalLoader(pattern, false);
   });
 
   clickOutside.value.init(extendedMultiselectWrapper.value, () => {

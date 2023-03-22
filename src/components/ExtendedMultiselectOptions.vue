@@ -267,15 +267,6 @@ const props = defineProps({
   },
 
   /**
-   * Defines "height" css-property of every option element
-   * @property {number} anyOptionWrapperBlockHeight
-   */
-  anyOptionWrapperBlockHeight: {
-    type: Number,
-    required: true,
-  },
-
-  /**
    * Determines maximal limit of selected options
    * @property {number|null} maxOptionsCount
    */
@@ -416,6 +407,15 @@ const props = defineProps({
   externalOptionsLoader: {
     type: Function,
     default: null,
+  },
+
+  /**
+   * Defines "height" css-property of every option element
+   * @property {number} anyOptionWrapperBlockHeight
+   */
+  anyOptionWrapperBlockHeight: {
+    type: [Number, String],
+    required: true,
   },
 
   /**
@@ -645,14 +645,15 @@ const minOptionsWereNotSelected = computed(() => {
 });
 
 /**
- * Defines styles for "padding" and "height" css-property 
+ * Defines styles for "padding" and "height" css-property
  * of every option element
  * @function
  * @returns {Object} styles
  */
 const optionHeightByProps = computed(() => {
+  const heightNumeric = typeof anyOptionWrapperBlockHeight.value === "number";
   let height = {
-    height: `${anyOptionWrapperBlockHeight.value}px`,
+    height: heightNumeric ? `${anyOptionWrapperBlockHeight.value}px` : `${anyOptionWrapperBlockHeight.value}`,
   };
 
   if (optionsPadding.value.length) {
