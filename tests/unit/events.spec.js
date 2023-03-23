@@ -70,6 +70,8 @@ describe("events", () => {
     wrapper = await mountComponent(Vue3ExtendedMultiselect, false, propsData);
 
     const cleanButton = wrapper.find("#extended__multiselect-cancel");
+    
+    await mockOptionSelection(wrapper);
 
     await fireEvent.click(cleanButton.element);
 

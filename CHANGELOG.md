@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.9.7**
+Current `vue3-extended-multiselect` version: **1.9.8**
 
 ***
 
@@ -367,3 +367,7 @@ Adding descriptive comments for some types in typings.
 ### 1.9.7 (2023-03-23)
 
 * Fixing bug with non-rendering "labelBlock" slot when "showSearchField" prop is set to false.
+
+### 1.9.8 (2023-03-23)
+
+* Fixing bug with "clean" event payload when all options were deselected.

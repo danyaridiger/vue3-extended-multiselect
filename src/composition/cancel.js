@@ -18,16 +18,19 @@ export default function useCancel(
    */
   const cancel = () => {
     if (disabled.value) return;
+
+    const deselectedOptions = selectedOptions.value;
       
     emitter.value.emit("extended:skip-block-blur-zeroing");
     emitter.value.emit("extended:deselect-option", { 
       index: null,
       clearAll: true,
+      deselectedOptions,
     });
       
     if (!showSearchField.value) return;
 
-    emitter.value.emit("extended:clean-options", selectedOptions.value);
+    emitter.value.emit("extended:clean-options");
 
     setSearchValue(null);
     setSearchPattern(null);

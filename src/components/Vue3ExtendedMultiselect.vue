@@ -269,7 +269,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.9.7
+ * @version 1.9.8
  */
 const props = defineProps({
   /**
@@ -916,7 +916,6 @@ const emit = defineEmits([
   "pattern-changed",
   "select",
   "update:modelValue",
-  "update:wrapper"
 ]);
 
 const dropdownActive = ref(false);
@@ -1709,7 +1708,6 @@ const updateModelValue = () => {
  * @listens extended:toggle-options
  * @listens extended:select-option
  * @listens extended:deselect-option
- * @listens extended:clean-options
  * @listens extended:create-option
  * @listens extended:increase-display
  * @listens extended:loader-pattern-changed
@@ -1758,6 +1756,8 @@ onBeforeMount(() => {
        */
       emit("select", eventData);
     }
+
+    updateModelValue();
   });
 
   emitter.value.on("extended:deselect-option", (payload) => {
@@ -1765,7 +1765,7 @@ onBeforeMount(() => {
       const deselectedOption = selectedOptions.value[payload.index];
 
       const eventData = simpleEvents.value
-       ? deselectedOption 
+       ? deselectedOption
        : createEventFields(deselectedOption, "option");
   
       /**
@@ -1785,6 +1785,24 @@ onBeforeMount(() => {
 
       return;
     } else {
+      if (!selectedOptions.value.length) return;
+
+      const deselectedOption = payload.deselectedOptions
+       ? payload.deselectedOptions
+       : selectedOptions.value;
+      
+      const eventData = simpleEvents.value
+       ? deselectedOption
+       : createEventFields(deselectedOption, "option");
+
+       /**
+        * @event clean
+        * @type {Object}
+        * @property {string} inputId - id of search field set by "id" prop
+        * @property {UnionPropType} options - just now deselected options
+        */
+      emit("clean", eventData);
+
       selectedOptions.value = [];
       updateModelValue();
     }
@@ -1792,18 +1810,6 @@ onBeforeMount(() => {
     if (toggleOptionsBySelect.value) {
       emitter.value.emit("extended:rollup-options");
     }
-  });
-
-  emitter.value.on("extended:clean-options", (selectedOptions) => {
-    const eventData = simpleEvents.value
-     ? selectedOptions.value 
-     : createEventFields(selectedOptions, "options");
-
-    /**
-     * @see clean
-     * @property {Array} options - just now deselected options
-     */
-    emit("clean", eventData);
   });
 
   emitter.value.on("extended:create-option", (createdOption) => {
