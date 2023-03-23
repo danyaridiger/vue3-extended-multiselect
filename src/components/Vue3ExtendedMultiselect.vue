@@ -269,7 +269,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.9.5
+ * @version 1.9.6
  */
 const props = defineProps({
   /**
@@ -1786,6 +1786,7 @@ onBeforeMount(() => {
       return;
     } else {
       selectedOptions.value = [];
+      updateModelValue();
     }
     
     if (toggleOptionsBySelect.value) {

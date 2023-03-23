@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.9.5**
+Current `vue3-extended-multiselect` version: **1.9.6**
 
 ***
 
@@ -359,3 +359,7 @@ Adding descriptive comments for some types in typings.
 ### 1.9.5 (2023-03-23)
 
 * Adding "selected" flag to "marker" slot.
+
+### 1.9.6 (2023-03-23)
+
+* Fixing bug with v-model not updating by clearing of all options.
