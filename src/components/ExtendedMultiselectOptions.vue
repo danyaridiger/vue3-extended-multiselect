@@ -1061,7 +1061,12 @@ const selectOption = (option, clickEvent) => {
     const optionDeselected = lookForObjectOptions(option);
 
     if (!optionDeselected) {
-      emitter.value.emit("extended:deselect-option");
+      const index = selectedOptions.value.findIndex((selectedOption) => {
+        return JSON.stringify(selectedOption) === JSON.stringify(option);
+      });
+
+      emitter.value.emit("extended:deselect-option", { skipNextRemoval: true, index });
+      
       return;
     }
   }

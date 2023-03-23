@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.9.3**
+Current `vue3-extended-multiselect` version: **1.9.4**
 
 ***
 
@@ -349,4 +349,9 @@ Adding descriptive comments for some types in typings.
 
 ### 1.9.3 (2023-03-22)
 
-* Fixing a bug with v-model not clearing by computed property.
+* Fixing bug with v-model not clearing by computed property.
+
+### 1.9.4 (2023-03-23)
+
+* Fixing bug with hidden placeholder when "showSearchField" prop is set to false.
+* Fixing bug with deselection of all options when "showSelectedOptions" prop is set to true.

@@ -262,7 +262,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.9.3
+ * @version 1.9.4
  */
 const props = defineProps({
   /**
@@ -913,6 +913,7 @@ const emit = defineEmits([
 ]);
 
 const dropdownActive = ref(false);
+const skipNextRemoval = ref(false);
 const externalOptionsLoader = ref(null);
 const chosenToggleAppearanceSide = ref(null);
 const selectedOptionsWatcher = ref(null);
@@ -1168,7 +1169,14 @@ watch(dropdownActive, (value) => {
  * @function
  */
 watch(modelValue, (value, prevValue) => {
-  if (JSON.stringify(toRaw(value)) === JSON.stringify(toRaw(prevValue))) return;
+  if (
+    JSON.stringify(toRaw(value)) === JSON.stringify(toRaw(prevValue)) 
+    || skipNextRemoval.value
+  ) {
+    skipNextRemoval.value = false;
+
+    return;
+  }
 
   setPreselectedOptionsByModelValue(true);
 }, { deep: true });
@@ -1761,7 +1769,12 @@ onBeforeMount(() => {
        */
       emit("clean", eventData);
 
+      if (payload.skipNextRemoval) {
+        skipNextRemoval.value = true;
+      }
+
       selectedOptions.value.splice(payload.index, 1);
+
       return;
     } else {
       selectedOptions.value = [];
