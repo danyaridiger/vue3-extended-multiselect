@@ -226,6 +226,7 @@ import {
   onMounted,
   provide,
   ref,
+  toRaw,
   toRefs,
   useAttrs,
   useSlots,
@@ -261,9 +262,8 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.9.2
+ * @version 1.9.3
  */
-
 const props = defineProps({
   /**
    * Determines whether to select just now created option
@@ -913,7 +913,6 @@ const emit = defineEmits([
 ]);
 
 const dropdownActive = ref(false);
-const skipNextUpdate = ref(false);
 const externalOptionsLoader = ref(null);
 const chosenToggleAppearanceSide = ref(null);
 const selectedOptionsWatcher = ref(null);
@@ -1168,11 +1167,8 @@ watch(dropdownActive, (value) => {
  * Changes selected options based on external modelValue changes
  * @function
  */
-watch(modelValue, () => {
-  if (skipNextUpdate.value) {
-    skipNextUpdate.value = false;
-    return;
-  }
+watch(modelValue, (value, prevValue) => {
+  if (JSON.stringify(toRaw(value)) === JSON.stringify(toRaw(prevValue))) return;
 
   setPreselectedOptionsByModelValue(true);
 }, { deep: true });
@@ -1433,9 +1429,7 @@ const setPreselectedOptionsByModelValue = (withRemoval = false) => {
   if (withRemoval) {
     updateModelValue();
 
-    skipNextUpdate.value = true;
-
-    selectedOptionsWatcher.value = watch(selectedOptions, (value) => {
+    selectedOptionsWatcher.value = watch(selectedOptions, () => {
       updateModelValue();
 
       if (resetSearchByValue.value) {
