@@ -55,12 +55,12 @@
           :input-id="inputId"
         >
           <template
-            v-if="!showSearchField"
+            v-if="slots.labelBlock"
             #labelBlock="{ labelBlockValue }"
           >
             <slot
               name="labelBlock"
-              :label="labelBlockValue"
+              :label-block-value="labelBlockValue"
             >
             </slot>
           </template>
@@ -84,7 +84,7 @@
           >
             <slot 
               name="showMore"
-              :increase="showMoreOptions"
+              :show-more-options="showMoreOptions"
             >
             </slot>
           </template>
@@ -269,7 +269,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.9.6
+ * @version 1.9.7
  */
 const props = defineProps({
   /**
