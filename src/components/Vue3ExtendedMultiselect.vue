@@ -193,8 +193,15 @@
           >
           </slot>
         </template>
-        <template #marker>
-          <slot name="marker"></slot>
+        <template 
+          v-if="slots.marker"
+          #marker="{ selected }"
+        >
+          <slot 
+            name="marker"
+            :selected="selected"
+          >
+          </slot>
         </template>
         <template
           v-if="noResultsBlockShown"
@@ -262,7 +269,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.9.4
+ * @version 1.9.5
  */
 const props = defineProps({
   /**
@@ -1774,6 +1781,7 @@ onBeforeMount(() => {
       }
 
       selectedOptions.value.splice(payload.index, 1);
+      updateModelValue();
 
       return;
     } else {

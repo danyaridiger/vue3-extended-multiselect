@@ -1,4 +1,4 @@
-# vue3-extended-multiselect v1.9.4
+# vue3-extended-multiselect v1.9.5
 
 ***
 
@@ -100,7 +100,7 @@ Slot name | Slot appointment | Slot scope
 ----------|------------------|-----------
 **option**|Option in options list with its label.|``option`` — option from options list,<br/>``createCustomOptionLabel`` — function that creates custom label for each option|
 **optionBlock**|Element with selected option and its label.|``label`` — option label,<br/>``deselectBlock`` — function that deselects option and removes element that contained it,<br/>``index`` — option index|
-**marker**|Marker that indicates state of option selection.|&mdash;|
+**marker**|Marker that indicates state of option selection.|``selected`` — flag to determine markers for selected options|
 **maxElements**|Message displayed if maximal limit of elements with selected options has been shown.|&mdash;|
 **showMore**|Button that increases limit of displayed elements with selected options.|``showMoreOptions`` — function that increases limit of displayed elements with selected options|
 **noResults**|Message displayed if no options have been found by internal search.|&mdash;|

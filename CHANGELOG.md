@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.9.4**
+Current `vue3-extended-multiselect` version: **1.9.5**
 
 ***
 
@@ -355,3 +355,7 @@ Adding descriptive comments for some types in typings.
 
 * Fixing bug with hidden placeholder when "showSearchField" prop is set to false.
 * Fixing bug with deselection of all options when "showSelectedOptions" prop is set to true.
+
+### 1.9.5 (2023-03-23)
+
+* Adding "selected" flag to "marker" slot.

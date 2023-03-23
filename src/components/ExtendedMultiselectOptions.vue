@@ -55,7 +55,7 @@
             <div class="extended__multiselect-marker">
               <slot 
                 name="marker"
-                :option="option"
+                :selected="showCurrentMarker(option)"
               >
                 <div
                   v-if="showMarker && showCurrentMarker(option)"
