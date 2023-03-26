@@ -30,7 +30,6 @@
           :auto-select-search-value="autoSelectSearchValue"
           :create-on-the-go="createOnTheGo"
           :disabled="disabled"
-          :dropdown-active="dropdownActive"
           :loading="internalLoading"
           :icon-filter="iconFilter"
           :multiple="multiple"
@@ -64,7 +63,21 @@
             >
             </slot>
           </template>
-          <template #optionBlock="{ label, deselectBlock, index }">
+          <template
+            v-if="slots.multipleBlocks"
+            #multipleBlocks="{ selectedOptions, deselectBlock }"
+          >
+            <slot
+              name="multipleBlocks"
+              :selected-options="selectedOptions"
+              :deselect-block="deselectBlock"
+            >
+            </slot>
+          </template>
+          <template
+            v-if="slots.optionBlock"
+            #optionBlock="{ label, deselectBlock, index }"
+          >
             <slot 
               name="optionBlock"
               :label="label"
@@ -74,6 +87,7 @@
             </slot>
           </template>
           <template
+            v-if="slots.maxElements"
             #maxElements
           >
             <slot name="maxElements"></slot>
@@ -125,7 +139,7 @@
             :emitter="emitter"
           />
         </slot>
-    </div>
+      </div>
     </div>
     <transition
       name="extended-toggle"
@@ -185,7 +199,10 @@
         >
           <slot name="lessThanLimit"></slot>
         </template>
-        <template #option="{ option, createCustomOptionLabel }">
+        <template
+          v-if="slots.option"
+          #option="{ option, createCustomOptionLabel }"
+        >
           <slot 
             name="option"
             :option="option"
@@ -209,7 +226,10 @@
         >
           <slot name="noResults"></slot>
         </template>
-        <template #noOptions>
+        <template
+          v-if="slots.noOptions"
+          #noOptions
+        >
           <slot name="noOptions"></slot>
         </template>
         <template
@@ -269,7 +289,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.9.8
+ * @version 1.10.0
  */
 const props = defineProps({
   /**
@@ -1124,7 +1144,7 @@ const restrictedOptions = computed(() => {
   if (!rawOptions.value) return [];
   
   return optionsCountRestriction.value
-   ? rawOptions.value.filter((option, index) => index + 1 <= optionsCountRestriction.value)
+   ? rawOptions.value.filter((_, index) => index + 1 <= optionsCountRestriction.value)
    : rawOptions.value;
 });
 
@@ -1582,7 +1602,6 @@ const toggleCustomRestrictor = (mouseEvent, blockType) => {
  */
 const toggleDetector = (mouseEvent, pattern, mode) => {
   let target = mouseEvent.target;
-  const optionPattern = /^extended__multiselect-options_option/i;
 
   let filteredHasToggle = Array.prototype.filter.call(target.classList, (className) => {
     return pattern.test(className) === true;

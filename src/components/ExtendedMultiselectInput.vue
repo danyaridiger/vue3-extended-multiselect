@@ -55,6 +55,14 @@
       :emitter="emitter"
       :create-custom-option-label="createCustomOptionLabel"
     >
+      <template #multipleBlocks="{ selectedOptions, deselectBlock }">
+        <slot
+          name="multipleBlocks"
+          :selected-options="selectedOptions"
+          :deselect-block="deselectBlock"
+        >
+        </slot>
+      </template>
       <template #optionBlock="{ label, deselectBlock, index }">
         <slot 
           name="optionBlock"
@@ -98,6 +106,14 @@
       :emitter="emitter"
       :create-custom-option-label="createCustomOptionLabel"
     >
+      <template #multipleBlocks="{ selectedOptions, deselectBlock }">
+        <slot
+          name="multipleBlocks"
+          :selected-options="selectedOptions"
+          :deselect-block="deselectBlock"
+        >
+        </slot>
+      </template>
       <template #optionBlock="{ label, deselectBlock, index }">
         <slot 
           name="optionBlock"
@@ -196,15 +212,6 @@ const props = defineProps({
    * @property {boolean} disabled
    */
   disabled: {
-    type: Boolean,
-    required: true,
-  },
-
-  /**
-   * Determines whether option list expanded or not
-   * @property {boolean} dropdownActive
-   */
-  dropdownActive: {
     type: Boolean,
     required: true,
   },

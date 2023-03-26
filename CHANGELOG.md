@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.9.8**
+Current `vue3-extended-multiselect` version: **1.10.0**
 
 ***
 
@@ -371,3 +371,11 @@ Adding descriptive comments for some types in typings.
 ### 1.9.8 (2023-03-23)
 
 * Fixing bug with "clean" event payload when all options were deselected.
+
+### 1.10.0 (2023-03-26)
+
+* Adding "multipleBlocks" slot for element with all selected options.
+* Adding conditional rendering to all slots.
+* Removal of some excess props inside the component.
+* Ordering "Events" section in documentation in alphabetic order.
+* Ordering props in alphabetic order inside the component.

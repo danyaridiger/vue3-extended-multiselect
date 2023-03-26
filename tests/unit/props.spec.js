@@ -785,7 +785,7 @@ describe("props", () => {
 
     await fireEvent.click(increaserWrapper.element);
 
-    const multipleWrapper = wrapper.find(".extended__multiselect-block--multiple");
+    const multipleWrapper = wrapper.find(".extended__multiselect-block--multiple > div");
 
     expect(multipleWrapper.element.children).toHaveLength(2);
     expect(multipleWrapper.text()).toMatch(globalThis.OPTIONS[1].label);
@@ -999,8 +999,6 @@ describe("props", () => {
 
 
   it("correctly handles 'preselectedOptions' prop value", async () => {
-    expect.assertions(1);
-
     const propsData = {
       defaultExpanded: true,
       multiple: true,
@@ -1010,9 +1008,14 @@ describe("props", () => {
 
     wrapper = await mountComponent(Vue3ExtendedMultiselect, false, propsData);
 
-    const multipleWrapper = wrapper.find(".extended__multiselect-block--multiple");
+    const multipleWrapper = wrapper.find(".extended__multiselect-block--multiple > div");
 
     expect(multipleWrapper.element.children).toHaveLength(2);
+    
+    const optionsWrapper = wrapper.findComponent(ExtendedMultiselectOptions);
+    const optionsListWrapper = optionsWrapper.find(".extended__multiselect-options_container");
+
+    expect(optionsListWrapper.element.children).toHaveLength(2);
   });
 
 

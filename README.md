@@ -1,4 +1,4 @@
-# vue3-extended-multiselect v1.9.8
+# vue3-extended-multiselect v1.10.0
 
 ***
 
@@ -98,20 +98,21 @@ Prop name | Prop type | Prop appointment | Prop default value | Prop values
 ## Slots list
 Slot name | Slot appointment | Slot scope
 ----------|------------------|-----------
-**option**|Option in options list with its label.|``option`` — option from options list,<br/>``createCustomOptionLabel`` — function that creates custom label for each option|
-**optionBlock**|Element with selected option and its label.|``label`` — option label,<br/>``deselectBlock`` — function that deselects option and removes element that contained it,<br/>``index`` — option index|
-**marker**|Marker that indicates state of option selection.|``selected`` — flag to determine markers for selected options|
-**maxElements**|Message displayed if maximal limit of elements with selected options has been shown.|&mdash;|
-**showMore**|Button that increases limit of displayed elements with selected options.|``showMoreOptions`` — function that increases limit of displayed elements with selected options|
-**noResults**|Message displayed if no options have been found by internal search.|&mdash;|
-**noOptions**|Message displayed if given options list is empty.|&mdash;|
+**cancel**|Button that deselects all options.|``cancel`` — function that deselects all options|
+**labelBlock**|Element with single selected option that is shown if search field display is disabled.|``labelBlockValue`` — option label|
+**lessThanLimit**|Message displayed if minimal limit of selected options has not been reached.|&mdash;|
 **listHeader**|Element at the top of options list for information content.|&mdash;|
 **listFooter**|Element at the bottom of options list for information content.|&mdash;|
-**toggle**|Button that toggles options list display.|``toggleOptionsList`` — function that toggles options list display|
-**labelBlock**|Element with single selected option that is shown if search field display is disabled.|``labelBlockValue`` — option label|
+**marker**|Marker that indicates state of option selection.|``selected`` — flag to determine markers for selected options|
+**maxElements**|Message displayed if maximal limit of elements with selected options has been shown.|&mdash;|
 **moreThanLimit**|Message displayed if maximal limit of selected options has been reached.|&mdash;|
-**lessThanLimit**|Message displayed if minimal limit of selected options has not been reached.|&mdash;|
-**cancel**|Button that deselects all options.|``cancel`` — function that deselects all options|
+**multipleBlocks**|Block with selected options and other multiple select slots|``selectedOptions`` — list of selected options,<br/>``deselectBlock`` — function that deselects option and removes element that contained it|
+**noResults**|Message displayed if no options have been found by internal search.|&mdash;|
+**noOptions**|Message displayed if given options list is empty.|&mdash;|
+**option**|Option in options list with its label.|``option`` — option from options list,<br/>``createCustomOptionLabel`` — function that creates custom label for each option|
+**optionBlock**|Element with selected option and its label.|``label`` — option label,<br/>``deselectBlock`` — function that deselects option and removes element that contained it,<br/>``index`` — option index|
+**showMore**|Button that increases limit of displayed elements with selected options.|``showMoreOptions`` — function that increases limit of displayed elements with selected options|
+**toggle**|Button that toggles options list display.|``toggleOptionsList`` — function that toggles options list display|
 
 ## Events list
 Event name | Event appointment | Listener method | Simplified event payload | Fields of object with full event payload |
