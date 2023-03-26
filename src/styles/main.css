@@ -426,7 +426,7 @@
   height: var(--icon-size-block);
 }
 
-.extended__multiselect-block--multiple {
+.extended__multiselect-block--multiple > div {
   display: flex;
   flex-flow: row wrap;
   gap: var(--outer-gap);

@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.10.0**
+Current `vue3-extended-multiselect` version: **1.10.1**
 
 ***
 
@@ -379,3 +379,7 @@ Adding descriptive comments for some types in typings.
 * Removal of some excess props inside the component.
 * Ordering "Events" section in documentation in alphabetic order.
 * Ordering props in alphabetic order inside the component.
+
+### 1.10.1 (2023-03-26)
+
+* Fixing bug with incorrect display of multiple option blocks.
