@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.10.1**
+Current `vue3-extended-multiselect` version: **1.10.2**
 
 ***
 
@@ -383,3 +383,7 @@ Adding descriptive comments for some types in typings.
 ### 1.10.1 (2023-03-26)
 
 * Fixing bug with incorrect display of multiple option blocks.
+
+### 1.10.2 (2023-09-01)
+
+* Updating dependencies and dev-dependencies.

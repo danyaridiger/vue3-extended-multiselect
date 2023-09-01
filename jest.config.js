@@ -56,7 +56,7 @@ module.exports = {
     "tests/utils"
   ],
   transformIgnorePatterns: [
-    "node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)"
+    "<rootDir>/node_modules/"
   ],
   timers: "real",
 }

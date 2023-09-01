@@ -288,8 +288,12 @@ import ExtendedMultiselectOptions from "./ExtendedMultiselectOptions.vue";
 import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
+ * @todo Mark optional arguments of functions
+ */
+
+/**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 1.10.1
+ * @version 1.10.2
  */
 const props = defineProps({
   /**
