@@ -8,26 +8,28 @@ import ExtendedMultiselectOptions from "../../src/components/ExtendedMultiselect
 let wrapper;
 
 describe("tools", () => {
-  it("correctly debounces search value changing", async (done) => {
+  it("correctly debounces search value changing", (done) => {
     const propsData = {
       defaultExpanded: true,
       options: globalThis.OPTIONS,
     };
 
-    wrapper = await mountComponent(Vue3ExtendedMultiselect, false, propsData);
-
-    const input = wrapper.find("input");
-    const optionsWrapper = wrapper.findComponent(ExtendedMultiselectOptions);
-    const optionsListWrapper = optionsWrapper.find(".extended__multiselect-options_container");
-
-    await fireEvent.input(input.element, { target: { value: globalThis.SEARCH_VALUE_WITH_RESULTS } });
-
-    expect(optionsListWrapper.element.children).toHaveLength(4);
+    wrapper = mountComponent(Vue3ExtendedMultiselect, false, propsData);
 
     setTimeout(() => {
-      expect(optionsListWrapper.element.children).toHaveLength(1);
+      const input = wrapper.find("input");
+      const optionsWrapper = wrapper.findComponent(ExtendedMultiselectOptions);
+      const optionsListWrapper = optionsWrapper.find(".extended__multiselect-options_container");
+  
+      fireEvent.input(input.element, { target: { value: globalThis.SEARCH_VALUE_WITH_RESULTS } });
+  
+      expect(optionsListWrapper.element.children).toHaveLength(4);
 
-      done();
+      setTimeout(() => {
+        expect(optionsListWrapper.element.children).toHaveLength(1);
+
+        done();
+      }, 1000);
     }, 1000);
   });
 

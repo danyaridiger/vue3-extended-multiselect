@@ -1,7 +1,7 @@
 module.exports = {
-  preset: '@vue/cli-plugin-unit-jest',
+  preset: "@vue/cli-plugin-unit-jest",
   transform: {
-    '^.+\\.vue$': 'vue-jest'
+    "^.+\\.vue$": "@vue/vue3-jest"
   },
   expand: true,
   displayName: {
@@ -23,7 +23,7 @@ module.exports = {
     LESS_THAN_LIMIT: "You have to select at least two options",
   },
   include: [
-    "<rootDir>/components/ExtendedMultiselectOptions.vue"
+    "<rootDir>/components/ExtendedMultiselectOptions.vue",
   ],
   injectGlobals: true,
   moduleFileExtensions: [

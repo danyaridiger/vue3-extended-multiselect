@@ -1,5 +1,6 @@
 module.exports = {
   root: true,
+  requireConfigFile: false,
   env: {
     node: true,
   },

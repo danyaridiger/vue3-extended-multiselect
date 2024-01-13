@@ -1,4 +1,4 @@
-# vue3-extended-multiselect v1.10.2
+# vue3-extended-multiselect v2.0.0
 
 ***
 
@@ -23,7 +23,7 @@ import Vue3ExtendedMultiselect from "vue3-extended-multiselect"
 ### Importing types
 
 ```js
-import { UnionOptionType } from "vue3-extended-multiselect"
+import { UnionOptionType } from "vue3-extended-multiselect/types"
 ```
 
 ## Table of contents

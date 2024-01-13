@@ -387,3 +387,25 @@ Adding descriptive comments for some types in typings.
 ### 1.10.2 (2023-09-01)
 
 * Updating dependencies and dev-dependencies.
+
+### 2.0.0 (2024-13-01)
+
+* Component `vue3-extended-multiselect` was bundled by rollup.
+* Updating dependencies and dev-dependencies.
+* Changing "vue-jest" plugin to "@vue/vue3-jest" plugin in jest.config.js.
+* Changing some asynchronous unit-tests for correct running.
+* Adding "@rollup/plugin-babel" dev-dependency.
+* Adding "@vue/vue3-jest" dev-dependency.
+* Adding "babel-jest" dev-dependency.
+* Adding "postcss" dev-dependency.
+* Adding "rollup" dev-dependency.
+* Adding "rollup-plugin-copy" dev-dependency.
+* Adding "rollup-plugin-dts" dev-dependency.
+* Adding "rollup-plugin-postcss" dev-dependency.
+* Adding "rollup-plugin-vue" dev-dependency.
+* Adding "images" directory into "assets" directory.
+* Adding "rollup.config.mjs" file.
+* Adding "build" script into "package.json" file.
+* Moving all images into "images" directory.
+* Removal of "vue-jest" dev-dependency.
+* Removal of "style" directory with all files. Including styles directly in component.

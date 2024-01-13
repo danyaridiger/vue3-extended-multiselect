@@ -101,7 +101,7 @@ describe("props", () => {
   });
 
 
-  it("correctly handles 'defaultExpanded' prop value", async (done) => {
+  it("correctly handles 'defaultExpanded' prop value", (done) => {
     expect.assertions(3);
 
     const propsData = {
@@ -109,7 +109,7 @@ describe("props", () => {
       options: async () => await Promise.resolve(globalThis.OPTIONS),
     };
 
-    wrapper = await mountComponent(Vue3ExtendedMultiselect, false, propsData);
+    wrapper = mountComponent(Vue3ExtendedMultiselect, false, propsData);
 
     let optionsWrapper = wrapper.findComponent(ExtendedMultiselectOptions);
 
@@ -117,9 +117,9 @@ describe("props", () => {
 
     propsData.options = globalThis.OPTIONS;
 
-    wrapper = await mountComponent(Vue3ExtendedMultiselect, false, propsData);
+    wrapper = mountComponent(Vue3ExtendedMultiselect, false, propsData);
 
-    process.nextTick(() => {
+    process.nextTick(async () => {
       optionsWrapper = wrapper.findComponent(ExtendedMultiselectOptions);
 
       expect(optionsWrapper.exists()).toBeTruthy();
@@ -951,7 +951,7 @@ describe("props", () => {
   });
 
 
-  it("correctly handles 'options' prop value", async (done) => {
+  it("correctly handles 'options' prop value", async () => {
     expect.assertions(2);
 
     const propsData = {
@@ -974,10 +974,9 @@ describe("props", () => {
 
     wrapper = await mountComponent(Vue3ExtendedMultiselect, false, propsData);
 
-    process.nextTick(async () => {
-      expect(wrapper.vm.rawOptions).toHaveLength(4);
-      done();
-    });
+    await process.nextTick(jest.fn());
+
+    expect(wrapper.vm.rawOptions).toHaveLength(4);
   });
 
 
@@ -1129,7 +1128,7 @@ describe("props", () => {
   });
 
 
-  it("correctly handles 'preselectedOption' prop value", async (done) => {
+  it("correctly handles 'preselectedOption' prop value", (done) => {
     expect.assertions(2);
     
     const propsData = {
@@ -1137,7 +1136,7 @@ describe("props", () => {
       options: globalThis.OPTIONS,
     };
 
-    wrapper = await mountComponent(Vue3ExtendedMultiselect, false, propsData);
+    wrapper = mountComponent(Vue3ExtendedMultiselect, false, propsData);
 
     process.nextTick(async () => {
       await expandOptionsList(wrapper);
