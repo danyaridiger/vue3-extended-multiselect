@@ -409,3 +409,7 @@ Adding descriptive comments for some types in typings.
 * Moving all images into "images" directory.
 * Removal of "vue-jest" dev-dependency.
 * Removal of "style" directory with all files. Including styles directly in component.
+
+### 2.0.1 (2024-13-01)
+
+* Adding "files" and "unpkg" sections to package.json file.
