@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **1.10.2**
+Current `vue3-extended-multiselect` version: **2.0.2**
 
 ***
 
@@ -413,3 +413,7 @@ Adding descriptive comments for some types in typings.
 ### 2.0.1 (2024-13-01)
 
 * Adding "files" and "unpkg" sections to package.json file.
+
+### 2.0.2 (2024-13-01)
+
+* Removal "/dist" exception from ".gitignore" and ".npmignore" files.
