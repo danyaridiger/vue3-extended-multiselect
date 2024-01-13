@@ -20,7 +20,7 @@ jobs:
           node-version: 16
           registry-url: https://registry.npmjs.org/
       - name: install
-        run: npm install --legasy-peer-deps
+        run: npm install --legacy-peer-deps
       - name: tests
         run: npm run test:unit
   

@@ -417,3 +417,7 @@ Adding descriptive comments for some types in typings.
 ### 2.0.2 (2024-13-01)
 
 * Removal "/dist" exception from ".gitignore" and ".npmignore" files.
+
+### 2.0.3 (2024-13-01)
+
+* Adding "main" and "module" sections to package.json file.
