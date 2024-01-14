@@ -293,7 +293,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 2.0.5
+ * @version 2.0.6
  */
 const props = defineProps({
   /**
@@ -1956,6 +1956,7 @@ defineExpose({
   --dark-slate-grey-transparent: rgba(47, 79, 79, 0.6);
   --disabled: rgba(176, 176, 176, 0.6);
   --hover-color: #FFFFFF;
+  --default-color: #FFFFFF;
   --loader-color: #00BFFF;
   --placeholder: #808080;
   --strict: #000000;
@@ -2035,7 +2036,7 @@ defineExpose({
 
 .extended-multiselect-wrapper,
 .extended__multiselect-options_container {
-  background-color: var(--hover-color);
+  background-color: var(--default-color);
 }
 
 .extended__multiselect-wrapper--disabled .extended__multiselect-container {
@@ -2064,6 +2065,7 @@ defineExpose({
   display: grid;
   padding: var(--wrapper-padding);
   width: var(--max-size);
+  background-color: var(--default-color);
 }
 
 .extended__multiselect,
@@ -2107,7 +2109,7 @@ defineExpose({
   border: var(--border);
   color: inherit;
   user-select: none;
-  background-color: var(--hover-color);
+  background-color: var(--default-color);
   border-top-right-radius: 0;
   border-top-left-radius: 0;
   z-index: var(--z-index-options);

@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **2.0.5**
+Current `vue3-extended-multiselect` version: **2.0.6**
 
 ***
 
@@ -428,4 +428,8 @@ Adding descriptive comments for some types in typings.
 
 ### 2.0.5 (2024-01-14)
 
-* Changing some default styles and css-variables.
+* Changing some default styles.
+
+### 2.0.6 (2024-01-14)
+
+* Adding css-variable --default-color for multiselect background color.
