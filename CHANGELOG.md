@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **2.0.4**
+Current `vue3-extended-multiselect` version: **2.0.5**
 
 ***
 
@@ -388,7 +388,7 @@ Adding descriptive comments for some types in typings.
 
 * Updating dependencies and dev-dependencies.
 
-### 2.0.0 (2024-13-01)
+### 2.0.0 (2024-01-13)
 
 * Component `vue3-extended-multiselect` was bundled by rollup.
 * Updating dependencies and dev-dependencies.
@@ -410,18 +410,22 @@ Adding descriptive comments for some types in typings.
 * Removal of "vue-jest" dev-dependency.
 * Removal of "style" directory with all files. Including styles directly in component.
 
-### 2.0.1 (2024-13-01)
+### 2.0.1 (2024-01-13)
 
 * Adding "files" and "unpkg" sections to package.json file.
 
-### 2.0.2 (2024-13-01)
+### 2.0.2 (2024-01-13)
 
 * Removal "/dist" exception from ".gitignore" and ".npmignore" files.
 
-### 2.0.3 (2024-13-01)
+### 2.0.3 (2024-01-13)
 
 * Adding "main" and "module" sections to package.json file.
 
-### 2.0.4 (2024-13-01)
+### 2.0.4 (2024-01-14)
+
+* Changing some default styles and css-variables.
+
+### 2.0.5 (2024-01-14)
 
 * Changing some default styles and css-variables.
