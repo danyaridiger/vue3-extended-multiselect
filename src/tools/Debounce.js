@@ -1,6 +1,5 @@
 class Debounce {
 
-  _localTimer = null;
   _localTimeout = null;
   _callback = null; 
   _timer = 0;
@@ -11,8 +10,6 @@ class Debounce {
   }
 
   start() {
-    this._localTimer = performance.now();
-
     if (this._localTimeout) {
       clearTimeout(this._localTimeout);
     }

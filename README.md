@@ -1,10 +1,13 @@
-# vue3-extended-multiselect v2.0.6
+# vue3-extended-multiselect v2.1.0
 
 ***
 
 ### Brief annotation
 
 Vue3 extended multiselect is a component that was created for simplification of custom settings of built-in select element. This component allows developer to escape writing many excess css-rules by using built-in themes and to escape problems with different kinds of provided options. Various decoration of options list by some extra slots will help developer to make it more informative and obvious. More thorough filtering of raw options list given by developer excludes sudden errors if kind of option is not intended for extended multiselect. Switchable useful warnings will help to catch possible errors that may occur while working with options. Tools for working with selected options will allow user to control amount of displayed options and quickly deselect them. Such tools also can be customized by developer. Various slots can help developer to customize to his liking options list, elements with selected options in multiple select or some other interaction elements. You can use this component in your web-applications based on Vue 3 framework.
+
+### Page with live examples
+https://vue3-extended-multiselect.surge.sh/
 
 ### Installation with npm
 
@@ -84,7 +87,7 @@ Prop name | Prop type | Prop appointment | Prop default value | Prop values
 **toggleMax<br/>Height**|Number|Defines maximal value in pixels of "max-height" css-property for options list.|400|&mdash;|
 **toggleMin<br/>Height**|Number|Defines minimal value in pixels of "max-height" css-property for options list.|null|&mdash;|
 **createOption<br/>Fields**|Array|Defines a list of fields for options of type "object" created by user.|["label"]|&mdash;|
-**disabled<br/>Primitive<br/>Options**|Array|Defines a list of primitive types for options. Options of given types will be disabled for selection.|[]|&mdash;|
+**disabled<br/>Primitive<br/>Options**|Array|Defines a list of primitive options which will be disabled for selection.|[]|&mdash;|
 **options**|Array|Raw options list.|[]|&mdash;|
 **optionsPadding**|Array|Defines a list with "padding-top", "padding-left", "padding-bottom" and "padding-right" css-properties for options in options list. Property "padding-top" matches index zero. Property "padding-right" matches index three.|[]|&mdash;|
 **preselected<br/>Options**|Array|Defines a list of options that will be select by default.|[]|&mdash;|

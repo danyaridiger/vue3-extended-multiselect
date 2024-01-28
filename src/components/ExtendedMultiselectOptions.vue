@@ -1054,7 +1054,7 @@ const selectOption = (option, clickEvent) => {
   if (option[disableByField.value] || defineDisabledOption(option)) return;
   if (
     clickEvent.target.id === "extended__multiselect-toggle"
-    || clickEvent.target.id === "extended__multiselect-cancel"
+     || clickEvent.target.id === "extended__multiselect-cancel"
   ) return;
 
   if (selectedOptionsShown.value || externalOptionsLoader.value) {

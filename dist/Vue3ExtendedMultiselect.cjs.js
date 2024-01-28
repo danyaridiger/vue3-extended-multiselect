@@ -535,10 +535,10 @@ var script$5 = {
   },
 
   /**
-   * Defines a svg-filter for icons
-   * @property {string} iconFilter
+   * Defines a svg-filter for loader icons
+   * @property {string} loaderIconFilter
    */
-  iconFilter: {
+  loaderIconFilter: {
     type: String,
     required: true,
   },
@@ -609,7 +609,7 @@ const setSearchPattern = vue.inject("setSearchPattern");
 const {
   disabled,
   emitter,
-  iconFilter,
+  loaderIconFilter,
   iconSize,
   loading,
   selectedOptions,
@@ -672,7 +672,7 @@ return (_ctx, _cache) => {
         }, null, 10 /* CLASS, PROPS */, _hoisted_2$5))
       : (vue.openBlock(), vue.createBlock(script$6, {
           key: 1,
-          "icon-filter": vue.unref(iconFilter),
+          "icon-filter": vue.unref(loaderIconFilter),
           "icon-size": vue.unref(iconSize)
         }, null, 8 /* PROPS */, ["icon-filter", "icon-size"]))
   ], 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_1$5))
@@ -685,7 +685,6 @@ script$5.__file = "src/components/ExtendedMultiselectCancel.vue";
 
 class Debounce {
   constructor(callback, timer) {
-    _defineProperty(this, "_localTimer", null);
     _defineProperty(this, "_localTimeout", null);
     _defineProperty(this, "_callback", null);
     _defineProperty(this, "_timer", 0);
@@ -693,7 +692,6 @@ class Debounce {
     this._timer = timer;
   }
   start() {
-    this._localTimer = performance.now();
     if (this._localTimeout) {
       clearTimeout(this._localTimeout);
     }
@@ -1259,10 +1257,10 @@ var script$3 = {
   },
 
   /**
-   * Defines a svg-filter for icons
-   * @property {string} iconFilter
+   * Defines a svg-filter for loader icons
+   * @property {string} loaderIconFilter
    */
-  iconFilter: {
+  loaderIconFilter: {
     type: String,
     required: true,
   },
@@ -1728,7 +1726,7 @@ return (_ctx, _cache) => {
           style: vue.normalizeStyle(multipleBlocksMargin.value),
           disabled: vue.unref(disabled),
           loading: __props.loading,
-          "icon-filter": __props.iconFilter,
+          "icon-filter": __props.loaderIconFilter,
           "show-deselect-icon-loader": __props.showDeselectIconLoader,
           "toggle-multiple-blocks-limit": __props.toggleMultipleBlocksLimit,
           "empty-objects-placeholder": __props.emptyObjectsPlaceholder,
@@ -1777,7 +1775,7 @@ return (_ctx, _cache) => {
           vue.createVNode(script$4, {
             disabled: vue.unref(disabled),
             loading: __props.loading,
-            "icon-filter": __props.iconFilter,
+            "icon-filter": __props.loaderIconFilter,
             "placeholder-block-shown": !vue.unref(selectedOptions).length,
             "show-deselect-icon-loader": __props.showDeselectIconLoader,
             "toggle-multiple-blocks-limit": __props.toggleMultipleBlocksLimit,
@@ -2811,7 +2809,7 @@ const selectOption = (option, clickEvent) => {
   if (option[disableByField.value] || defineDisabledOption(option)) return;
   if (
     clickEvent.target.id === "extended__multiselect-toggle"
-    || clickEvent.target.id === "extended__multiselect-cancel"
+     || clickEvent.target.id === "extended__multiselect-cancel"
   ) return;
 
   if (selectedOptionsShown.value || externalOptionsLoader.value) {
@@ -3127,6 +3125,15 @@ var script$1 = {
     type: String,
     required: true,
   },
+
+  /**
+   * Defines a svg-filter for loader icons
+   * @property {string} loaderIconFilter
+   */
+   loaderIconFilter: {
+    type: String,
+    required: true,
+  },
       
   /**
    * Provides size to create special size-class 
@@ -3184,6 +3191,7 @@ const {
   dropdownActive,
   emitter,
   iconFilter,
+  loaderIconFilter,
   iconSize,
   loading,
   tabindex,
@@ -3248,8 +3256,8 @@ const icon = vue.computed(() => {
  */
 const iconFilterClass = vue.computed(() => {
   const basicFilter = "extended__multiselect-filter";
-      
-  switch(iconFilter) {
+
+  switch(iconFilter.value) {
     case "basic":
       return `${basicFilter}_basic`;
     case "black":
@@ -3304,7 +3312,7 @@ return (_ctx, _cache) => {
         }, null, 10 /* CLASS, PROPS */, _hoisted_2$1))
       : (vue.openBlock(), vue.createBlock(script$6, {
           key: 1,
-          "icon-filter": vue.unref(iconFilter),
+          "icon-filter": vue.unref(loaderIconFilter),
           "icon-size": vue.unref(iconSize)
         }, null, 8 /* PROPS */, ["icon-filter", "icon-size"])),
     _hoisted_3$1
@@ -3326,7 +3334,7 @@ const _hoisted_3 = { class: "extended__multiselect-cancel_wrapper" };
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 2.0.6
+ * @version 2.1.0
  */
 
 var script = {
@@ -3842,9 +3850,9 @@ var script = {
     default: () => [],
     validator(value) {
       return value.every((option) => {
-        return typeof option === "string" || Array.isArray(option)
-        || typeof option === "number" || typeof option === "boolean"
-        || typeof option === "function";
+        return typeof option === "string" || typeof option === "number" 
+         || typeof option === "boolean"
+         || typeof option === "function";
       });
     },
   },
@@ -4108,7 +4116,7 @@ const classes = vue.computed(() => {
 });
 
 /**
- * Defines a list of disabled options by types given in "disabledPrimitiveOptions" prop
+ * Defines a list of disabled primitive options given in "disabledPrimitiveOptions" prop
  * @function
  * @returns {Array} options
  */
@@ -4116,10 +4124,8 @@ const disabledPrimitiveOptionsConverted = vue.computed(() => {
   if (!disabledPrimitiveOptions.value) return null;
 
   return disabledPrimitiveOptions.value.map((disabledOption) => {
-    if (Array.isArray(disabledOption)) {
-      if (!disabledOption.length) return emptyObjectsPlaceholder.value;
-
-      return disabledOption.join(", ");
+    if (Array.isArray(disabledOption) || typeof disabledOption === "object") {
+      return null;
     }
 
     return disabledOption;
@@ -4241,7 +4247,7 @@ vue.watch(dropdownActive, (value) => {
 vue.watch(modelValue, (value, prevValue) => {
   if (
     JSON.stringify(vue.toRaw(value)) === JSON.stringify(vue.toRaw(prevValue)) 
-    || skipNextRemoval.value
+     || skipNextRemoval.value
   ) {
     skipNextRemoval.value = false;
 
@@ -4463,7 +4469,7 @@ const setPreselectedOptions = async (preselectedOptions, restriction = true) => 
 
     if (
       (mappedOptions.value.includes(JSON.stringify(preselectedOption)) || !restriction)
-      && !mappedSelectedOptions.includes(JSON.stringify(preselectedOption))
+       && !mappedSelectedOptions.includes(JSON.stringify(preselectedOption))
     ) {
       const isObjectOrArray = typeof option === "object";
       const label = createLabel(isObjectOrArray, preselectedOption);
@@ -5021,7 +5027,7 @@ return (_ctx, _cache) => {
           "create-on-the-go": __props.createOnTheGo,
           disabled: vue.unref(disabled),
           loading: internalLoading.value,
-          "icon-filter": __props.iconFilter,
+          "loader-icon-filter": vue.unref(loaderIconFilter),
           multiple: vue.unref(multiple),
           "search-filter-active": __props.searchFilterActive,
           "show-deselect-icon-loader": __props.showDeselectIconLoader,
@@ -5095,7 +5101,7 @@ return (_ctx, _cache) => {
                 key: "4"
               }
             : undefined
-        ]), 1032 /* PROPS, DYNAMIC_SLOTS */, ["accesskey", "autocomplete", "name", "spellcheck", "tabindex", "translate", "auto-select-search-value", "create-on-the-go", "disabled", "loading", "icon-filter", "multiple", "search-filter-active", "show-deselect-icon-loader", "toggling-saves-search-value", "toggle-options-by-select", "placeholder", "show-search-field", "empty-objects-placeholder", "label", "multiple-blocks-limit-message", "theme-type", "increase-display-by", "multipleBlocksLimit", "toggle-multiple-blocks-limit", "selected-options", "emitter", "create-custom-option-label", "create-option-placeholder", "external-options-loader", "input-id"])
+        ]), 1032 /* PROPS, DYNAMIC_SLOTS */, ["accesskey", "autocomplete", "name", "spellcheck", "tabindex", "translate", "auto-select-search-value", "create-on-the-go", "disabled", "loading", "loader-icon-filter", "multiple", "search-filter-active", "show-deselect-icon-loader", "toggling-saves-search-value", "toggle-options-by-select", "placeholder", "show-search-field", "empty-objects-placeholder", "label", "multiple-blocks-limit-message", "theme-type", "increase-display-by", "multipleBlocksLimit", "toggle-multiple-blocks-limit", "selected-options", "emitter", "create-custom-option-label", "create-option-placeholder", "external-options-loader", "input-id"])
       ]),
       vue.createElementVNode("div", _hoisted_2, [
         vue.renderSlot(_ctx.$slots, "toggle", { toggleOptionsList: vue.unref(toggleOptionsList) }, () => [
@@ -5107,10 +5113,11 @@ return (_ctx, _cache) => {
             "dropdown-active": dropdownActive.value,
             loading: internalLoading.value,
             "icon-filter": __props.iconFilter,
+            "loader-icon-filter": vue.unref(loaderIconFilter),
             "icon-size": __props.iconSize,
             "toggle-icon": __props.toggleIcon,
             emitter: vue.unref(emitter)
-          }, null, 8 /* PROPS */, ["tabindex", "disabled", "dropdown-active", "loading", "icon-filter", "icon-size", "toggle-icon", "emitter"])
+          }, null, 8 /* PROPS */, ["tabindex", "disabled", "dropdown-active", "loading", "icon-filter", "loader-icon-filter", "icon-size", "toggle-icon", "emitter"])
         ])
       ]),
       vue.createElementVNode("div", _hoisted_3, [
@@ -5122,11 +5129,11 @@ return (_ctx, _cache) => {
                 disabled: vue.unref(disabled),
                 "show-search-field": vue.unref(showSearchField),
                 loading: internalLoading.value,
-                "icon-filter": __props.iconFilter,
+                "loader-icon-filter": vue.unref(loaderIconFilter),
                 "icon-size": __props.iconSize,
                 "selected-options": selectedOptions.value,
                 emitter: vue.unref(emitter)
-              }, null, 8 /* PROPS */, ["tabindex", "disabled", "show-search-field", "loading", "icon-filter", "icon-size", "selected-options", "emitter"]))
+              }, null, 8 /* PROPS */, ["tabindex", "disabled", "show-search-field", "loading", "loader-icon-filter", "icon-size", "selected-options", "emitter"]))
             : vue.createCommentVNode("v-if", true)
         ])
       ])

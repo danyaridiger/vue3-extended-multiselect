@@ -18,7 +18,7 @@
     />
     <extended-multiselect-loader
       v-else
-      :icon-filter="iconFilter"
+      :icon-filter="loaderIconFilter"
       :icon-size="iconSize"
     />
     <svg
@@ -117,6 +117,15 @@ const props = defineProps({
     type: String,
     required: true,
   },
+
+  /**
+   * Defines a svg-filter for loader icons
+   * @property {string} loaderIconFilter
+   */
+   loaderIconFilter: {
+    type: String,
+    required: true,
+  },
       
   /**
    * Provides size to create special size-class 
@@ -171,6 +180,7 @@ const {
   dropdownActive,
   emitter,
   iconFilter,
+  loaderIconFilter,
   iconSize,
   loading,
   tabindex,
@@ -235,8 +245,8 @@ const icon = computed(() => {
  */
 const iconFilterClass = computed(() => {
   const basicFilter = "extended__multiselect-filter";
-      
-  switch(iconFilter) {
+
+  switch(iconFilter.value) {
     case "basic":
       return `${basicFilter}_basic`;
     case "black":

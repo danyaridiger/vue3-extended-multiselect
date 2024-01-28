@@ -31,7 +31,7 @@
           :create-on-the-go="createOnTheGo"
           :disabled="disabled"
           :loading="internalLoading"
-          :icon-filter="iconFilter"
+          :loader-icon-filter="loaderIconFilter"
           :multiple="multiple"
           :search-filter-active="searchFilterActive"
           :show-deselect-icon-loader="showDeselectIconLoader"
@@ -116,6 +116,7 @@
             :dropdown-active="dropdownActive"
             :loading="internalLoading"
             :icon-filter="iconFilter"
+            :loader-icon-filter="loaderIconFilter"
             :icon-size="iconSize"
             :toggle-icon="toggleIcon"
             :emitter="emitter"
@@ -133,7 +134,7 @@
             :disabled="disabled"
             :show-search-field="showSearchField"
             :loading="internalLoading"
-            :icon-filter="iconFilter"
+            :loader-icon-filter="loaderIconFilter"
             :icon-size="iconSize"
             :selected-options="selectedOptions"
             :emitter="emitter"
@@ -293,7 +294,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 2.0.6
+ * @version 2.1.0
  */
 const props = defineProps({
   /**
@@ -806,9 +807,9 @@ const props = defineProps({
     default: () => [],
     validator(value) {
       return value.every((option) => {
-        return typeof option === "string" || Array.isArray(option)
-        || typeof option === "number" || typeof option === "boolean"
-        || typeof option === "function";
+        return typeof option === "string" || typeof option === "number" 
+         || typeof option === "boolean"
+         || typeof option === "function";
       });
     },
   },
@@ -1068,7 +1069,7 @@ const classes = computed(() => {
 });
 
 /**
- * Defines a list of disabled options by types given in "disabledPrimitiveOptions" prop
+ * Defines a list of disabled primitive options given in "disabledPrimitiveOptions" prop
  * @function
  * @returns {Array} options
  */
@@ -1076,10 +1077,8 @@ const disabledPrimitiveOptionsConverted = computed(() => {
   if (!disabledPrimitiveOptions.value) return null;
 
   return disabledPrimitiveOptions.value.map((disabledOption) => {
-    if (Array.isArray(disabledOption)) {
-      if (!disabledOption.length) return emptyObjectsPlaceholder.value;
-
-      return disabledOption.join(", ");
+    if (Array.isArray(disabledOption) || typeof disabledOption === "object") {
+      return null;
     }
 
     return disabledOption;
@@ -1201,7 +1200,7 @@ watch(dropdownActive, (value) => {
 watch(modelValue, (value, prevValue) => {
   if (
     JSON.stringify(toRaw(value)) === JSON.stringify(toRaw(prevValue)) 
-    || skipNextRemoval.value
+     || skipNextRemoval.value
   ) {
     skipNextRemoval.value = false;
 
@@ -1423,7 +1422,7 @@ const setPreselectedOptions = async (preselectedOptions, restriction = true) => 
 
     if (
       (mappedOptions.value.includes(JSON.stringify(preselectedOption)) || !restriction)
-      && !mappedSelectedOptions.includes(JSON.stringify(preselectedOption))
+       && !mappedSelectedOptions.includes(JSON.stringify(preselectedOption))
     ) {
       const isObjectOrArray = typeof option === "object";
       const label = createLabel(isObjectOrArray, preselectedOption);

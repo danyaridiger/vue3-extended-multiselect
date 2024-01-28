@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **2.0.6**
+Current `vue3-extended-multiselect` version: **2.1.0**
 
 ***
 
@@ -433,3 +433,11 @@ Adding descriptive comments for some types in typings.
 ### 2.0.6 (2024-01-14)
 
 * Adding css-variable --default-color for multiselect background color.
+
+### 2.1.0 (2024-01-28)
+
+* Adding link to page with live examples.
+* Fixing bug with always basic icon filter.
+* Fixing bug with rendering icon filter instead of loader icon filter.
+* Fixing bug with "disabledPrimitiveOptions" prop accepting options of type "Array".
+

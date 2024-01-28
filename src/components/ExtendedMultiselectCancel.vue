@@ -16,7 +16,7 @@
     />
     <extended-multiselect-loader
       v-else
-      :icon-filter="iconFilter"
+      :icon-filter="loaderIconFilter"
       :icon-size="iconSize"
     />
   </div>
@@ -48,10 +48,10 @@ const props = defineProps({
   },
 
   /**
-   * Defines a svg-filter for icons
-   * @property {string} iconFilter
+   * Defines a svg-filter for loader icons
+   * @property {string} loaderIconFilter
    */
-  iconFilter: {
+  loaderIconFilter: {
     type: String,
     required: true,
   },
@@ -119,7 +119,7 @@ const setSearchPattern = inject("setSearchPattern");
 const {
   disabled,
   emitter,
-  iconFilter,
+  loaderIconFilter,
   iconSize,
   loading,
   selectedOptions,
