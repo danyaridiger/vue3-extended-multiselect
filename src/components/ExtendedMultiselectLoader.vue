@@ -1,9 +1,8 @@
 <template>
   <div class="extended__multiselect-loader">
-    <img
-      alt=""
+    <loader-icon
+      v-if="!loading"
       :class="[iconFilterClass, iconSizeClass, 'extended__multiselect-loader-animate']"
-      :src="loaderIcon"
     />
     <svg
       version="1.1" 
@@ -111,8 +110,9 @@ import {
   toRefs,
 } from "vue";
 
-import useImagePath from "../composition/image-path";
 import useSizes from "../composition/sizes";
+
+import LoaderIcon from "../icons/LoaderIcon.vue";
 
 const props = defineProps({
   /**
@@ -138,10 +138,6 @@ const props = defineProps({
 const loaderIconFilter = inject("loaderIconFilter");
 
 const { iconSize } = toRefs(props);
-
-const { createImagePath } = useImagePath();
-
-const loaderIcon = ref(createImagePath("loader.svg"));
 
 const { iconSizeClass } = useSizes(iconSize);
 

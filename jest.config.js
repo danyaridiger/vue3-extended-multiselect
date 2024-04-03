@@ -40,7 +40,6 @@ module.exports = {
     "\\.svg$" : "<rootDir>/tests/utils/stubs",
     "\\.scss$" : "identity-obj-proxy",
   },
-  modulePathIgnorePatterns: ["<rootDir>/assets"],
   resetModules: true,
   resetMocks: true,
   rootDir: "./",

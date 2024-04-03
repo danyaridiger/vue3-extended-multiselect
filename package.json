@@ -1,6 +1,6 @@
 {
   "name": "vue3-extended-multiselect",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Extended multiselect component for applications based on Vue 3 framework",
   "keywords": [
     "multiselect",
@@ -53,7 +53,6 @@
     "postcss": "^8.4.33",
     "resize-observer-polyfill": "^1.5.1",
     "rollup": "^4.9.5",
-    "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-vue": "^6.0.0",

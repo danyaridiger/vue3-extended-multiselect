@@ -1,4 +1,4 @@
-import { computed, readonly, reactive, ref, getCurrentInstance, inject, toRefs, openBlock, createElementBlock, createElementVNode, normalizeClass, unref, withModifiers, createBlock, watch, onBeforeMount, toDisplayString, createCommentVNode, renderSlot, Fragment, renderList, createTextVNode, toRef, useAttrs, onMounted, nextTick, withDirectives, vModelText, vShow, createVNode, normalizeStyle, createSlots, withCtx, provide, useSlots, toRaw, withKeys, Transition } from 'vue';
+import { computed, readonly, reactive, ref, getCurrentInstance, openBlock, createElementBlock, createElementVNode, inject, toRefs, createBlock, normalizeClass, unref, createCommentVNode, createStaticVNode, withModifiers, watch, onBeforeMount, toDisplayString, renderSlot, Fragment, renderList, createTextVNode, toRef, useAttrs, onMounted, nextTick, withDirectives, vModelText, vShow, createVNode, normalizeStyle, createSlots, withCtx, resolveDynamicComponent, provide, useSlots, toRaw, withKeys, Transition } from 'vue';
 import _defineProperty from '@babel/runtime/helpers/defineProperty';
 import ExtendedClickOutside from 'extended-click-outside';
 
@@ -271,24 +271,6 @@ function usePreselectedOptions(label, emptyObjectsPlaceholder, showInsertWarning
   };
 }
 
-function useImagePath() {
-  const createImagePath = image => {
-    const hasRequire = typeof require !== "undefined";
-    if (hasRequire) {
-      return require(`./assets/images/${image}`);
-    } else {
-      try {
-        return new URL(`./assets/images/${image}`, import.meta.url).href;
-      } catch (error) {
-        throw new ReferenceError("import.meta.url is available in «esnext» libtype only");
-      }
-    }
-  };
-  return {
-    createImagePath
-  };
-}
-
 function useSizes(iconSize) {
   /**
    * Defines classes for each kind of icon
@@ -328,9 +310,35 @@ function useSizes(iconSize) {
   };
 }
 
-const _hoisted_1$6 = { class: "extended__multiselect-loader" };
-const _hoisted_2$6 = ["src"];
-const _hoisted_3$5 = /*#__PURE__*/createElementVNode("svg", {
+const _hoisted_1$f = {
+  id: "Layer_1",
+  style: {"enable-background":"new 0 0 128 128"},
+  version: "1.1",
+  viewBox: "0 0 128 128",
+  "xml:space": "preserve",
+  xmlns: "http://www.w3.org/2000/svg",
+  "xmlns:xlink": "http://www.w3.org/1999/xlink"
+};
+const _hoisted_2$e = /*#__PURE__*/createElementVNode("g", null, [
+  /*#__PURE__*/createElementVNode("path", { d: "M96.1,103.6c-10.4,8.4-23.5,12.4-36.8,11.1c-10.5-1-20.3-5.1-28.2-11.8H44v-8H18v26h8v-11.9c9.1,7.7,20.4,12.5,32.6,13.6   c1.9,0.2,3.7,0.3,5.5,0.3c13.5,0,26.5-4.6,37-13.2c19.1-15.4,26.6-40.5,19.1-63.9l-7.6,2.4C119,68.6,112.6,90.3,96.1,103.6z" }),
+  /*#__PURE__*/createElementVNode("path", { d: "M103,19.7c-21.2-18.7-53.5-20-76.1-1.6C7.9,33.5,0.4,58.4,7.7,81.7l7.6-2.4C9,59.2,15.5,37.6,31.9,24.4   C51.6,8.4,79.7,9.6,98,26H85v8h26V8h-8V19.7z" })
+], -1 /* HOISTED */);
+const _hoisted_3$7 = [
+  _hoisted_2$e
+];
+
+function render$8(_ctx, _cache) {
+  return (openBlock(), createElementBlock("svg", _hoisted_1$f, [..._hoisted_3$7]))
+}
+
+const script$f = {};
+
+
+script$f.render = render$8;
+script$f.__file = "src/icons/LoaderIcon.vue";
+
+const _hoisted_1$e = { class: "extended__multiselect-loader" };
+const _hoisted_2$d = /*#__PURE__*/createElementVNode("svg", {
   version: "1.1",
   xmlns: "http://www.w3.org/2000/svg",
   "xmlns:xlink": "http://www.w3.org/1999/xlink",
@@ -426,7 +434,7 @@ const _hoisted_3$5 = /*#__PURE__*/createElementVNode("svg", {
 ], -1 /* HOISTED */);
 
 
-var script$6 = {
+var script$e = {
   __name: 'ExtendedMultiselectLoader',
   props: {
   /**
@@ -455,10 +463,6 @@ const props = __props;
 const loaderIconFilter = inject("loaderIconFilter");
 
 const { iconSize } = toRefs(props);
-
-const { createImagePath } = useImagePath();
-
-const loaderIcon = ref(createImagePath("loader.svg"));
 
 const { iconSizeClass } = useSizes(iconSize);
 
@@ -498,26 +502,49 @@ const iconFilterClass = computed(() => {
 });
 
 return (_ctx, _cache) => {
-  return (openBlock(), createElementBlock("div", _hoisted_1$6, [
-    createElementVNode("img", {
-      alt: "",
-      class: normalizeClass([iconFilterClass.value, unref(iconSizeClass), 'extended__multiselect-loader-animate']),
-      src: loaderIcon.value
-    }, null, 10 /* CLASS, PROPS */, _hoisted_2$6),
-    _hoisted_3$5
+  return (openBlock(), createElementBlock("div", _hoisted_1$e, [
+    (!_ctx.loading)
+      ? (openBlock(), createBlock(script$f, {
+          key: 0,
+          class: normalizeClass([iconFilterClass.value, unref(iconSizeClass), 'extended__multiselect-loader-animate'])
+        }, null, 8 /* PROPS */, ["class"]))
+      : createCommentVNode("v-if", true),
+    _hoisted_2$d
   ]))
 }
 }
 
 };
 
-script$6.__file = "src/components/ExtendedMultiselectLoader.vue";
+script$e.__file = "src/components/ExtendedMultiselectLoader.vue";
 
-const _hoisted_1$5 = ["tabindex"];
-const _hoisted_2$5 = ["src"];
+const _hoisted_1$d = {
+  style: {"enable-background":"new 0 0 35.999 36.005"},
+  version: "1.1",
+  viewBox: "0 0 35.505 36.005",
+  "xml:space": "preserve",
+  xmlns: "http://www.w3.org/2000/svg",
+  "xmlns:xlink": "http://www.w3.org/1999/xlink"
+};
+const _hoisted_2$c = /*#__PURE__*/createStaticVNode("<g id=\"Close\"><g id=\"Layer_10\"><g id=\"ClipView_7\"><path d=\"M0,0v36.005h35.999V0H0z\" marker-end=\"none\" marker-start=\"none\" style=\"fill:none;\"></path><g><defs><rect height=\"36.005\" id=\"SVGID_1_\" width=\"35.999\" y=\"0\"></rect></defs><clipPath id=\"SVGID_2_\"><use style=\"overflow:visible;\" xlink:href=\"#SVGID_1_\"></use></clipPath><g style=\"clip-path:url(#SVGID_2_);\"><g id=\"Group_18\"><path d=\"M2.995,4.799v26.403c0,0.995,0.805,1.8,1.799,1.8        h26.405c0.995,0,1.8-0.805,1.8-1.8V4.799c0-0.994-0.805-1.799-1.8-1.799H4.794C3.8,3,2.995,3.805,2.995,4.799z\" marker-end=\"none\" marker-start=\"none\" style=\"fill:#990E0D;\"></path><linearGradient gradientTransform=\"matrix(1 0 0 1 167.998 491.77)\" gradientUnits=\"userSpaceOnUse\" id=\"SVGID_3_\" x1=\"-150.3105\" x2=\"-149.2125\" y1=\"-461.7169\" y2=\"-504.473\"><stop offset=\"0\" style=\"stop-color:#DF1413;\"></stop><stop offset=\"1\" style=\"stop-color:#990E0D;\"></stop></linearGradient><path d=\"M3.745,31.202V4.799        c0-0.579,0.469-1.049,1.049-1.049h26.405c0.581,0,1.05,0.47,1.05,1.049v26.403c0,0.581-0.47,1.05-1.05,1.05H4.794        C4.214,32.252,3.745,31.784,3.745,31.202z\" marker-end=\"none\" marker-start=\"none\" style=\"fill:url(#SVGID_3_);\"></path></g><g id=\"Group_19\"><path d=\"M9.961,8.892        l16.073,16.072\" style=\"fill:none;stroke:#990E0D;stroke-width:4.287;stroke-linejoin:round;stroke-miterlimit:79.8403;\"></path><path d=\"        M26.034,8.892L9.961,24.964\" style=\"fill:none;stroke:#990E0D;stroke-width:4.287;stroke-linejoin:round;stroke-miterlimit:79.8403;\"></path></g><g id=\"Group_20\"><path d=\"M9.961,9.964        l16.073,16.073\" style=\"fill:none;stroke:#FFFFFF;stroke-width:4.287;stroke-linejoin:round;stroke-miterlimit:79.8403;\"></path><path d=\"        M26.034,9.964L9.961,26.037\" style=\"fill:none;stroke:#FFFFFF;stroke-width:4.287;stroke-linejoin:round;stroke-miterlimit:79.8403;\"></path></g></g></g></g></g></g><g id=\"Layer_1\"></g>", 2);
+const _hoisted_4$4 = [
+  _hoisted_2$c
+];
+
+function render$7(_ctx, _cache) {
+  return (openBlock(), createElementBlock("svg", _hoisted_1$d, [..._hoisted_4$4]))
+}
+
+const script$d = {};
 
 
-var script$5 = {
+script$d.render = render$7;
+script$d.__file = "src/icons/CancelIcon.vue";
+
+const _hoisted_1$c = ["tabindex"];
+
+
+var script$c = {
   __name: 'ExtendedMultiselectCancel',
   props: {
   /**
@@ -612,10 +639,6 @@ const {
   tabindex,
 } = toRefs(props);
 
-const { createImagePath } = useImagePath();
-
-const cancelIcon = ref(createImagePath("cancel.svg"));
-
 const { cancel } = useCancel(
   disabled,
   showSearchField,
@@ -659,24 +682,22 @@ return (_ctx, _cache) => {
     onKeypress: _cache[1] || (_cache[1] = withModifiers((...args) => (unref(cancel) && unref(cancel)(...args)), ["stop"]))
   }, [
     (!unref(loading))
-      ? (openBlock(), createElementBlock("img", {
+      ? (openBlock(), createBlock(script$d, {
           key: 0,
-          alt: "",
-          class: normalizeClass(unref(iconSizeClass)),
-          src: cancelIcon.value
-        }, null, 10 /* CLASS, PROPS */, _hoisted_2$5))
-      : (openBlock(), createBlock(script$6, {
+          class: normalizeClass(unref(iconSizeClass))
+        }, null, 8 /* PROPS */, ["class"]))
+      : (openBlock(), createBlock(script$e, {
           key: 1,
           "icon-filter": unref(loaderIconFilter),
           "icon-size": unref(iconSize)
         }, null, 8 /* PROPS */, ["icon-filter", "icon-size"]))
-  ], 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_1$5))
+  ], 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_1$c))
 }
 }
 
 };
 
-script$5.__file = "src/components/ExtendedMultiselectCancel.vue";
+script$c.__file = "src/components/ExtendedMultiselectCancel.vue";
 
 class Debounce {
   constructor(callback, timer) {
@@ -703,15 +724,14 @@ function useDebounce() {
   };
 }
 
-const _hoisted_1$4 = { class: "extended__multiselect-block extended__multiselect-block--multiple" };
-const _hoisted_2$4 = {
+const _hoisted_1$b = { class: "extended__multiselect-block extended__multiselect-block--multiple" };
+const _hoisted_2$b = {
   key: 0,
   class: "extended__multiselect-placeholder"
 };
-const _hoisted_3$4 = ["src", "onClick"];
 
 
-var script$4 = {
+var script$b = {
   __name: 'ExtendedMultiselectMultiple',
   props: {
   /**
@@ -884,11 +904,8 @@ const {
   toggleMultipleBlocksLimit,
 } = toRefs(props);
 
-const { createImagePath } = useImagePath();
-
 const optionsLimitIncreaser = ref(null);
 const increaserClass = ref("extended__multiselect-increaser");
-const deselectImage = ref(createImagePath("cancel.svg"));
 
 const { optionCreateLabel } = useLabels(
   label, 
@@ -1036,9 +1053,9 @@ onBeforeMount(() => {
 });
 
 return (_ctx, _cache) => {
-  return (openBlock(), createElementBlock("div", _hoisted_1$4, [
+  return (openBlock(), createElementBlock("div", _hoisted_1$b, [
     (__props.placeholderBlockShown)
-      ? (openBlock(), createElementBlock("span", _hoisted_2$4, toDisplayString(__props.appropriatePlaceholder), 1 /* TEXT */))
+      ? (openBlock(), createElementBlock("span", _hoisted_2$b, toDisplayString(__props.appropriatePlaceholder), 1 /* TEXT */))
       : createCommentVNode("v-if", true),
     createElementVNode("div", null, [
       renderSlot(_ctx.$slots, "multipleBlocks", {
@@ -1060,14 +1077,12 @@ return (_ctx, _cache) => {
                   class: normalizeClass(deselectClasses.value)
                 }, [
                   (!showLoaderIcon.value)
-                    ? (openBlock(), createElementBlock("img", {
+                    ? (openBlock(), createBlock(script$d, {
                         key: 0,
-                        alt: "",
                         class: "extended__multiselect_deselect-block-icon",
-                        src: deselectImage.value,
                         onClick: withModifiers($event => (deselectBlock(index)), ["stop"])
-                      }, null, 8 /* PROPS */, _hoisted_3$4))
-                    : (openBlock(), createBlock(script$6, {
+                      }, null, 8 /* PROPS */, ["onClick"]))
+                    : (openBlock(), createBlock(script$e, {
                         key: 1,
                         "icon-filter": __props.iconFilter,
                         "icon-size": "deselect"
@@ -1101,26 +1116,26 @@ return (_ctx, _cache) => {
 
 };
 
-script$4.__file = "src/components/ExtendedMultiselectMultiple.vue";
+script$b.__file = "src/components/ExtendedMultiselectMultiple.vue";
 
-const _hoisted_1$3 = { key: 0 };
-const _hoisted_2$3 = ["accesskey", "autocomplete", "disabled", "id", "name", "placeholder", "spellcheck", "tabindex", "translate"];
-const _hoisted_3$3 = {
+const _hoisted_1$a = { key: 0 };
+const _hoisted_2$a = ["accesskey", "autocomplete", "disabled", "id", "name", "placeholder", "spellcheck", "tabindex", "translate"];
+const _hoisted_3$6 = {
   key: 0,
   class: "extended__multiselect-placeholder"
 };
-const _hoisted_4$1 = { key: 1 };
-const _hoisted_5$1 = {
+const _hoisted_4$3 = { key: 1 };
+const _hoisted_5$3 = {
   key: 2,
   class: "extended__multiselect-block"
 };
-const _hoisted_6$1 = {
+const _hoisted_6$3 = {
   key: 0,
   class: "extended__multiselect-placeholder"
 };
 
 
-var script$3 = {
+var script$a = {
   __name: 'ExtendedMultiselectInput',
   props: {
   /**
@@ -1681,7 +1696,7 @@ onMounted(() => {
 
 return (_ctx, _cache) => {
   return (unref(showSearchField))
-    ? (openBlock(), createElementBlock("div", _hoisted_1$3, [
+    ? (openBlock(), createElementBlock("div", _hoisted_1$a, [
         withDirectives(createElementVNode("input", {
           "aria-controls": "extended-search-field",
           ref_key: "extendedInput",
@@ -1701,7 +1716,7 @@ return (_ctx, _cache) => {
           onBlur: withModifiers(rollUp, ["prevent"]),
           onFocus: withModifiers(expand, ["prevent"]),
           onInput: search
-        }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_2$3), [
+        }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_2$a), [
           [vModelText, searchValue.value]
         ]),
         withDirectives(createElementVNode("div", {
@@ -1715,9 +1730,9 @@ return (_ctx, _cache) => {
           [vShow, !searchFieldForwarding.value && !unref(multiple) && !placeholderBlockShown.value]
         ]),
         (placeholderBlockShown.value)
-          ? (openBlock(), createElementBlock("span", _hoisted_3$3, toDisplayString(appropriatePlaceholder.value), 1 /* TEXT */))
+          ? (openBlock(), createElementBlock("span", _hoisted_3$6, toDisplayString(appropriatePlaceholder.value), 1 /* TEXT */))
           : createCommentVNode("v-if", true),
-        withDirectives(createVNode(script$4, {
+        withDirectives(createVNode(script$b, {
           style: normalizeStyle(multipleBlocksMargin.value),
           disabled: unref(disabled),
           loading: __props.loading,
@@ -1766,8 +1781,8 @@ return (_ctx, _cache) => {
         ])
       ]))
     : (!unref(showSearchField) && unref(multiple))
-      ? (openBlock(), createElementBlock("div", _hoisted_4$1, [
-          createVNode(script$4, {
+      ? (openBlock(), createElementBlock("div", _hoisted_4$3, [
+          createVNode(script$b, {
             disabled: unref(disabled),
             loading: __props.loading,
             "icon-filter": __props.loaderIconFilter,
@@ -1819,9 +1834,9 @@ return (_ctx, _cache) => {
             onFocus: withModifiers(expand, ["prevent"])
           }, null, 544 /* NEED_HYDRATION, NEED_PATCH */)
         ]))
-      : (openBlock(), createElementBlock("div", _hoisted_5$1, [
+      : (openBlock(), createElementBlock("div", _hoisted_5$3, [
           (placeholderBlockShown.value)
-            ? (openBlock(), createElementBlock("span", _hoisted_6$1, toDisplayString(appropriatePlaceholder.value), 1 /* TEXT */))
+            ? (openBlock(), createElementBlock("span", _hoisted_6$3, toDisplayString(appropriatePlaceholder.value), 1 /* TEXT */))
             : createCommentVNode("v-if", true),
           renderSlot(_ctx.$slots, "labelBlock", { labelBlockValue: singleLabel.value }, () => [
             createElementVNode("span", null, toDisplayString(singleLabel.value), 1 /* TEXT */)
@@ -1840,23 +1855,23 @@ return (_ctx, _cache) => {
 
 };
 
-script$3.__file = "src/components/ExtendedMultiselectInput.vue";
+script$a.__file = "src/components/ExtendedMultiselectInput.vue";
 
-const _hoisted_1$2 = /*#__PURE__*/createElementVNode("span", null, "Maximum limit of selected options was achieved", -1 /* HOISTED */);
-const _hoisted_2$2 = /*#__PURE__*/createElementVNode("span", null, "Minimum amount of selected options was not achieved", -1 /* HOISTED */);
-const _hoisted_3$2 = { class: "extended__multiselect-options_container" };
-const _hoisted_4 = ["aria-setsize", "aria-posinset", "aria-labelledby", "aria-disabled", "enter-locator", "role", "onClick", "onKeypress"];
-const _hoisted_5 = { class: "extended__multiselect-marker" };
-const _hoisted_6 = {
+const _hoisted_1$9 = /*#__PURE__*/createElementVNode("span", null, "Maximum limit of selected options was achieved", -1 /* HOISTED */);
+const _hoisted_2$9 = /*#__PURE__*/createElementVNode("span", null, "Minimum amount of selected options was not achieved", -1 /* HOISTED */);
+const _hoisted_3$5 = { class: "extended__multiselect-options_container" };
+const _hoisted_4$2 = ["aria-setsize", "aria-posinset", "aria-labelledby", "aria-disabled", "enter-locator", "role", "onClick", "onKeypress"];
+const _hoisted_5$2 = { class: "extended__multiselect-marker" };
+const _hoisted_6$2 = {
   key: 1,
   class: "extended__multiselect-marker-shape-only"
 };
-const _hoisted_7 = ["id"];
-const _hoisted_8 = /*#__PURE__*/createElementVNode("span", null, "No results were found by search", -1 /* HOISTED */);
-const _hoisted_9 = /*#__PURE__*/createElementVNode("span", null, "Options list is empty", -1 /* HOISTED */);
+const _hoisted_7$2 = ["id"];
+const _hoisted_8$2 = /*#__PURE__*/createElementVNode("span", null, "No results were found by search", -1 /* HOISTED */);
+const _hoisted_9$2 = /*#__PURE__*/createElementVNode("span", null, "Options list is empty", -1 /* HOISTED */);
 
 
-var script$2 = {
+var script$9 = {
   __name: 'ExtendedMultiselectOptions',
   props: {
   /**
@@ -2957,15 +2972,15 @@ return (_ctx, _cache) => {
       : createCommentVNode("v-if", true),
     (maxOptionsWereSelected.value)
       ? renderSlot(_ctx.$slots, "moreThanLimit", { key: 1 }, () => [
-          _hoisted_1$2
+          _hoisted_1$9
         ])
       : createCommentVNode("v-if", true),
     (minOptionsWereNotSelected.value)
       ? renderSlot(_ctx.$slots, "lessThanLimit", { key: 2 }, () => [
-          _hoisted_2$2
+          _hoisted_2$9
         ])
       : createCommentVNode("v-if", true),
-    createElementVNode("div", _hoisted_3$2, [
+    createElementVNode("div", _hoisted_3$5, [
       (openBlock(true), createElementBlock(Fragment, null, renderList(availableOptions.value, (option, index) => {
         return (openBlock(), createElementBlock("div", {
           role: "listbox",
@@ -2991,7 +3006,7 @@ return (_ctx, _cache) => {
                   option: option,
                   createCustomOptionLabel: unref(createCustomOptionLabel)
                 }, () => [
-                  createElementVNode("div", _hoisted_5, [
+                  createElementVNode("div", _hoisted_5$2, [
                     renderSlot(_ctx.$slots, "marker", {
                       selected: showCurrentMarker(option)
                     }, () => [
@@ -3002,27 +3017,27 @@ return (_ctx, _cache) => {
                             style: normalizeStyle(markerShapeMargin.value)
                           }, null, 6 /* CLASS, STYLE */))
                         : (unref(showMarker))
-                          ? (openBlock(), createElementBlock("div", _hoisted_6))
+                          ? (openBlock(), createElementBlock("div", _hoisted_6$2))
                           : createCommentVNode("v-if", true)
                     ])
                   ]),
                   createElementVNode("span", {
                     id: `option-label-${index}`
-                  }, toDisplayString(unref(optionCreateLabel)(option)), 9 /* TEXT, PROPS */, _hoisted_7)
+                  }, toDisplayString(unref(optionCreateLabel)(option)), 9 /* TEXT, PROPS */, _hoisted_7$2)
                 ])
-              ], 46 /* CLASS, STYLE, PROPS, NEED_HYDRATION */, _hoisted_4))
+              ], 46 /* CLASS, STYLE, PROPS, NEED_HYDRATION */, _hoisted_4$2))
             : createCommentVNode("v-if", true)
         ]))
       }), 128 /* KEYED_FRAGMENT */))
     ]),
     (emptySearchResult.value)
       ? renderSlot(_ctx.$slots, "noResults", { key: 3 }, () => [
-          _hoisted_8
+          _hoisted_8$2
         ])
       : createCommentVNode("v-if", true),
     (emptyOptionsList.value)
       ? renderSlot(_ctx.$slots, "noOptions", { key: 4 }, () => [
-          _hoisted_9
+          _hoisted_9$2
         ])
       : createCommentVNode("v-if", true),
     renderSlot(_ctx.$slots, "listFooter")
@@ -3032,11 +3047,256 @@ return (_ctx, _cache) => {
 
 };
 
-script$2.__file = "src/components/ExtendedMultiselectOptions.vue";
+script$9.__file = "src/components/ExtendedMultiselectOptions.vue";
+
+const _hoisted_1$8 = {
+  version: "1.1",
+  id: "Capa_1",
+  xmlns: "http://www.w3.org/2000/svg",
+  "xmlns:xlink": "http://www.w3.org/1999/xlink",
+  x: "0px",
+  y: "0px",
+  viewBox: "0 0 490 490",
+  style: {"enable-background":"new 0 0 490 490"},
+  "xml:space": "preserve"
+};
+const _hoisted_2$8 = /*#__PURE__*/createStaticVNode("<g><g><polygon points=\"0,332.668 245.004,82.631 490,332.668 413.507,407.369 245.004,235.402 76.493,407.369 \t\t\"></polygon></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g>", 16);
+const _hoisted_18$4 = [
+  _hoisted_2$8
+];
+
+function render$6(_ctx, _cache) {
+  return (openBlock(), createElementBlock("svg", _hoisted_1$8, [..._hoisted_18$4]))
+}
+
+const script$8 = {};
+
+
+script$8.render = render$6;
+script$8.__file = "src/icons/BaseArrowIcon.vue";
+
+const _hoisted_1$7 = {
+  version: "1.1",
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 26 26",
+  "xmlns:xlink": "http://www.w3.org/1999/xlink",
+  "enable-background": "new 0 0 26 26"
+};
+const _hoisted_2$7 = /*#__PURE__*/createElementVNode("g", null, [
+  /*#__PURE__*/createElementVNode("path", { d: "m13,0c-7.2,0-13,5.8-13,13s5.8,13 13,13 13-5.8 13-13-5.8-13-13-13zm0,22c-5,0-9-4-9-9s4-9 9-9 9,4 9,9-4,9-9,9z" }),
+  /*#__PURE__*/createElementVNode("path", { d: "M18.8,14.4l-5-6C13.6,8.2,13.3,8,13,8s-0.6,0.1-0.8,0.4l-5,6l-0.1,0.1C7,14.7,7,14.8,7,15c0,0.3,0.2,0.7,0.5,0.9l1.7,1   C9.3,17,9.5,17,9.7,17c0.3,0,0.5-0.1,0.7-0.3l1.8-2.1c0.4-0.5,1.1-0.5,1.5,0l1.8,2.1c0.2,0.2,0.4,0.3,0.7,0.3c0.2,0,0.4,0,0.5-0.1   l1.7-1c0.3-0.2,0.5-0.5,0.5-0.9c0-0.2,0-0.3-0.1-0.5C18.8,14.4,18.8,14.4,18.8,14.4z" })
+], -1 /* HOISTED */);
+const _hoisted_3$4 = [
+  _hoisted_2$7
+];
+
+function render$5(_ctx, _cache) {
+  return (openBlock(), createElementBlock("svg", _hoisted_1$7, [..._hoisted_3$4]))
+}
+
+const script$7 = {};
+
+
+script$7.render = render$5;
+script$7.__file = "src/icons/CircleArrowIcon.vue";
+
+const _hoisted_1$6 = {
+  version: "1.1",
+  id: "Capa_1",
+  xmlns: "http://www.w3.org/2000/svg",
+  "xmlns:xlink": "http://www.w3.org/1999/xlink",
+  x: "0px",
+  y: "0px",
+  viewBox: "0 0 490.037 490.037",
+  style: {"enable-background":"new 0 0 490.037 490.037"},
+  "xml:space": "preserve"
+};
+const _hoisted_2$6 = /*#__PURE__*/createElementVNode("path", { d: "M91.483,490.019l153.535-160.332l153.535,160.332l91.483-91.439l-69.81-72.906l69.81-69.775L245.019,0.019L0,255.898\r\n      l69.81,69.775L0,398.58L91.483,490.019z M42.905,255.434L245.019,44.346l202.114,211.089l-48.1,48.07L245.019,142.678\r\n      L91.004,303.504L42.905,255.434z M245.019,187.02l202.114,211.081l-48.1,48.085L245.019,285.345L91.004,446.186l-48.1-48.085\r\n      L245.019,187.02z" }, null, -1 /* HOISTED */);
+const _hoisted_3$3 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_4$1 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_5$1 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_6$1 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_7$1 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_8$1 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_9$1 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_10$1 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_11$1 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_12$1 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_13$1 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_14$1 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_15$1 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_16$1 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_17$1 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_18$3 = [
+  _hoisted_2$6,
+  _hoisted_3$3,
+  _hoisted_4$1,
+  _hoisted_5$1,
+  _hoisted_6$1,
+  _hoisted_7$1,
+  _hoisted_8$1,
+  _hoisted_9$1,
+  _hoisted_10$1,
+  _hoisted_11$1,
+  _hoisted_12$1,
+  _hoisted_13$1,
+  _hoisted_14$1,
+  _hoisted_15$1,
+  _hoisted_16$1,
+  _hoisted_17$1
+];
+
+function render$4(_ctx, _cache) {
+  return (openBlock(), createElementBlock("svg", _hoisted_1$6, [..._hoisted_18$3]))
+}
+
+const script$6 = {};
+
+
+script$6.render = render$4;
+script$6.__file = "src/icons/DoubleArrowIcon.vue";
+
+const _hoisted_1$5 = {
+  version: "1.1",
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 137.145 137.145",
+  "xmlns:xlink": "http://www.w3.org/1999/xlink",
+  "enable-background": "new 0 0 137.145 137.145"
+};
+const _hoisted_2$5 = /*#__PURE__*/createElementVNode("g", null, [
+  /*#__PURE__*/createElementVNode("g", null, [
+    /*#__PURE__*/createElementVNode("path", { d: "m37.711,89.198l30.861-28.835-10.287-9.612-30.861,28.835 10.287,9.612zm72.004-89.198h-82.286c-15.149,0-27.429,12.281-27.429,27.429v82.287c0,15.148 12.28,27.429 27.429,27.429h82.286c15.149,0 27.429-12.28 27.429-27.429v-82.287c0-15.148-12.28-27.429-27.429-27.429zm13.715,102.858c0,11.361-9.21,20.572-20.572,20.572h-68.572c-11.361,0-20.571-9.211-20.571-20.572v-68.572c0-11.361 9.21-20.572 20.571-20.572h68.572c11.361,0 20.572,9.211 20.572,20.572v68.572zm-65.145-52.107l41.148,38.447 10.287-9.612-41.148-38.446-10.287,9.611z" })
+  ])
+], -1 /* HOISTED */);
+const _hoisted_3$2 = [
+  _hoisted_2$5
+];
+
+function render$3(_ctx, _cache) {
+  return (openBlock(), createElementBlock("svg", _hoisted_1$5, [..._hoisted_3$2]))
+}
+
+const script$5 = {};
+
+
+script$5.render = render$3;
+script$5.__file = "src/icons/InnerArrowIcon.vue";
+
+const _hoisted_1$4 = {
+  version: "1.1",
+  id: "Capa_1",
+  xmlns: "http://www.w3.org/2000/svg",
+  "xmlns:xlink": "http://www.w3.org/1999/xlink",
+  x: "0px",
+  y: "0px",
+  viewBox: "0 0 16 16",
+  style: {"enable-background":"new 0 0 16 16"},
+  "xml:space": "preserve"
+};
+const _hoisted_2$4 = /*#__PURE__*/createElementVNode("g", null, [
+  /*#__PURE__*/createElementVNode("path", {
+    style: {"fill":"#030104"},
+    d: "M8,0C3.582,0,0,3.582,0,8s3.582,8,8,8s8-3.582,8-8S12.418,0,8,0z M4,11l4-7l4,7H4z"
+  })
+], -1 /* HOISTED */);
+const _hoisted_3$1 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_4 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_5 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_6 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_7 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_8 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_9 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_10 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_11 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_12 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_13 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_14 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_15 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_16 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_17 = /*#__PURE__*/createElementVNode("g", null, null, -1 /* HOISTED */);
+const _hoisted_18$2 = [
+  _hoisted_2$4,
+  _hoisted_3$1,
+  _hoisted_4,
+  _hoisted_5,
+  _hoisted_6,
+  _hoisted_7,
+  _hoisted_8,
+  _hoisted_9,
+  _hoisted_10,
+  _hoisted_11,
+  _hoisted_12,
+  _hoisted_13,
+  _hoisted_14,
+  _hoisted_15,
+  _hoisted_16,
+  _hoisted_17
+];
+
+function render$2(_ctx, _cache) {
+  return (openBlock(), createElementBlock("svg", _hoisted_1$4, [..._hoisted_18$2]))
+}
+
+const script$4 = {};
+
+
+script$4.render = render$2;
+script$4.__file = "src/icons/TriangleCircleArrowIcon.vue";
+
+const _hoisted_1$3 = {
+  version: "1.1",
+  id: "Capa_1",
+  xmlns: "http://www.w3.org/2000/svg",
+  "xmlns:xlink": "http://www.w3.org/1999/xlink",
+  x: "0px",
+  y: "0px",
+  viewBox: "0 0 490 490",
+  style: {"enable-background":"new 0 0 490 490"},
+  "xml:space": "preserve"
+};
+const _hoisted_2$3 = /*#__PURE__*/createStaticVNode("<g><g><g><polygon points=\"0,249.888 245.004,8.139 490,249.888 490,481.861 245.004,239.71 0,481.861 \t\t\t\"></polygon></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g>", 16);
+const _hoisted_18$1 = [
+  _hoisted_2$3
+];
+
+function render$1(_ctx, _cache) {
+  return (openBlock(), createElementBlock("svg", _hoisted_1$3, [..._hoisted_18$1]))
+}
+
+const script$3 = {};
+
+
+script$3.render = render$1;
+script$3.__file = "src/icons/WideArrowIcon.vue";
+
+const _hoisted_1$2 = {
+  version: "1.1",
+  id: "Capa_1",
+  xmlns: "http://www.w3.org/2000/svg",
+  "xmlns:xlink": "http://www.w3.org/1999/xlink",
+  x: "0px",
+  y: "0px",
+  viewBox: "0 0 491.858 491.858",
+  style: {"enable-background":"new 0 0 491.858 491.858"},
+  "xml:space": "preserve"
+};
+const _hoisted_2$2 = /*#__PURE__*/createStaticVNode("<g><g><path d=\"M491.858,442.461c0,13.931-11.293,25.224-25.224,25.224L245.93,373.097L25.224,467.686\r\n          C11.292,467.686,0,456.392,0,442.461L227.011,32.58c0,0,18.918-18.918,37.834,0C283.764,51.499,491.858,442.461,491.858,442.461z\"></path></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g>", 16);
+const _hoisted_18 = [
+  _hoisted_2$2
+];
+
+function render(_ctx, _cache) {
+  return (openBlock(), createElementBlock("svg", _hoisted_1$2, [..._hoisted_18]))
+}
+
+const script$2 = {};
+
+
+script$2.render = render;
+script$2.__file = "src/icons/TriangleArrowIcon.vue";
 
 const _hoisted_1$1 = ["aria-checked", "tabindex"];
-const _hoisted_2$1 = ["src"];
-const _hoisted_3$1 = /*#__PURE__*/createElementVNode("svg", {
+const _hoisted_2$1 = /*#__PURE__*/createElementVNode("svg", {
   version: "1.1",
   xmlns: "http://www.w3.org/2000/svg",
   "xmlns:xlink": "http://www.w3.org/1999/xlink",
@@ -3193,8 +3453,6 @@ const {
   toggleIcon,
 } = toRefs(props);
 
-const { createImagePath } = useImagePath();
-
 const { toggleSlotClass, toggleOptionsList } = useToggle(
   loading,
   disabled,
@@ -3222,25 +3480,23 @@ const classesSummary = computed(() => {
  * @returns {string} icon
  */
 const icon = computed(() => {
-  const baseArrow = createImagePath("base-arrow.svg");
-
   switch(toggleIcon.value) {
     case "base-arrow":
-      return baseArrow;
+      return script$8;
     case "double-arrow":
-      return createImagePath("double-arrow.svg");
+      return script$6;
     case "wide-arrow":
-      return createImagePath("wide-arrow.svg");
+      return script$3;
     case "circle-arrow":
-      return createImagePath("circle-arrow.svg");
+      return script$7;
     case "inner-arrow":
-      return createImagePath("inner-arrow.svg");
+      return script$5;
     case "triangle-arrow":
-      return createImagePath("triangle-arrow.svg");
+      return script$2;
     case "triangle-circle-arrow":
-      return createImagePath("triangle-circle-arrow.svg");
+      return script$4;
     default: 
-      return baseArrow;
+      return script$8;
   }
 });
 
@@ -3299,18 +3555,16 @@ return (_ctx, _cache) => {
     onKeypress: _cache[2] || (_cache[2] = withModifiers($event => (unref(toggleOptionsList)($event)), ["stop"]))
   }, [
     (!unref(loading))
-      ? (openBlock(), createElementBlock("img", {
-          key: 0,
-          alt: "",
+      ? (openBlock(), createBlock(resolveDynamicComponent(icon.value), {
           class: normalizeClass(classesSummary.value),
-          src: icon.value
-        }, null, 10 /* CLASS, PROPS */, _hoisted_2$1))
-      : (openBlock(), createBlock(script$6, {
+          key: icon.value
+        }, null, 8 /* PROPS */, ["class"]))
+      : (openBlock(), createBlock(script$e, {
           key: 1,
           "icon-filter": unref(loaderIconFilter),
           "icon-size": unref(iconSize)
         }, null, 8 /* PROPS */, ["icon-filter", "icon-size"])),
-    _hoisted_3$1
+    _hoisted_2$1
   ], 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_1$1))
 }
 }
@@ -3329,7 +3583,7 @@ const _hoisted_3 = { class: "extended__multiselect-cancel_wrapper" };
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 2.1.0
+ * @version 2.2.0
  */
 
 var script = {
@@ -5011,7 +5265,7 @@ return (_ctx, _cache) => {
       style: normalizeStyle([displayWrongValue.value, expanded.value])
     }, [
       createElementVNode("div", null, [
-        createVNode(script$3, {
+        createVNode(script$a, {
           accesskey: unref(attrs).accesskey,
           autocomplete: unref(attrs).autocomplete,
           name: unref(attrs).name,
@@ -5118,7 +5372,7 @@ return (_ctx, _cache) => {
       createElementVNode("div", _hoisted_3, [
         renderSlot(_ctx.$slots, "cancel", { cancel: unref(cancel) }, () => [
           (unref(showClearIcon))
-            ? (openBlock(), createBlock(script$5, {
+            ? (openBlock(), createBlock(script$c, {
                 key: 0,
                 tabindex: unref(attrs).tabindex,
                 disabled: unref(disabled),
@@ -5139,7 +5393,7 @@ return (_ctx, _cache) => {
     }, {
       default: withCtx(() => [
         (dropdownActive.value)
-          ? (openBlock(), createBlock(script$2, {
+          ? (openBlock(), createBlock(script$9, {
               key: 0,
               "auto-select-created-option": __props.autoSelectCreatedOption,
               "clear-by-select-when-multiple": __props.clearBySelectWhenMultiple,

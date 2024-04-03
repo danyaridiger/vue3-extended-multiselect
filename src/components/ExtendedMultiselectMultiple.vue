@@ -25,11 +25,9 @@
             <div :class="classes">
               <span>{{ optionCreateLabel(option) }}</span>
               <div :class="deselectClasses">
-                <img
-                  alt=""
+                <CancelIcon
                   class="extended__multiselect_deselect-block-icon"
                   v-if="!showLoaderIcon"
-                  :src="deselectImage"
                   @click.stop="deselectBlock(index)"
                 />
                 <extended-multiselect-loader
@@ -74,10 +72,10 @@ import {
   watch,
 } from "vue";
 
-import useImagePath from "../composition/image-path";
 import useLabels from "../composition/labels";
 
 import ExtendedMultiselectLoader from "./ExtendedMultiselectLoader.vue";
+import CancelIcon from "../icons/CancelIcon.vue";
 
 const props = defineProps({
   /**
@@ -247,11 +245,8 @@ const {
   toggleMultipleBlocksLimit,
 } = toRefs(props);
 
-const { createImagePath } = useImagePath();
-
 const optionsLimitIncreaser = ref(null);
 const increaserClass = ref("extended__multiselect-increaser");
-const deselectImage = ref(createImagePath("cancel.svg"));
 
 const { optionCreateLabel } = useLabels(
   label, 

@@ -8,11 +8,9 @@
     @click="cancel"
     @keypress.stop="cancel"
   >
-    <img
-      alt=""
+    <cancel-icon
       v-if="!loading"
       :class="iconSizeClass"
-      :src="cancelIcon"
     />
     <extended-multiselect-loader
       v-else
@@ -32,10 +30,10 @@ import {
 } from "vue";
 
 import useCancel from "../composition/cancel";
-import useImagePath from "../composition/image-path";
 import useSizes from "../composition/sizes";
 
 import ExtendedMultiselectLoader from "./ExtendedMultiselectLoader.vue";
+import CancelIcon from "../icons/CancelIcon.vue";
 
 const props = defineProps({
   /**
@@ -126,10 +124,6 @@ const {
   showSearchField,
   tabindex,
 } = toRefs(props);
-
-const { createImagePath } = useImagePath();
-
-const cancelIcon = ref(createImagePath("cancel.svg"));
 
 const { cancel } = useCancel(
   disabled,

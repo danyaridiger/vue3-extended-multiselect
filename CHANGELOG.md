@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **2.1.0**
+Current `vue3-extended-multiselect` version: **2.2.0**
 
 ***
 
@@ -440,4 +440,19 @@ Adding descriptive comments for some types in typings.
 * Fixing bug with always basic icon filter.
 * Fixing bug with rendering icon filter instead of loader icon filter.
 * Fixing bug with "disabledPrimitiveOptions" prop accepting options of type "Array".
+
+### 2.2.0 (2024-03-04)
+
+* Adding "icon" directory with svg-icon components.
+* Adding BaseArrowIcon component.
+* Adding CancelIcon component.
+* Adding DoubleArrowIcon component.
+* Adding InnerArrowIcon component.
+* Adding LoaderIcon component.
+* Adding TriangleArrowIcon component.
+* Adding TriangleCircleArrowIcon component.
+* Adding WideArrowIcon component.
+* Removal of "copy" plugin and "transform" section from rollup.config.mjs.
+* Removal of "rollup-plugin-copy" dev-dependency.
+* Removal of "assets" and "images" directories with corresponding files.
 

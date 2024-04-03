@@ -354,7 +354,7 @@ describe("props", () => {
     wrapper = await mountComponent(Vue3ExtendedMultiselect, false, propsData);
 
     const multipleWrapper = wrapper.find(".extended__multiselect-block--multiple");
-    const loaderWrapper = multipleWrapper.findComponent(ExtendedMultiselectLoader).find("img");
+    const loaderWrapper = multipleWrapper.findComponent(ExtendedMultiselectLoader).find("svg");
 
     expect(loaderWrapper.exists()).toBeTruthy();
     expect(loaderWrapper.isVisible()).toBeTruthy();
@@ -610,7 +610,7 @@ describe("props", () => {
 
     wrapper = await mountComponent(Vue3ExtendedMultiselect, false, propsData);
 
-    const toggleWrapper = wrapper.find("#extended__multiselect-toggle").find("img");
+    const toggleWrapper = wrapper.find("#extended__multiselect-toggle").find("svg");
 
     expect(toggleWrapper.classes()).toContain("extended__multiselect-filter_basic");
   });
@@ -623,7 +623,7 @@ describe("props", () => {
 
     wrapper = await mountComponent(Vue3ExtendedMultiselect, false, propsData);
 
-    const toggleWrapper = wrapper.find("#extended__multiselect-toggle").find("img");
+    const toggleWrapper = wrapper.find("#extended__multiselect-toggle").find("svg");
 
     expect(toggleWrapper.classes()).toContain("extended__multiselect-toggle_icon-large");
   });
@@ -653,7 +653,7 @@ describe("props", () => {
 
     wrapper = await mountComponent(Vue3ExtendedMultiselect, false, propsData);
 
-    const loaderWrapper = wrapper.findComponent(ExtendedMultiselectLoader).find("img");
+    const loaderWrapper = wrapper.findComponent(ExtendedMultiselectLoader).find("svg");
 
     expect(loaderWrapper.classes()).toContain("extended__multiselect-loader_default-loader");
   });
@@ -741,7 +741,7 @@ describe("props", () => {
     wrapper = await mountComponent(Vue3ExtendedMultiselect, false, propsData);
 
     const toggleWrapper = wrapper.findComponent(ExtendedMultiselectToggle);
-    const icon = toggleWrapper.find("img");
+    const icon = toggleWrapper.find("svg");
 
     expect(toggleWrapper.props("toggleIcon")).toEqual("base-arrow");
     expect(icon.exists()).toBeTruthy();

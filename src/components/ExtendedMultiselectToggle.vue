@@ -10,11 +10,11 @@
     @click.stop.middle="toggleOptionsList"
     @keypress.stop="toggleOptionsList($event)"
   >
-    <img
-      alt=""
+    <component
       v-if="!loading"
       :class="classesSummary"
-      :src="icon"
+      :is="icon"
+      :key="icon"
     />
     <extended-multiselect-loader
       v-else
@@ -83,11 +83,17 @@ import {
   toRefs,
 } from "vue";
 
-import useImagePath from "../composition/image-path";
 import useToggle from "../composition/toggle";
 import useSizes from "../composition/sizes";
 
 import ExtendedMultiselectLoader from "./ExtendedMultiselectLoader.vue";
+import BaseArrowIcon from "../icons/BaseArrowIcon.vue";
+import CircleArrowIcon from "../icons/CircleArrowIcon.vue";
+import DoubleArrowIcon from "../icons/DoubleArrowIcon.vue";
+import InnerArrowIcon from "../icons/InnerArrowIcon.vue";
+import TriangleCircleArrowIcon from "../icons/TriangleCircleArrowIcon.vue";
+import WideArrowIcon from "../icons/WideArrowIcon.vue";
+import TriangleArrowIcon from "../icons/TriangleArrowIcon.vue";
 
 const props = defineProps({
   /**
@@ -187,8 +193,6 @@ const {
   toggleIcon,
 } = toRefs(props);
 
-const { createImagePath } = useImagePath();
-
 const { toggleSlotClass, toggleOptionsList } = useToggle(
   loading,
   disabled,
@@ -216,25 +220,23 @@ const classesSummary = computed(() => {
  * @returns {string} icon
  */
 const icon = computed(() => {
-  const baseArrow = createImagePath("base-arrow.svg");
-
   switch(toggleIcon.value) {
     case "base-arrow":
-      return baseArrow;
+      return BaseArrowIcon;
     case "double-arrow":
-      return createImagePath("double-arrow.svg");
+      return DoubleArrowIcon;
     case "wide-arrow":
-      return createImagePath("wide-arrow.svg");
+      return WideArrowIcon;
     case "circle-arrow":
-      return createImagePath("circle-arrow.svg");
+      return CircleArrowIcon;
     case "inner-arrow":
-      return createImagePath("inner-arrow.svg");
+      return InnerArrowIcon;
     case "triangle-arrow":
-      return createImagePath("triangle-arrow.svg");
+      return TriangleArrowIcon;
     case "triangle-circle-arrow":
-      return createImagePath("triangle-circle-arrow.svg");
+      return TriangleCircleArrowIcon;
     default: 
-      return baseArrow;
+      return BaseArrowIcon;
   }
 });
 
