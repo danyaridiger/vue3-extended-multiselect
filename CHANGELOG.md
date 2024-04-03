@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **2.2.2**
+Current `vue3-extended-multiselect` version: **2.2.3**
 
 ***
 
@@ -465,3 +465,7 @@ Adding descriptive comments for some types in typings.
 ### 2.2.2 (2024-04-03)
 
 * Fixing bug with incorrect extended multiselect base height.
+
+### 2.2.3 (2024-04-03)
+
+* Changing rotation of toggle icon.

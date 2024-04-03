@@ -294,7 +294,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 2.2.2
+ * @version 2.2.3
  */
 const props = defineProps({
   /**
@@ -2228,16 +2228,18 @@ defineExpose({
   user-select: none;
 }
 
-.extended__multiselect-toggle--active {
-  transform-origin: 50% 50%;
-  transition: transform 0.2s ease-out;
-  transform: rotate(180deg);
-}
-
+.extended__multiselect-toggle--active,
 .extended__multiselect-toggle--locked {
   transform-origin: 50% 50%;
   transition: transform 0.2s ease-out;
+}
+
+.extended__multiselect-toggle--active {
   transform: rotate(0deg);
+}
+
+.extended__multiselect-toggle--locked {
+  transform: rotate(180deg);
 }
 
 .extended__multiselect-toggle_wrapper,
