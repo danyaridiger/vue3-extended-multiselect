@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **2.2.0**
+Current `vue3-extended-multiselect` version: **2.2.1**
 
 ***
 
@@ -441,7 +441,7 @@ Adding descriptive comments for some types in typings.
 * Fixing bug with rendering icon filter instead of loader icon filter.
 * Fixing bug with "disabledPrimitiveOptions" prop accepting options of type "Array".
 
-### 2.2.0 (2024-03-04)
+### 2.2.0 (2024-04-03)
 
 * Adding "icon" directory with svg-icon components.
 * Adding BaseArrowIcon component.
@@ -456,3 +456,8 @@ Adding descriptive comments for some types in typings.
 * Removal of "rollup-plugin-copy" dev-dependency.
 * Removal of "assets" and "images" directories with corresponding files.
 
+### 2.2.1 (2024-04-03)
+
+* Adding "@babel/runtime" dev-dependency.
+* Adding JSDoc blocks to tools.
+* Fixing bug with the placeholder disappearing after switching the list of options.

@@ -509,9 +509,7 @@ const multipleBlocksMargin = computed(() => {
  * @returns {boolean} display
  */
 const placeholderBlockShown = computed(() => {
-  if (selectedOptions.value.length || searchFieldForwarding.value) {
-    return false;
-  }
+  if (selectedOptions.value.length) return false;
 
   return true;
 });

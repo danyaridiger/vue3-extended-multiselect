@@ -1,3 +1,8 @@
+/**
+ * Event emitter
+ * @class
+ */
+
 class LocalEmitter {
 
   _eventsStack = {
@@ -5,6 +10,12 @@ class LocalEmitter {
   };
   _eventsRegistered = [];
 
+  /**
+   * Triggers some event with given name
+   * @method
+   * @param {string} eventName - name of event
+   * @param {} payload - data of event
+   */
   emit(eventName, payload = null) {
     const proxies = this._eventsRegistered.filter(event => event.eventName === eventName);
 
@@ -16,6 +27,12 @@ class LocalEmitter {
     });
   }
 
+  /**
+   * Registers an event listener with the given name
+   * @method
+   * @param {string} eventName - name of event
+   * @param {Function} callback - function to fire due to event
+   */
   on(eventName, callback) {
     this._eventsRegistered.push({
       eventName,

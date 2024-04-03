@@ -1467,7 +1467,7 @@ const multipleBlocksMargin = vue.computed(() => {
  * @returns {boolean} display
  */
 const placeholderBlockShown = vue.computed(() => {
-  if (selectedOptions.value.length || searchFieldForwarding.value) {
+  if (selectedOptions.value.length) { //  || searchFieldForwarding.value
     return false;
   }
 
