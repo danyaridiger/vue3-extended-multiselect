@@ -294,7 +294,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 2.2.1
+ * @version 2.2.2
  */
 const props = defineProps({
   /**
@@ -2020,7 +2020,7 @@ defineExpose({
 .extended__multiselect-wrapper--disabled {
   position: relative;
   width: var(--max-size);
-  height: var(--max-size);
+  height: auto;
   cursor: var(--pointer-cursor);
 
 }

@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **2.2.1**
+Current `vue3-extended-multiselect` version: **2.2.2**
 
 ***
 
@@ -461,3 +461,7 @@ Adding descriptive comments for some types in typings.
 * Adding "@babel/runtime" dev-dependency.
 * Adding JSDoc blocks to tools.
 * Fixing bug with the placeholder disappearing after switching the list of options.
+
+### 2.2.2 (2024-04-03)
+
+* Fixing bug with incorrect extended multiselect base height.
