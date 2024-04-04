@@ -357,7 +357,7 @@ const showLoaderIcon = computed(() => {
  * @function
  * @param {Array} - array of selected options
  */
- watch(selectedOptions, (value) => {
+watch(selectedOptions, (value) => {
   if (!value.length || value.length <= multipleBlocksLimit.value) {
     optionsLimitIncreaser.value = multipleBlocksLimit.value;
   }

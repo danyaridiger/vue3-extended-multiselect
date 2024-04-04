@@ -296,7 +296,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 2.3.2
+ * @version 2.3.3
  */
 const props = defineProps({
   /**
@@ -1733,6 +1733,7 @@ const updateModelValue = () => {
  * @emits increase
  * @emits pattern-changed
  * @emits extended:rollup-options
+ * @listens extended:available-options
  * @listens extended:rollup-options
  * @listens extended:toggle-options
  * @listens extended:select-option
@@ -1753,6 +1754,12 @@ onBeforeMount(() => {
   }, { deep: true });
 
   chosenToggleAppearanceSide.value = toggleAppearanceSide.value;
+
+  emitter.value.on("extended:available-options", () => {
+    nextTick(() => {
+      toggleAppearanceRestrictorActivate();
+    });
+  });
 
   emitter.value.on("extended:rollup-options", () => {
     if (!dropdownActive.value) return;

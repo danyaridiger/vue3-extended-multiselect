@@ -1048,7 +1048,7 @@ const showLoaderIcon = computed(() => {
  * @function
  * @param {Array} - array of selected options
  */
- watch(selectedOptions, (value) => {
+watch(selectedOptions, (value) => {
   if (!value.length || value.length <= multipleBlocksLimit.value) {
     optionsLimitIncreaser.value = multipleBlocksLimit.value;
   }
@@ -2969,6 +2969,15 @@ const triggerOptionBeforeSelection = () => {
     emitter.value.emit("extended:trigger-selection", true);
   }
 };
+
+/**
+ * Forcibly rolls up dropdown options list by changing "dropdownActive" flag
+ * @function
+ * @emits extended:available-options
+ */
+watch(availableOptions, () => {
+  emitter.value.emit("extended:available-options");
+});
 
 /**
  * "onBeforeMount" hook of ExtendedMultiselectOptions component
@@ -5105,6 +5114,12 @@ onBeforeMount(() => {
   }, { deep: true });
 
   chosenToggleAppearanceSide.value = toggleAppearanceSide.value;
+
+  emitter.value.on("extended:available-options", () => {
+    nextTick(() => {
+      toggleAppearanceRestrictorActivate();
+    });
+  });
 
   emitter.value.on("extended:rollup-options", () => {
     if (!dropdownActive.value) return;

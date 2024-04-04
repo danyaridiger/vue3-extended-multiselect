@@ -104,6 +104,7 @@ import {
   reactive,
   ref,
   toRefs,
+  watch,
 } from "vue";
 
 import usePreselectedOptions from "../composition/preselected-options";
@@ -1146,6 +1147,16 @@ const triggerOptionBeforeSelection = () => {
     emitter.value.emit("extended:trigger-selection", true);
   }
 };
+
+/**
+ * Triggers appearance side restrictor to set a position 
+ * of dropdown appearance
+ * @function
+ * @emits extended:available-options
+ */
+watch(availableOptions, () => {
+  emitter.value.emit("extended:available-options");
+});
 
 /**
  * "onBeforeMount" hook of ExtendedMultiselectOptions component

@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **2.3.2**
+Current `vue3-extended-multiselect` version: **2.3.3**
 
 ***
 
@@ -482,3 +482,7 @@ Adding descriptive comments for some types in typings.
 ### 2.3.2 (2024-04-04)
 
 * Fixing bug with co-appearance of search field and placeholder.
+
+### 2.3.3 (2024-04-04)
+
+* Fixing bug with incorrect options list appearance side after changing available options.

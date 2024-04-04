@@ -1052,7 +1052,7 @@ const showLoaderIcon = vue.computed(() => {
  * @function
  * @param {Array} - array of selected options
  */
- vue.watch(selectedOptions, (value) => {
+vue.watch(selectedOptions, (value) => {
   if (!value.length || value.length <= multipleBlocksLimit.value) {
     optionsLimitIncreaser.value = multipleBlocksLimit.value;
   }
@@ -2973,6 +2973,15 @@ const triggerOptionBeforeSelection = () => {
     emitter.value.emit("extended:trigger-selection", true);
   }
 };
+
+/**
+ * Forcibly rolls up dropdown options list by changing "dropdownActive" flag
+ * @function
+ * @emits extended:available-options
+ */
+vue.watch(availableOptions, () => {
+  emitter.value.emit("extended:available-options");
+});
 
 /**
  * "onBeforeMount" hook of ExtendedMultiselectOptions component
@@ -5109,6 +5118,12 @@ vue.onBeforeMount(() => {
   }, { deep: true });
 
   chosenToggleAppearanceSide.value = toggleAppearanceSide.value;
+
+  emitter.value.on("extended:available-options", () => {
+    vue.nextTick(() => {
+      toggleAppearanceRestrictorActivate();
+    });
+  });
 
   emitter.value.on("extended:rollup-options", () => {
     if (!dropdownActive.value) return;
