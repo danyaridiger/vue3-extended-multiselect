@@ -1482,6 +1482,18 @@ const appropriatePlaceholder = computed(() => {
 });
 
 /**
+ * Determines whether to show placeholder block
+ * if search field is hidden
+ * @function
+ * @returns {boolean} display
+ */
+const hintBlockShown = computed(() => {
+  if (selectedOptions.value.length) return false;
+
+  return true;
+});
+
+/**
  * Sets "margin-top" css property to multiple option blocks
  * if search field is shown
  * @function
@@ -1497,7 +1509,7 @@ const multipleBlocksMargin = computed(() => {
  * @returns {boolean} display
  */
 const placeholderBlockShown = computed(() => {
-  if (selectedOptions.value.length) return false;
+  if (selectedOptions.value.length || searchFieldForwarding.value) return false;
 
   return true;
 });
@@ -1881,7 +1893,7 @@ return (_ctx, _cache) => {
           }, null, 544 /* NEED_HYDRATION, NEED_PATCH */)
         ]))
       : (openBlock(), createElementBlock("div", _hoisted_5$3, [
-          (placeholderBlockShown.value)
+          (hintBlockShown.value)
             ? (openBlock(), createElementBlock("span", _hoisted_6$3, toDisplayString(appropriatePlaceholder.value), 1 /* TEXT */))
             : createCommentVNode("v-if", true),
           renderSlot(_ctx.$slots, "labelBlock", { labelBlockValue: singleLabel.value }, () => [
@@ -3629,7 +3641,7 @@ const _hoisted_3 = { class: "extended__multiselect-cancel_wrapper" };
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 2.3.1
+ * @version 2.3.2
  */
 
 var script = {

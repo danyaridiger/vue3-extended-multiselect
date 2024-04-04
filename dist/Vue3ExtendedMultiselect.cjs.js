@@ -1486,6 +1486,18 @@ const appropriatePlaceholder = vue.computed(() => {
 });
 
 /**
+ * Determines whether to show placeholder block
+ * if search field is hidden
+ * @function
+ * @returns {boolean} display
+ */
+const hintBlockShown = vue.computed(() => {
+  if (selectedOptions.value.length) return false;
+
+  return true;
+});
+
+/**
  * Sets "margin-top" css property to multiple option blocks
  * if search field is shown
  * @function
@@ -1501,7 +1513,7 @@ const multipleBlocksMargin = vue.computed(() => {
  * @returns {boolean} display
  */
 const placeholderBlockShown = vue.computed(() => {
-  if (selectedOptions.value.length) return false;
+  if (selectedOptions.value.length || searchFieldForwarding.value) return false;
 
   return true;
 });
@@ -1885,7 +1897,7 @@ return (_ctx, _cache) => {
           }, null, 544 /* NEED_HYDRATION, NEED_PATCH */)
         ]))
       : (vue.openBlock(), vue.createElementBlock("div", _hoisted_5$3, [
-          (placeholderBlockShown.value)
+          (hintBlockShown.value)
             ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_6$3, vue.toDisplayString(appropriatePlaceholder.value), 1 /* TEXT */))
             : vue.createCommentVNode("v-if", true),
           vue.renderSlot(_ctx.$slots, "labelBlock", { labelBlockValue: singleLabel.value }, () => [
@@ -3633,7 +3645,7 @@ const _hoisted_3 = { class: "extended__multiselect-cancel_wrapper" };
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 2.3.1
+ * @version 2.3.2
  */
 
 var script = {

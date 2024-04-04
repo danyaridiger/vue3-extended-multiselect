@@ -146,7 +146,7 @@
     v-else
   >
     <span
-      v-if="placeholderBlockShown"
+      v-if="hintBlockShown"
       class="extended__multiselect-placeholder"
     >
       {{ appropriatePlaceholder }}
@@ -494,6 +494,18 @@ const appropriatePlaceholder = computed(() => {
 });
 
 /**
+ * Determines whether to show placeholder block
+ * if search field is hidden
+ * @function
+ * @returns {boolean} display
+ */
+const hintBlockShown = computed(() => {
+  if (selectedOptions.value.length) return false;
+
+  return true;
+});
+
+/**
  * Sets "margin-top" css property to multiple option blocks
  * if search field is shown
  * @function
@@ -509,7 +521,7 @@ const multipleBlocksMargin = computed(() => {
  * @returns {boolean} display
  */
 const placeholderBlockShown = computed(() => {
-  if (selectedOptions.value.length) return false;
+  if (selectedOptions.value.length || searchFieldForwarding.value) return false;
 
   return true;
 });
