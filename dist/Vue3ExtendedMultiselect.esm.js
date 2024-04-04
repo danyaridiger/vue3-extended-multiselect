@@ -341,12 +341,12 @@ const _hoisted_2$e = /*#__PURE__*/createElementVNode("g", null, [
   /*#__PURE__*/createElementVNode("path", { d: "M96.1,103.6c-10.4,8.4-23.5,12.4-36.8,11.1c-10.5-1-20.3-5.1-28.2-11.8H44v-8H18v26h8v-11.9c9.1,7.7,20.4,12.5,32.6,13.6   c1.9,0.2,3.7,0.3,5.5,0.3c13.5,0,26.5-4.6,37-13.2c19.1-15.4,26.6-40.5,19.1-63.9l-7.6,2.4C119,68.6,112.6,90.3,96.1,103.6z" }),
   /*#__PURE__*/createElementVNode("path", { d: "M103,19.7c-21.2-18.7-53.5-20-76.1-1.6C7.9,33.5,0.4,58.4,7.7,81.7l7.6-2.4C9,59.2,15.5,37.6,31.9,24.4   C51.6,8.4,79.7,9.6,98,26H85v8h26V8h-8V19.7z" })
 ], -1 /* HOISTED */);
-const _hoisted_3$7 = [
+const _hoisted_3$8 = [
   _hoisted_2$e
 ];
 
 function render$8(_ctx, _cache) {
-  return (openBlock(), createElementBlock("svg", _hoisted_1$f, [..._hoisted_3$7]))
+  return (openBlock(), createElementBlock("svg", _hoisted_1$f, [..._hoisted_3$8]))
 }
 
 const script$f = {};
@@ -762,6 +762,7 @@ const _hoisted_2$b = {
   key: 0,
   class: "extended__multiselect-placeholder"
 };
+const _hoisted_3$7 = ["onClick"];
 
 
 var script$b = {
@@ -1107,20 +1108,20 @@ return (_ctx, _cache) => {
               }, [
                 createElementVNode("span", null, toDisplayString(unref(optionCreateLabel)(option)), 1 /* TEXT */),
                 createElementVNode("div", {
-                  class: normalizeClass(deselectClasses.value)
+                  class: normalizeClass(deselectClasses.value),
+                  onClick: withModifiers($event => (deselectBlock(index)), ["stop"])
                 }, [
                   (!showLoaderIcon.value)
                     ? (openBlock(), createBlock(script$d, {
                         key: 0,
-                        class: "extended__multiselect_deselect-block-icon",
-                        onClick: withModifiers($event => (deselectBlock(index)), ["stop"])
-                      }, null, 8 /* PROPS */, ["onClick"]))
+                        class: "extended__multiselect_deselect-block-icon"
+                      }))
                     : (openBlock(), createBlock(script$e, {
                         key: 1,
                         "icon-filter": __props.iconFilter,
                         "icon-size": "deselect"
                       }, null, 8 /* PROPS */, ["icon-filter"]))
-                ], 2 /* CLASS */)
+                ], 10 /* CLASS, PROPS */, _hoisted_3$7)
               ], 2 /* CLASS */)
             ])
           ]))
@@ -1573,7 +1574,7 @@ watch(searchValue, (value) => {
  * @function
  * @emits extended:expand-options
  */
-const expand = () => {
+const expand = (event) => {
   if (disabled.value) return;
       
   searchFieldFocused.value = true;
@@ -3628,7 +3629,7 @@ const _hoisted_3 = { class: "extended__multiselect-cancel_wrapper" };
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 2.3.0
+ * @version 2.3.1
  */
 
 var script = {
@@ -4299,6 +4300,7 @@ const togglePattern = /^extended__multiselect-toggle_wrapper/i;
 const extendedMultiselect = ref(null);
 const extendedMultiselectToggle = ref(null);
 const extendedMultiselectWrapper = ref(null);
+const extendedMultiselectOptions = ref(null);
 
 const {
   defaultExpanded,
@@ -4848,15 +4850,17 @@ const setPreselectedOptionsByConditions = () => {
  * @returns {string} position
  */
 const toggleAppearanceRestrictor = () => {
-  if (!window) return "under";
+  if (!window || !extendedMultiselectOptions.value.$el) return "under";
 
   const innerHeight = window.innerHeight;
+  const offsetHeight = extendedMultiselectOptions.value.$el.offsetHeight
+   + extendedMultiselect.value.offsetHeight;
   const offsetTop = extendedMultiselect.value
    ? extendedMultiselect.value.getBoundingClientRect().y
    : 0;
   const difference = innerHeight - offsetTop;
 
-  if (difference > toggleMaxHeight.value) {
+  if (difference > offsetHeight) {
     return "under";
   } else {
     return "atop";
@@ -4868,7 +4872,7 @@ const toggleAppearanceRestrictor = () => {
  * @function
  */
 const toggleAppearanceRestrictorActivate = () => {
-  if (!dropdownActive.value) {
+  if (dropdownActive.value) {
     chosenToggleAppearanceSide.value = toggleAppearanceSide.value !== "auto"
      ? toggleAppearanceSide.value
      : toggleAppearanceRestrictor();
@@ -4988,15 +4992,17 @@ const toggleDetector = (mouseEvent, pattern, mode) => {
 const toggleOptions = () => {
   if (internalLoading.value || disabled.value || dropdownDisabled.value) return;
 
-  toggleAppearanceRestrictorActivate();
+  dropdownActive.value = !dropdownActive.value;
+
+  nextTick(() => {
+    toggleAppearanceRestrictorActivate();
+  });
 
   if (!dropdownActive.value) {
     activeEmitter();
   } else {
     closeEmitter();
   }
-
-  dropdownActive.value = !dropdownActive.value;
 };
 
 /**
@@ -5263,15 +5269,21 @@ onMounted(() => {
     && typeof options.value !== "function"
   ) {
     dropdownActive.value = true;
+
+    nextTick(() => {
+      toggleAppearanceRestrictorActivate();
+    });
   }
 
   emitter.value.on("extended:expand-options", () => {
     if (dropdownActive.value || dropdownDisabled.value) return;
-      
-    toggleAppearanceRestrictorActivate();
-    activeEmitter();
-
+    
     dropdownActive.value = true;
+
+    nextTick(() => {
+      toggleAppearanceRestrictorActivate();
+    });
+    activeEmitter();
   });
 
   emitter.value.on("extended:loader-pattern-changed", async (pattern) => {
@@ -5451,6 +5463,8 @@ return (_ctx, _cache) => {
         (dropdownActive.value)
           ? (openBlock(), createBlock(script$9, {
               key: 0,
+              ref_key: "extendedMultiselectOptions",
+              ref: extendedMultiselectOptions,
               "auto-select-created-option": __props.autoSelectCreatedOption,
               "clear-by-select-when-multiple": __props.clearBySelectWhenMultiple,
               "create-on-the-go": __props.createOnTheGo,

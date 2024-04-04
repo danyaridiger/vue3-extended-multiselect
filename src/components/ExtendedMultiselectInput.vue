@@ -586,7 +586,7 @@ watch(searchValue, (value) => {
  * @function
  * @emits extended:expand-options
  */
-const expand = () => {
+const expand = (event) => {
   if (disabled.value) return;
       
   searchFieldFocused.value = true;

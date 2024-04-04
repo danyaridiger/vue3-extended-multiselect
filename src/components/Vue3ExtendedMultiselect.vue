@@ -147,6 +147,7 @@
       type="transition"
     >
       <extended-multiselect-options
+        ref="extendedMultiselectOptions"
         v-if="dropdownActive"
         :auto-select-created-option="autoSelectCreatedOption"
         :clear-by-select-when-multiple="clearBySelectWhenMultiple"
@@ -250,6 +251,7 @@ import {
   defineEmits,
   defineExpose,
   defineProps,
+  nextTick,
   onBeforeMount,
   onMounted,
   provide,
@@ -294,7 +296,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 2.3.0
+ * @version 2.3.1
  */
 const props = defineProps({
   /**
@@ -958,6 +960,7 @@ const togglePattern = /^extended__multiselect-toggle_wrapper/i;
 const extendedMultiselect = ref(null);
 const extendedMultiselectToggle = ref(null);
 const extendedMultiselectWrapper = ref(null);
+const extendedMultiselectOptions = ref(null);
 
 const {
   defaultExpanded,
@@ -1507,15 +1510,17 @@ const setPreselectedOptionsByConditions = () => {
  * @returns {string} position
  */
 const toggleAppearanceRestrictor = () => {
-  if (!window) return "under";
+  if (!window || !extendedMultiselectOptions.value.$el) return "under";
 
   const innerHeight = window.innerHeight;
+  const offsetHeight = extendedMultiselectOptions.value.$el.offsetHeight
+   + extendedMultiselect.value.offsetHeight;
   const offsetTop = extendedMultiselect.value
    ? extendedMultiselect.value.getBoundingClientRect().y
    : 0;
   const difference = innerHeight - offsetTop;
 
-  if (difference > toggleMaxHeight.value) {
+  if (difference > offsetHeight) {
     return "under";
   } else {
     return "atop";
@@ -1527,7 +1532,7 @@ const toggleAppearanceRestrictor = () => {
  * @function
  */
 const toggleAppearanceRestrictorActivate = () => {
-  if (!dropdownActive.value) {
+  if (dropdownActive.value) {
     chosenToggleAppearanceSide.value = toggleAppearanceSide.value !== "auto"
      ? toggleAppearanceSide.value
      : toggleAppearanceRestrictor();
@@ -1647,15 +1652,17 @@ const toggleDetector = (mouseEvent, pattern, mode) => {
 const toggleOptions = () => {
   if (internalLoading.value || disabled.value || dropdownDisabled.value) return;
 
-  toggleAppearanceRestrictorActivate();
+  dropdownActive.value = !dropdownActive.value;
+
+  nextTick(() => {
+    toggleAppearanceRestrictorActivate();
+  });
 
   if (!dropdownActive.value) {
     activeEmitter();
   } else {
     closeEmitter();
   }
-
-  dropdownActive.value = !dropdownActive.value;
 };
 
 /**
@@ -1922,15 +1929,21 @@ onMounted(() => {
     && typeof options.value !== "function"
   ) {
     dropdownActive.value = true;
+
+    nextTick(() => {
+      toggleAppearanceRestrictorActivate();
+    });
   }
 
   emitter.value.on("extended:expand-options", () => {
     if (dropdownActive.value || dropdownDisabled.value) return;
-      
-    toggleAppearanceRestrictorActivate();
-    activeEmitter();
-
+    
     dropdownActive.value = true;
+
+    nextTick(() => {
+      toggleAppearanceRestrictorActivate();
+    });
+    activeEmitter();
   });
 
   emitter.value.on("extended:loader-pattern-changed", async (pattern) => {

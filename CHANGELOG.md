@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **2.3.0**
+Current `vue3-extended-multiselect` version: **2.3.1**
 
 ***
 
@@ -474,3 +474,7 @@ Adding descriptive comments for some types in typings.
 
 * Changing behaviour of "select" event: it no longer fires after setting preselected options.
 * Fixing bug with incorrect modelValue type in preselected options setter method.
+
+### 2.3.1 (2024-04-04)
+
+* Fixing bug with incorrect options list placement.

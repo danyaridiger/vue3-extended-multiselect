@@ -24,11 +24,13 @@
           >
             <div :class="classes">
               <span>{{ optionCreateLabel(option) }}</span>
-              <div :class="deselectClasses">
+              <div 
+                :class="deselectClasses" 
+                @click.stop="deselectBlock(index)"
+              >
                 <CancelIcon
                   class="extended__multiselect_deselect-block-icon"
                   v-if="!showLoaderIcon"
-                  @click.stop="deselectBlock(index)"
                 />
                 <extended-multiselect-loader
                   v-else
