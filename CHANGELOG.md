@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **2.2.3**
+Current `vue3-extended-multiselect` version: **2.3.0**
 
 ***
 
@@ -469,3 +469,8 @@ Adding descriptive comments for some types in typings.
 ### 2.2.3 (2024-04-03)
 
 * Changing rotation of toggle icon.
+
+### 2.3.0 (2024-04-04)
+
+* Changing behaviour of "select" event: it no longer fires after setting preselected options.
+* Fixing bug with incorrect modelValue type in preselected options setter method.

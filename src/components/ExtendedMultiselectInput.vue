@@ -639,6 +639,24 @@ const rollUp = () => {
 };
 
 /**
+ * Rolls up options list after option selection
+ * and sets single option label
+ * @function
+ * @param {UnionPropType} option - option to be selected
+ */
+const rollupIfSelected = (option) => {
+  if (toggleOptionsBySelect.value) {
+    rollUp();
+  }
+
+  if (multiple.value) {
+    return;
+  } else {
+    singleLabel.value = option.label;
+  }
+}
+
+/**
  * Activates debounced version of options list filter
  * @function
  */
@@ -651,6 +669,7 @@ const search = () => {
  * @listens extended:field-focus
  * @listens extended:rollup-options
  * @listens extended:select-option
+ * @listens extended:preselect-option
  * @listens extended:deselect-option
  * @listens extended:clean-options
  * @listens extended:clear-field
@@ -674,16 +693,11 @@ onBeforeMount(() => {
   });
 
   emitter.value.on("extended:select-option", (option) => {
+    rollupIfSelected(option);
+  });
 
-    if (toggleOptionsBySelect.value) {
-      rollUp();
-    }
-
-    if (multiple.value) {
-      return;
-    } else {
-      singleLabel.value = option.label;
-    }
+  emitter.value.on("extended:preselect-option", (option) => {
+    rollupIfSelected(option);
   });
 
   emitter.value.on("extended:deselect-option", () => {

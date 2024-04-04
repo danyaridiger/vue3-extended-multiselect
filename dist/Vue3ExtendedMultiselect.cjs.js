@@ -1630,6 +1630,24 @@ const rollUp = () => {
 };
 
 /**
+ * Rolls up options list after option selection
+ * and sets single option label
+ * @function
+ * @param {UnionPropType} option - option to be selected
+ */
+const rollupIfSelected = (option) => {
+  if (toggleOptionsBySelect.value) {
+    rollUp();
+  }
+
+  if (multiple.value) {
+    return;
+  } else {
+    singleLabel.value = option.label;
+  }
+};
+
+/**
  * Activates debounced version of options list filter
  * @function
  */
@@ -1642,6 +1660,7 @@ const search = () => {
  * @listens extended:field-focus
  * @listens extended:rollup-options
  * @listens extended:select-option
+ * @listens extended:preselect-option
  * @listens extended:deselect-option
  * @listens extended:clean-options
  * @listens extended:clear-field
@@ -1665,16 +1684,11 @@ vue.onBeforeMount(() => {
   });
 
   emitter.value.on("extended:select-option", (option) => {
+    rollupIfSelected(option);
+  });
 
-    if (toggleOptionsBySelect.value) {
-      rollUp();
-    }
-
-    if (multiple.value) {
-      return;
-    } else {
-      singleLabel.value = option.label;
-    }
+  emitter.value.on("extended:preselect-option", (option) => {
+    rollupIfSelected(option);
   });
 
   emitter.value.on("extended:deselect-option", () => {
@@ -3618,7 +3632,7 @@ const _hoisted_3 = { class: "extended__multiselect-cancel_wrapper" };
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 2.2.2
+ * @version 2.3.0
  */
 
 var script = {
@@ -4700,7 +4714,7 @@ const selectByEnter = (keyboardEvent) => {
 /**
  * Sets preselected option provided by "preselectedOption" prop
  * @function
- * @emits extended:select-option
+ * @emits extended:preselect-option
  * @param {UnionPropType} preselectedOption - option to be selected
  * @param {boolean} restriction - restriction of preselected option
  */
@@ -4725,7 +4739,7 @@ const setPreselectedOption = (preselectedOption, restriction = true) => {
   const isObjectOrArray = typeof preselectedOption === "object";
   const label = createLabel(isObjectOrArray, preselectedOption);
 
-  emitter.value.emit("extended:select-option", {
+  emitter.value.emit("extended:preselect-option", {
     label,
     option: preselectedOption,
   });
@@ -4735,7 +4749,7 @@ const setPreselectedOption = (preselectedOption, restriction = true) => {
  * Sets preselected options provided by "preselectedOptions" prop 
  * if "multiple" prop equals true
  * @function
- * @emits extended:select-option
+ * @emits extended:preselect-option
  * @param {Array} preselectedOptions - options to be selected
  * @param {boolean} restriction - restriction of preselected options
  */
@@ -4760,7 +4774,7 @@ const setPreselectedOptions = async (preselectedOptions, restriction = true) => 
 
       allOptionsWereSelected++;
 
-      emitter.value.emit("extended:select-option", {
+      emitter.value.emit("extended:preselect-option", {
         label,
         option: preselectedOption,
       });
@@ -4784,7 +4798,7 @@ const setPreselectedOptionsByModelValue = (withRemoval = false) => {
 
   if (withRemoval) selectedOptionsWatcher.value();
 
-  if (multiple.value) {
+  if (Array.isArray(modelValue.value) && multiple.value) {
     if (withRemoval) removeSelectedOptions();
 
     setPreselectedOptions(modelValue.value, false);
@@ -4821,7 +4835,7 @@ const setPreselectedOptionsByConditions = () => {
     }
   }
 
-  if (preselectedOptions.value && multiple.value) {
+  if (!!preselectedOptions.value.length && multiple.value) {
     const initialLength = selectedOptions.value.length;
 
     setPreselectedOptions(preselectedOptions.value);
@@ -5060,6 +5074,7 @@ const updateModelValue = () => {
  * @listens extended:rollup-options
  * @listens extended:toggle-options
  * @listens extended:select-option
+ * @listens extended:preselect-option
  * @listens extended:deselect-option
  * @listens extended:create-option
  * @listens extended:increase-display
@@ -5108,6 +5123,16 @@ vue.onBeforeMount(() => {
        * @see select
        */
       emit("select", eventData);
+    }
+
+    updateModelValue();
+  });
+
+  emitter.value.on("extended:preselect-option", (option) => {
+    if (multiple.value) {
+      selectedOptions.value.push(option.option);
+    } else {
+      selectedOptions.value = [option.option];
     }
 
     updateModelValue();
