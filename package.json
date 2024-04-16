@@ -1,6 +1,6 @@
 {
   "name": "vue3-extended-multiselect",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "description": "Extended multiselect component for applications based on Vue 3 framework",
   "keywords": [
     "multiselect",
@@ -15,7 +15,7 @@
   "unpkg": "dist/VueExtendedMultiselect.esm.js",
   "main": "dist/Vue3ExtendedMultiselect.cjs.js",
   "module": "dist/Vue3ExtendedMultiselect.esm.js",
-  "typings": "typings/vue3-extended-multiselect.d.ts",
+  "typings": "dist/types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/danyaridiger/vue3-extended-multiselect.git"

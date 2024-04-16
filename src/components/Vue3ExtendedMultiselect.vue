@@ -296,7 +296,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 2.3.3
+ * @version 2.3.4
  */
 const props = defineProps({
   /**
