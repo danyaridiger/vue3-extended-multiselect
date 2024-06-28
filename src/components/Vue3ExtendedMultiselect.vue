@@ -296,7 +296,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 2.3.4
+ * @version 2.3.5
  */
 const props = defineProps({
   /**
@@ -2077,7 +2077,7 @@ defineExpose({
 
 .extended__multiselect-wrapper--disabled .extended__multiselect-input,
 .extended__multiselect-wrapper--disabled .extended__multiselect-input--hidden {
-  cursor: --default-cursor;
+  cursor: var(--default-cursor);
 }
 
 .extended__multiselect-container {
@@ -2474,7 +2474,7 @@ defineExpose({
 .extended__multiselect-options_option--disabled {
   background-color: var(--disabled);
   user-select: none;
-  cursor: --default-cursor;
+  cursor: var(--default-cursor);
 }
 
 .extended__multiselect_deselect-block-icon {

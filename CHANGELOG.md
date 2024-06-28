@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **2.3.4**
+Current `vue3-extended-multiselect` version: **2.3.5**
 
 ***
 
@@ -490,3 +490,7 @@ Adding descriptive comments for some types in typings.
 ### 2.3.4 (2024-04-16)
 
 * Fixing incorrect path to "types" folder in package.json file.
+
+### 2.3.5 (2024-06-28)
+
+* Fixing incorrect css-variables interpolation.
