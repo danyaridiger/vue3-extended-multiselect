@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **2.3.5**
+Current `vue3-extended-multiselect` version: **2.3.6**
 
 ***
 
@@ -494,3 +494,7 @@ Adding descriptive comments for some types in typings.
 ### 2.3.5 (2024-06-28)
 
 * Fixing incorrect css-variables interpolation.
+
+### 2.3.6 (2024-10-29)
+
+* Fixing bug with the wrong number of blocks in the displayed limit message.

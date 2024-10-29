@@ -1,4 +1,4 @@
-# vue3-extended-multiselect v2.3.5
+# vue3-extended-multiselect v2.3.6
 
 ***
 

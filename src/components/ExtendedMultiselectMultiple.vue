@@ -336,9 +336,9 @@ const optionsLimitAchieved = computed(() => {
  * @returns {number|null} amount
  */
 const overLimitOptionsCount = computed(() => {
-  if (selectedOptions.value.length <= multipleBlocksLimit.value) return null;
-
-  return selectedOptions.value.length - multipleBlocksLimit.value;
+  if (selectedOptions.value.length <= optionsLimitIncreaser.value) return null;
+  
+  return selectedOptions.value.length - optionsLimitIncreaser.value;
 });
 
 /**

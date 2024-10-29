@@ -1031,9 +1031,9 @@ const optionsLimitAchieved = vue.computed(() => {
  * @returns {number|null} amount
  */
 const overLimitOptionsCount = vue.computed(() => {
-  if (selectedOptions.value.length <= multipleBlocksLimit.value) return null;
-
-  return selectedOptions.value.length - multipleBlocksLimit.value;
+  if (selectedOptions.value.length <= optionsLimitIncreaser.value) return null;
+  
+  return selectedOptions.value.length - optionsLimitIncreaser.value;
 });
 
 /**
@@ -3655,7 +3655,7 @@ const _hoisted_3 = { class: "extended__multiselect-cancel_wrapper" };
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 2.3.5
+ * @version 2.3.6
  */
 
 var script = {
