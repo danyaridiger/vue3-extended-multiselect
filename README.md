@@ -1,4 +1,4 @@
-# vue3-extended-multiselect v2.3.6
+# vue3-extended-multiselect v2.3.7
 
 ***
 
@@ -15,7 +15,7 @@ https://vue3-extended-multiselect.surge.sh/
 
 ### Installation with yarn
 
-``yarn install --production vue3-extended-multiselect``
+``yarn add vue3-extended-multiselect``
 
 ### Importing
 
@@ -176,7 +176,7 @@ Vue3 extended multiselect provides following css-variables:
 
   --border: 1px solid;
   --default-cursor: default;
-  --icons-align-self: start;
+  --icons-align-self: center;
   --icons-justify-self: center;
   --pointer-cursor: pointer;
   --wrapper-transition: border-top-left-radius 250ms ease 0s, border-top-right-radius 250ms ease 0s,
@@ -189,12 +189,14 @@ You can override it globally or by particular instance class name.
   <vue3-extended-multiselect class="instance-class" />
 ```
 
-```css
+```html
+<style scoped>
 .instance-class {
   --basic-color: purple;
   --outer-gap: 2rem;
   --border: 1px dotted;
 }
+</style>
 ```
 
 ## Styling with props

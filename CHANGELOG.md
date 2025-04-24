@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **2.3.6**
+Current `vue3-extended-multiselect` version: **2.3.7**
 
 ***
 
@@ -498,3 +498,8 @@ Adding descriptive comments for some types in typings.
 ### 2.3.6 (2024-10-29)
 
 * Fixing bug with the wrong number of blocks in the displayed limit message.
+
+### 2.3.7 (2025-04-24)
+
+* Removal of unnecessary identifiers.
+* Changing default value of "--icons-align-self" css-variable to "center".

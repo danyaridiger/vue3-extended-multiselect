@@ -1054,8 +1054,10 @@ const selectOption = (option, clickEvent) => {
   if (maxOptionsWereSelected.value) return;
   if (option[disableByField.value] || defineDisabledOption(option)) return;
   if (
-    clickEvent.target.id === "extended__multiselect-toggle"
-     || clickEvent.target.id === "extended__multiselect-cancel"
+    clickEvent.target.classList && (clickEvent.target.classList.contains("extended__multiselect-toggle")
+     || clickEvent.target.classList.contains("extended__multiselect-toggle--disabled")
+     || clickEvent.target.classList.contains("extended__multiselect-cancel")
+     || clickEvent.target.classList.contains("extended__multiselect-cancel--disabled"))
   ) return;
 
   if (selectedOptionsShown.value || externalOptionsLoader.value) {

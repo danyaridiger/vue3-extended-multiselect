@@ -1,7 +1,6 @@
 <template>
   <div
     aria-label="Clear options list"
-    id="extended__multiselect-cancel"
     role="button"
     :class="classes"
     :tabindex="increasedTabindex"

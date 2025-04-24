@@ -296,7 +296,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 2.3.6
+ * @version 2.3.7
  */
 const props = defineProps({
   /**
@@ -2021,7 +2021,7 @@ defineExpose({
 
   --border: 1px solid;
   --default-cursor: default;
-  --icons-align-self: start;
+  --icons-align-self: center;
   --icons-justify-self: center;
   --pointer-cursor: pointer;
   --wrapper-transition: border-top-left-radius 250ms ease 0s, border-top-right-radius 250ms ease 0s,

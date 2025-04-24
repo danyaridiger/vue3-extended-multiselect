@@ -15,7 +15,8 @@ export const mockOptionsLoader = async () => {
 }
 
 export const expandOptionsList = async (wrapper) => {
-  const toggle = wrapper.find("#extended__multiselect-toggle");
+  const toggle = wrapper.find(".extended__multiselect-toggle");
+
   await fireEvent.click(toggle.element);
 }
 

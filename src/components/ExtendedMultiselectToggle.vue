@@ -1,7 +1,6 @@
 <template>
   <div
     aria-label="Toggle options list"
-    id="extended__multiselect-toggle"
     role="switch"
     :aria-checked="dropdownActive"
     :class="toggleSlotClass"
