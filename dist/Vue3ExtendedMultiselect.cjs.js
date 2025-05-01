@@ -136,39 +136,7 @@ function useToggle(loading, disabled, emitter) {
   };
 }
 
-function useSearchValue() {
-  /**
-   * @property {string|null} searchValue - value of search field
-   * @property {string|null} searchPattern - pattern of inner search for available options
-   */
-  const searchState = vue.reactive({
-    searchValue: null,
-    searchPattern: null
-  });
-
-  /**
-   * @function setSearchValue
-   * @param {string|null} value - new value of search field
-   */
-  const setSearchValue = value => {
-    searchState.searchValue = value;
-  };
-
-  /**
-   * @function setSearchPattern
-   * @param {string|null} pattern - new pattern of inner search for available options
-   */
-  const setSearchPattern = pattern => {
-    searchState.searchPattern = pattern;
-  };
-  return {
-    searchState: vue.readonly(searchState),
-    setSearchValue,
-    setSearchPattern
-  };
-}
-
-function useCancel(disabled, showSearchField, selectedOptions, emitter, setSearchValue, setSearchPattern) {
+function useCancel(disabled, loading, showSearchField, selectedOptions, emitter, setSearchValue, setSearchPattern) {
   /**
    * Removes all selected options or single selected option
    * when "multiple" prop equals false
@@ -178,7 +146,7 @@ function useCancel(disabled, showSearchField, selectedOptions, emitter, setSearc
    * @emits extended:clean-options
    */
   const cancel = () => {
-    if (disabled.value) return;
+    if (disabled.value || loading.value) return;
     const deselectedOptions = selectedOptions.value;
     emitter.value.emit("extended:skip-block-blur-zeroing");
     emitter.value.emit("extended:deselect-option", {
@@ -290,6 +258,38 @@ function usePreselectedOptions(label, emptyObjectsPlaceholder, showInsertWarning
   return {
     createLabel,
     optionTypeRestrictor
+  };
+}
+
+function useSearchValue() {
+  /**
+   * @property {string|null} searchValue - value of search field
+   * @property {string|null} searchPattern - pattern of inner search for available options
+   */
+  const searchState = vue.reactive({
+    searchValue: null,
+    searchPattern: null
+  });
+
+  /**
+   * @function setSearchValue
+   * @param {string|null} value - new value of search field
+   */
+  const setSearchValue = value => {
+    searchState.searchValue = value;
+  };
+
+  /**
+   * @function setSearchPattern
+   * @param {string|null} pattern - new pattern of inner search for available options
+   */
+  const setSearchPattern = pattern => {
+    searchState.searchPattern = pattern;
+  };
+  return {
+    searchState: vue.readonly(searchState),
+    setSearchValue,
+    setSearchPattern
   };
 }
 
@@ -483,7 +483,7 @@ const props = __props;
 
 const loaderIconFilter = vue.inject("loaderIconFilter");
 
-const { iconSize } = vue.toRefs(props);
+const { loading, iconSize } = vue.toRefs(props);
 
 const { iconSizeClass } = useSizes(iconSize);
 
@@ -524,12 +524,9 @@ const iconFilterClass = vue.computed(() => {
 
 return (_ctx, _cache) => {
   return (vue.openBlock(), vue.createElementBlock("div", _hoisted_1$e, [
-    (!_ctx.loading)
-      ? (vue.openBlock(), vue.createBlock(script$f, {
-          key: 0,
-          class: vue.normalizeClass([iconFilterClass.value, vue.unref(iconSizeClass), 'extended__multiselect-loader-animate'])
-        }, null, 8 /* PROPS */, ["class"]))
-      : vue.createCommentVNode("v-if", true),
+    vue.createVNode(script$f, {
+      class: vue.normalizeClass([iconFilterClass.value, vue.unref(iconSizeClass), 'extended__multiselect-loader-animate'])
+    }, null, 8 /* PROPS */, ["class"]),
     _hoisted_2$d
   ]))
 }
@@ -662,6 +659,7 @@ const {
 
 const { cancel } = useCancel(
   disabled,
+  loading,
   showSearchField,
   selectedOptions,
   emitter,
@@ -1436,11 +1434,12 @@ const blurSkip = vue.ref(false);
 vue.ref(false);
 const searchFieldFocused = vue.ref(false);
 const optionWillBeTriggered = vue.ref(false);
+const searchFieldPreserving = vue.ref(false);
+const searchPlaceholderPreserving = vue.ref(false);
 const searchValue = vue.ref("");
 const singleLabel = vue.ref("");
 const blurSkipByToggleIcon = vue.ref(0);
 const blurSkipByBlock = vue.ref(0);
-vue.ref([]);
 const searchDebounce = vue.ref(new DebounceConstructor.value(() => {
   const searchPattern = searchValue.value ? new RegExp(`${searchValue.value}`, "i") : null;
   if (externalOptionsLoader.value) {
@@ -1531,6 +1530,10 @@ const searchFieldClass = vue.computed(() => {
     searchFieldClasses.push("extended__multiselect-input--trigger-option");
   }
 
+  if (searchPlaceholderPreserving.value) {
+    searchFieldClasses.push("extended__multiselect-input--preserved");
+  }
+
   searchFieldClasses.push(mainClass);
       
   return searchFieldClasses;
@@ -1543,7 +1546,9 @@ const searchFieldClass = vue.computed(() => {
  * @returns {boolean} display
  */
 const searchFieldForwarding = vue.computed(() => {
-  return searchFieldFocused.value || optionWillBeTriggered.value;
+  return searchFieldFocused.value 
+    || optionWillBeTriggered.value 
+    || searchFieldPreserving.value;
 });
 
 /**
@@ -1679,6 +1684,7 @@ const search = () => {
  * @listens extended:skip-block-blur
  * @listens extended:skip-block-blur-zeroing
  * @listens extended:trigger-selection
+ * @listens extended:preserve-search-field
  */
 vue.onBeforeMount(() => {
   emitter.value.on("extended:rollup-options", (internalRollup) => {
@@ -1735,6 +1741,14 @@ vue.onBeforeMount(() => {
       searchFieldFocused.value = false;
     }
     optionWillBeTriggered.value = triggerState;
+  });
+
+  emitter.value.on("extended:preserve-search-field", (preserveState) => {
+    if (!multiple.value && selectedOptions.value.length) {
+      searchFieldPreserving.value = preserveState;
+    }
+
+    searchPlaceholderPreserving.value = preserveState;
   });
 });
 
@@ -2865,12 +2879,14 @@ const optionHighlightClasses = (option) => {
  * Selects option 
  * @function
  * @emits extended:deselect-option
+ * @emits extended:preserve-search-field
  * @param {UnionPropType} option - option to select
  * @param {MouseEvent|KeyboardEvent} clickEvent - MouseEvent or KeyboardEvent instance
  */
 const selectOption = (option, clickEvent) => {
 
   emitter.value.emit("extended:trigger-selection", false);
+  emitter.value.emit("extended:preserve-search-field", false);
 
   if (!clickEvent) return;
   if (keyBlocker(clickEvent)) return;
@@ -2967,11 +2983,14 @@ const showCurrentMarker = (option) => {
  * to search field before option selection
  * @function
  * @emits extended:trigger-selection
+ * @emits extended:preserve-search-field
  */
 const triggerOptionBeforeSelection = () => {
   if (fieldWasShown.value) {
     emitter.value.emit("extended:trigger-selection", true);
   }
+
+  emitter.value.emit("extended:preserve-search-field", true);
 };
 
 /**
@@ -3649,7 +3668,7 @@ const _hoisted_3 = { class: "extended__multiselect-cancel_wrapper" };
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 2.3.7
+ * @version 2.3.9
  */
 
 var script = {
@@ -5639,7 +5658,7 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z = ".extended__multiselect-wrapper,.extended__multiselect-wrapper--disabled{--basic-color:#708090;--basic-transparent:rgba(112,128,144,.6);--cancel:#b22222;--cancel-backgound-color:rgba(179,33,33,.1);--dark-slate-blue:#483d8b;--dark-slate-blue-transparent:rgba(72,61,139,.6);--dark-slate-grey:#2f4f4f;--dark-slate-grey-transparent:rgba(47,79,79,.6);--disabled:hsla(0,0%,69%,.6);--hover-color:#fff;--default-color:#fff;--loader-color:#00bfff;--placeholder:grey;--strict:#000;--strict-transparent:rgba(0,0,0,.6);--teal:teal;--teal-transparent:rgba(0,128,128,.6);--block-border-radius:4px;--block-cancel-padding:4px;--block-gap:6px;--block-padding:1px 3px 1px 7px;--border-radius:6px;--border-radius-small:3px;--cancel-padding:3px 8px;--grid-columns:1fr 36px 36px;--grid-rows:1fr 36px;--half-size:50%;--icon-size-block:14px;--icon-size-large:18px;--icon-size-medium:15px;--icon-size-small:12px;--increaser-padding:3px 7px;--max-size:100%;--min-block-height:25px;--options-padding:6px 0;--outer-gap:10px;--root-padding:6px 10px;--toggle-icon-gap:1px;--wide-text:700;--wrapper-padding:5px 10px;--z-index-options:10;--border:1px solid;--default-cursor:default;--icons-align-self:center;--icons-justify-self:center;--pointer-cursor:pointer;--wrapper-transition:border-top-left-radius 250ms ease 0s,border-top-right-radius 250ms ease 0s,border-bottom-left-radius 250ms ease-out,border-bottom-right-radius 250ms ease-out}.extended-toggle-enter-active,.extended-toggle-leave-active{transition:opacity .25s}.extended-toggle-enter,.extended-toggle-leave-to{opacity:0}@keyframes loading{0%{transform:rotate(0deg)}to{transform:rotate(2turn)}}.extended__multiselect-wrapper,.extended__multiselect-wrapper--disabled{cursor:var(--pointer-cursor);height:auto;position:relative;width:var(--max-size)}.extended__multiselect-wrapper *,.extended__multiselect-wrapper--disabled *{box-sizing:border-box;font-family:inherit;font-size:inherit;font-style:inherit}.extended-multiselect-wrapper,.extended__multiselect-options_container{background-color:var(--default-color)}.extended__multiselect-wrapper--disabled .extended__multiselect-container{background-color:var(--disabled);cursor:var(--default-cursor);user-select:none}.extended__multiselect-wrapper--disabled .extended__multiselect-input,.extended__multiselect-wrapper--disabled .extended__multiselect-input--hidden{cursor:var(--default-cursor)}.extended__multiselect-container{align-items:center;transition:var(--wrapper-transition)}.extended__multiselect,.extended__multiselect-slate-blue,.extended__multiselect-slate-grey,.extended__multiselect-strict,.extended__multiselect-teal{background-color:var(--default-color);border:var(--border);border-radius:var(--border-radius);display:grid;padding:var(--wrapper-padding);width:var(--max-size)}.extended__multiselect,.extended__multiselect .extended__multiselect-increaser:active{border-color:var(--basic-color)}.extended__multiselect-slate-grey,.extended__multiselect-slate-grey .extended__multiselect-increaser:active{border-color:var(--dark-slate-grey)}.extended__multiselect-slate-blue,.extended__multiselect-slate-blue .extended__multiselect-increaser:active{border-color:var(--dark-slate-blue)}.extended__multiselect-teal,.extended__multiselect-teal .extended__multiselect-increaser:active{border-color:var(--teal)}.extended__multiselect-strict,.extended__multiselect-strict .extended__multiselect-increaser:active{border-color:var(--strict)}.extended__multiselect-options,.extended__multiselect-options-slate-blue,.extended__multiselect-options-slate-grey,.extended__multiselect-options-strict,.extended__multiselect-options-teal{-webkit-overflow-scrolling:touch;background-color:var(--default-color);border:var(--border);border-bottom-left-radius:var(--border-radius);border-bottom-right-radius:var(--border-radius);border-top:none;border-top-left-radius:0;border-top-right-radius:0;color:inherit;cursor:var(--pointer-cursor);display:flex;flex-flow:column nowrap;overflow:auto;position:absolute;top:var(--max-size);user-select:none;width:var(--max-size);z-index:var(--z-index-options)}.extended__multiselect-options-slate-blue>:not([class^=extended__multiselect-options_option]):not([class=extended__multiselect-options_container]),.extended__multiselect-options-slate-grey>:not([class^=extended__multiselect-options_option]):not([class=extended__multiselect-options_container]),.extended__multiselect-options-strict>:not([class^=extended__multiselect-options_option]):not([class=extended__multiselect-options_container]),.extended__multiselect-options-teal>:not([class^=extended__multiselect-options_option]):not([class=extended__multiselect-options_container]),.extended__multiselect-options>:not([class^=extended__multiselect-options_option]):not([class=extended__multiselect-options_container]){padding:var(--root-padding)}.extended__multiselect-options--atop{border-bottom-left-radius:0;border-bottom-right-radius:0;border-top:var(--border);border-top-left-radius:var(--border-radius);border-top-right-radius:var(--border-radius)}.extended__multiselect-clear--active{grid-template-columns:var(--grid-columns)}.extended__multiselect-clear--locked{grid-template-columns:var(--grid-rows)}.extended__multiselect,.extended__multiselect-options{border-color:var(--basic-color)}.extended__multiselect-options-slate-grey,.extended__multiselect-slate-grey{border-color:var(--dark-slate-grey)}.extended__multiselect-options-slate-blue,.extended__multiselect-slate-blue{border-color:var(--dark-slate-blue)}.extended__multiselect-options-teal,.extended__multiselect-teal{border-color:var(--teal)}.extended__multiselect-options-strict,.extended__multiselect-strict{border-color:var(--strict)}.extended__multiselect-block,.extended__multiselect-input{border:none;min-height:var(--min-block-height);outline:none;width:var(--max-size)}.extended__multiselect-block>span{white-space:pre-line;word-break:break-all}.extended__multiselect-input{color:inherit;cursor:text}.extended__multiselect-input:focus::placeholder{color:var(--strict);font-weight:var(--wide-text)}.extended__multiselect-input--trigger-option::placeholder{color:var(--strict);font-weight:var(--wide-text)}.extended__multiselect-block{align-items:center;color:inherit;display:flex;flex-flow:row nowrap;user-select:none}.extended__multiselect-input--hidden{border:none;cursor:var(--pointer-cursor);height:0;opacity:0;padding:0;position:absolute;width:0}.extended__multiselect-cancel,.extended__multiselect-cancel--disabled,.extended__multiselect-loader,.extended__multiselect-toggle,.extended__multiselect-toggle--disabled{align-items:center;display:flex;flex-flow:row nowrap;justify-content:center;user-select:none}.extended__multiselect-toggle--active,.extended__multiselect-toggle--locked{transform-origin:50% 50%;transition:transform .2s ease-out}.extended__multiselect-toggle--active{transform:rotate(0deg)}.extended__multiselect-toggle--locked{transform:rotate(180deg)}.extended__multiselect-cancel_wrapper,.extended__multiselect-toggle_wrapper{align-self:var(--icons-align-self);cursor:var(--pointer-cursor);justify-self:var(--icons-justify-self)}.extended__multiselect-toggle{margin-top:var(--toggle-icon-gap)}.extended__multiselect-toggle,.extended__multiselect-toggle--disabled{padding:var(--cancel-padding)}.extended__multiselect-cancel--disabled_icon-large,.extended__multiselect-cancel_icon-large,.extended__multiselect-loader_icon-large,.extended__multiselect-toggle--disabled_icon-large,.extended__multiselect-toggle_icon-large{height:var(--icon-size-large);width:var(--icon-size-large)}.extended__multiselect-cancel--disabled_icon-medium,.extended__multiselect-cancel_icon-medium,.extended__multiselect-loader_icon-medium,.extended__multiselect-toggle--disabled_icon-medium,.extended__multiselect-toggle_icon-medium{height:var(--icon-size-medium);width:var(--icon-size-medium)}.extended__multiselect-cancel--disabled_icon-small,.extended__multiselect-cancel_icon-small,.extended__multiselect-loader_icon-small,.extended__multiselect-toggle--disabled_icon-small,.extended__multiselect-toggle_icon-small{height:var(--icon-size-small);width:var(--icon-size-small)}.extended__multiselect-cancel--disabled_icon-deselect,.extended__multiselect-cancel_icon-deselect,.extended__multiselect-loader_icon-deselect,.extended__multiselect-toggle--disabled_icon-deselect,.extended__multiselect-toggle_icon-deselect{height:var(--icon-size-block);width:var(--icon-size-block)}.extended__multiselect-cancel,.extended__multiselect-cancel--disabled{align-items:center;border:var(--border);border-color:transparent;display:flex;flex-flow:row nowrap;padding:var(--cancel-padding)}.extended__multiselect-cancel:active{background-color:var(--cancel-backgound-color);border-color:var(--cancel);border-radius:var(--border-radius-small)}.extended__multiselect-filter_basic{filter:url(#basicFilter)}.extended__multiselect-filter_black{filter:url(#blackFilter)}.extended__multiselect-filter_green{filter:url(#greenFilter)}.extended__multiselect-loader_default-loader{filter:url(#filterLoaderDefault)}.extended__multiselect-loader_basic{filter:url(#filterLoaderBasic)}.extended__multiselect-loader_slate-grey{filter:url(#filterLoaderSlateGrey)}.extended__multiselect-loader_slate-blue{filter:url(#filterLoaderSlateBlue)}.extended__multiselect-loader_teal{filter:url(#filterLoaderTeal)}.extended__multiselect-loader_strict{filter:url(#filterLoaderStrict)}.extended__multiselect-loader-animate{animation-duration:3s;animation-iteration-count:infinite;animation-name:loading;animation-timing-function:linear}.extended__multiselect-options_container{display:flex;flex-flow:column nowrap}.extended__multiselect-options_option,.extended__multiselect-options_option-slate-blue,.extended__multiselect-options_option-slate-grey,.extended__multiselect-options_option-strict,.extended__multiselect-options_option-teal{align-items:center;color:inherit;display:flex;flex-flow:row nowrap;padding:var(--root-padding)}.extended__multiselect--multiple-basic,.extended__multiselect--multiple-slate-blue,.extended__multiselect--multiple-slate-grey,.extended__multiselect--multiple-strict,.extended__multiselect--multiple-teal{align-items:center;border-radius:var(--block-border-radius);display:flex;flex-flow:row nowrap;gap:var(--block-gap);min-height:var(--min-block-height);padding:var(--block-padding)}.extended__multiselect--multiple-basic,.extended__multiselect-options_option:hover{background-color:var(--basic-transparent);color:var(--hover-color)}.extended__multiselect--multiple-slate-grey,.extended__multiselect-options_option-slate-grey:hover{background-color:var(--dark-slate-grey-transparent);color:var(--hover-color)}.extended__multiselect--multiple-slate-blue,.extended__multiselect-options_option-slate-blue:hover{background-color:var(--dark-slate-blue-transparent);color:var(--hover-color)}.extended__multiselect--multiple-teal,.extended__multiselect-options_option-teal:hover{background-color:var(--teal-transparent);color:var(--hover-color)}.extended__multiselect--multiple-strict,.extended__multiselect-options_option-strict:hover{background-color:var(--strict-transparent);color:var(--hover-color)}.extended__multiselect-marker-shape{border:var(--border);border-color:var(--basic-color);border-radius:var(--half-size);height:var(--icon-size-block);margin-right:var(--block-gap);width:var(--icon-size-block)}.extended__multiselect-marker-shape--selected{border-color:var(--cancel)}.extended__multiselect-marker-shape-only{border:var(--border);border-color:transparent;height:var(--icon-size-block);margin-left:var(--block-gap);width:var(--icon-size-block)}.extended__multiselect-container+.extended__multiselect-options--marker>.extended__multiselect-option-create,.extended__multiselect-container+.extended__multiselect-options--marker>span:not([id^=option-label]){padding-left:30px}.extended__multiselect-options_option--disabled{background-color:var(--disabled);cursor:var(--default-cursor);user-select:none}.extended__multiselect_deselect-block-icon{height:var(--icon-size-block);width:var(--icon-size-block)}.extended__multiselect-block--multiple>div{display:flex;flex-flow:row wrap;gap:var(--outer-gap)}.extended__multiselect-block_cancel-wrapper,.extended__multiselect-block_cancel-wrapper--loading{align-items:center;border:var(--border);border-color:transparent;display:flex;flex-flow:row nowrap;padding:var(--block-cancel-padding)}.extended__multiselect-block_cancel-wrapper:active{background-color:var(--cancel-backgound-color);border-color:var(--cancel);border-radius:var(--border-radius-small)}.extended__multiselect-increaser{border:var(--border);border-color:transparent;padding:var(--increaser-padding)}.extended__multiselect-placeholder{color:var(--placeholder);margin-left:2px}";
+var css_248z = ".extended__multiselect-wrapper,.extended__multiselect-wrapper--disabled{--basic-color:#708090;--basic-transparent:rgba(112,128,144,.6);--cancel:#b22222;--cancel-backgound-color:rgba(179,33,33,.1);--dark-slate-blue:#483d8b;--dark-slate-blue-transparent:rgba(72,61,139,.6);--dark-slate-grey:#2f4f4f;--dark-slate-grey-transparent:rgba(47,79,79,.6);--disabled:hsla(0,0%,69%,.6);--hover-color:#fff;--default-color:#fff;--loader-color:#00bfff;--placeholder:grey;--strict:#000;--strict-transparent:rgba(0,0,0,.6);--teal:teal;--teal-transparent:rgba(0,128,128,.6);--block-border-radius:4px;--block-cancel-padding:4px;--block-gap:6px;--block-padding:1px 3px 1px 7px;--border-radius:6px;--border-radius-small:3px;--cancel-padding:3px 8px;--grid-columns:1fr 36px 36px;--grid-rows:1fr 36px;--half-size:50%;--icon-size-block:14px;--icon-size-large:18px;--icon-size-medium:15px;--icon-size-small:12px;--increaser-padding:3px 7px;--max-size:100%;--min-block-height:25px;--options-padding:6px 0;--outer-gap:10px;--root-padding:6px 10px;--toggle-icon-gap:1px;--wide-text:700;--wrapper-padding:5px 10px;--z-index-options:10;--border:1px solid;--default-cursor:default;--icons-align-self:center;--icons-justify-self:center;--pointer-cursor:pointer;--wrapper-transition:border-top-left-radius 250ms ease 0s,border-top-right-radius 250ms ease 0s,border-bottom-left-radius 250ms ease-out,border-bottom-right-radius 250ms ease-out}.extended-toggle-enter-active,.extended-toggle-leave-active{transition:opacity .25s}.extended-toggle-enter,.extended-toggle-leave-to{opacity:0}@keyframes loading{0%{transform:rotate(0deg)}to{transform:rotate(2turn)}}.extended__multiselect-wrapper,.extended__multiselect-wrapper--disabled{cursor:var(--pointer-cursor);height:auto;position:relative;width:var(--max-size)}.extended__multiselect-wrapper *,.extended__multiselect-wrapper--disabled *{box-sizing:border-box;font-family:inherit;font-size:inherit;font-style:inherit}.extended-multiselect-wrapper,.extended__multiselect-options_container{background-color:var(--default-color)}.extended__multiselect-wrapper--disabled .extended__multiselect-container{background-color:var(--disabled);cursor:var(--default-cursor);user-select:none}.extended__multiselect-wrapper--disabled .extended__multiselect-input,.extended__multiselect-wrapper--disabled .extended__multiselect-input--hidden{cursor:var(--default-cursor)}.extended__multiselect-container{align-items:center;transition:var(--wrapper-transition)}.extended__multiselect,.extended__multiselect-slate-blue,.extended__multiselect-slate-grey,.extended__multiselect-strict,.extended__multiselect-teal{background-color:var(--default-color);border:var(--border);border-radius:var(--border-radius);display:grid;padding:var(--wrapper-padding);width:var(--max-size)}.extended__multiselect,.extended__multiselect .extended__multiselect-increaser:active{border-color:var(--basic-color)}.extended__multiselect-slate-grey,.extended__multiselect-slate-grey .extended__multiselect-increaser:active{border-color:var(--dark-slate-grey)}.extended__multiselect-slate-blue,.extended__multiselect-slate-blue .extended__multiselect-increaser:active{border-color:var(--dark-slate-blue)}.extended__multiselect-teal,.extended__multiselect-teal .extended__multiselect-increaser:active{border-color:var(--teal)}.extended__multiselect-strict,.extended__multiselect-strict .extended__multiselect-increaser:active{border-color:var(--strict)}.extended__multiselect-options,.extended__multiselect-options-slate-blue,.extended__multiselect-options-slate-grey,.extended__multiselect-options-strict,.extended__multiselect-options-teal{-webkit-overflow-scrolling:touch;background-color:var(--default-color);border:var(--border);border-bottom-left-radius:var(--border-radius);border-bottom-right-radius:var(--border-radius);border-top:none;border-top-left-radius:0;border-top-right-radius:0;color:inherit;cursor:var(--pointer-cursor);display:flex;flex-flow:column nowrap;overflow:auto;position:absolute;top:var(--max-size);user-select:none;width:var(--max-size);z-index:var(--z-index-options)}.extended__multiselect-options-slate-blue>:not([class^=extended__multiselect-options_option]):not([class=extended__multiselect-options_container]),.extended__multiselect-options-slate-grey>:not([class^=extended__multiselect-options_option]):not([class=extended__multiselect-options_container]),.extended__multiselect-options-strict>:not([class^=extended__multiselect-options_option]):not([class=extended__multiselect-options_container]),.extended__multiselect-options-teal>:not([class^=extended__multiselect-options_option]):not([class=extended__multiselect-options_container]),.extended__multiselect-options>:not([class^=extended__multiselect-options_option]):not([class=extended__multiselect-options_container]){padding:var(--root-padding)}.extended__multiselect-options--atop{border-bottom-left-radius:0;border-bottom-right-radius:0;border-top:var(--border);border-top-left-radius:var(--border-radius);border-top-right-radius:var(--border-radius)}.extended__multiselect-clear--active{grid-template-columns:var(--grid-columns)}.extended__multiselect-clear--locked{grid-template-columns:var(--grid-rows)}.extended__multiselect,.extended__multiselect-options{border-color:var(--basic-color)}.extended__multiselect-options-slate-grey,.extended__multiselect-slate-grey{border-color:var(--dark-slate-grey)}.extended__multiselect-options-slate-blue,.extended__multiselect-slate-blue{border-color:var(--dark-slate-blue)}.extended__multiselect-options-teal,.extended__multiselect-teal{border-color:var(--teal)}.extended__multiselect-options-strict,.extended__multiselect-strict{border-color:var(--strict)}.extended__multiselect-input{color:inherit;cursor:text}.extended__multiselect-block,.extended__multiselect-input{border:none;min-height:var(--min-block-height);outline:none;width:var(--max-size)}.extended__multiselect-block>span{white-space:pre-line;word-break:break-all}.extended__multiselect-input--preserved::placeholder,.extended__multiselect-input--trigger-option::placeholder,.extended__multiselect-input:focus::placeholder{color:var(--strict);font-weight:var(--wide-text)}.extended__multiselect-block{align-items:center;color:inherit;display:flex;flex-flow:row nowrap;user-select:none}.extended__multiselect-input--hidden{border:none;cursor:var(--pointer-cursor);height:0;opacity:0;padding:0;position:absolute;width:0}.extended__multiselect-cancel,.extended__multiselect-cancel--disabled,.extended__multiselect-loader,.extended__multiselect-toggle,.extended__multiselect-toggle--disabled{align-items:center;display:flex;flex-flow:row nowrap;justify-content:center;user-select:none}.extended__multiselect-toggle--active,.extended__multiselect-toggle--locked{transform-origin:50% 50%;transition:transform .2s ease-out}.extended__multiselect-toggle--active{transform:rotate(0deg)}.extended__multiselect-toggle--locked{transform:rotate(180deg)}.extended__multiselect-cancel_wrapper,.extended__multiselect-toggle_wrapper{align-self:var(--icons-align-self);cursor:var(--pointer-cursor);justify-self:var(--icons-justify-self)}.extended__multiselect-toggle{margin-top:var(--toggle-icon-gap)}.extended__multiselect-toggle,.extended__multiselect-toggle--disabled{padding:var(--cancel-padding)}.extended__multiselect-cancel--disabled_icon-large,.extended__multiselect-cancel_icon-large,.extended__multiselect-loader_icon-large,.extended__multiselect-toggle--disabled_icon-large,.extended__multiselect-toggle_icon-large{height:var(--icon-size-large);width:var(--icon-size-large)}.extended__multiselect-cancel--disabled_icon-medium,.extended__multiselect-cancel_icon-medium,.extended__multiselect-loader_icon-medium,.extended__multiselect-toggle--disabled_icon-medium,.extended__multiselect-toggle_icon-medium{height:var(--icon-size-medium);width:var(--icon-size-medium)}.extended__multiselect-cancel--disabled_icon-small,.extended__multiselect-cancel_icon-small,.extended__multiselect-loader_icon-small,.extended__multiselect-toggle--disabled_icon-small,.extended__multiselect-toggle_icon-small{height:var(--icon-size-small);width:var(--icon-size-small)}.extended__multiselect-cancel--disabled_icon-deselect,.extended__multiselect-cancel_icon-deselect,.extended__multiselect-loader_icon-deselect,.extended__multiselect-toggle--disabled_icon-deselect,.extended__multiselect-toggle_icon-deselect{height:var(--icon-size-block);width:var(--icon-size-block)}.extended__multiselect-cancel,.extended__multiselect-cancel--disabled{align-items:center;border:var(--border);border-color:transparent;display:flex;flex-flow:row nowrap;padding:var(--cancel-padding)}.extended__multiselect-cancel:active{background-color:var(--cancel-backgound-color);border-color:var(--cancel);border-radius:var(--border-radius-small)}.extended__multiselect-filter_basic{filter:url(#basicFilter)}.extended__multiselect-filter_black{filter:url(#blackFilter)}.extended__multiselect-filter_green{filter:url(#greenFilter)}.extended__multiselect-loader_default-loader{filter:url(#filterLoaderDefault)}.extended__multiselect-loader_basic{filter:url(#filterLoaderBasic)}.extended__multiselect-loader_slate-grey{filter:url(#filterLoaderSlateGrey)}.extended__multiselect-loader_slate-blue{filter:url(#filterLoaderSlateBlue)}.extended__multiselect-loader_teal{filter:url(#filterLoaderTeal)}.extended__multiselect-loader_strict{filter:url(#filterLoaderStrict)}.extended__multiselect-loader-animate{animation-duration:3s;animation-iteration-count:infinite;animation-name:loading;animation-timing-function:linear}.extended__multiselect-options_container{display:flex;flex-flow:column nowrap}.extended__multiselect-options_option,.extended__multiselect-options_option-slate-blue,.extended__multiselect-options_option-slate-grey,.extended__multiselect-options_option-strict,.extended__multiselect-options_option-teal{align-items:center;color:inherit;display:flex;flex-flow:row nowrap;padding:var(--root-padding)}.extended__multiselect--multiple-basic,.extended__multiselect--multiple-slate-blue,.extended__multiselect--multiple-slate-grey,.extended__multiselect--multiple-strict,.extended__multiselect--multiple-teal{align-items:center;border-radius:var(--block-border-radius);display:flex;flex-flow:row nowrap;gap:var(--block-gap);max-height:var(--min-block-height);padding:var(--block-padding)}.extended__multiselect--multiple-basic,.extended__multiselect-options_option:hover{background-color:var(--basic-transparent);color:var(--hover-color)}.extended__multiselect--multiple-slate-grey,.extended__multiselect-options_option-slate-grey:hover{background-color:var(--dark-slate-grey-transparent);color:var(--hover-color)}.extended__multiselect--multiple-slate-blue,.extended__multiselect-options_option-slate-blue:hover{background-color:var(--dark-slate-blue-transparent);color:var(--hover-color)}.extended__multiselect--multiple-teal,.extended__multiselect-options_option-teal:hover{background-color:var(--teal-transparent);color:var(--hover-color)}.extended__multiselect--multiple-strict,.extended__multiselect-options_option-strict:hover{background-color:var(--strict-transparent);color:var(--hover-color)}.extended__multiselect-marker-shape{border:var(--border);border-color:var(--basic-color);border-radius:var(--half-size);height:var(--icon-size-block);margin-right:var(--block-gap);width:var(--icon-size-block)}.extended__multiselect-marker-shape--selected{border-color:var(--cancel)}.extended__multiselect-marker-shape-only{border:var(--border);border-color:transparent;height:var(--icon-size-block);margin-left:var(--block-gap);width:var(--icon-size-block)}.extended__multiselect-container+.extended__multiselect-options--marker>.extended__multiselect-option-create,.extended__multiselect-container+.extended__multiselect-options--marker>span:not([id^=option-label]){padding-left:30px}.extended__multiselect-options_option--disabled{background-color:var(--disabled);cursor:var(--default-cursor);user-select:none}.extended__multiselect_deselect-block-icon{height:var(--icon-size-block);width:var(--icon-size-block)}.extended__multiselect-block--multiple>div{display:flex;flex-flow:row wrap;gap:var(--outer-gap)}.extended__multiselect-block_cancel-wrapper,.extended__multiselect-block_cancel-wrapper--loading{align-items:center;border:var(--border);border-color:transparent;display:flex;flex-flow:row nowrap;padding:var(--block-cancel-padding)}.extended__multiselect-block_cancel-wrapper:active{background-color:var(--cancel-backgound-color);border-color:var(--cancel);border-radius:var(--border-radius-small)}.extended__multiselect-increaser{border:var(--border);border-color:transparent;padding:var(--increaser-padding)}.extended__multiselect-placeholder{color:var(--placeholder);margin-left:2px}";
 styleInject(css_248z);
 
 script.__file = "src/components/Vue3ExtendedMultiselect.vue";
