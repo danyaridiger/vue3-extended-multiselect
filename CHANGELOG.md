@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **2.3.8**
+Current `vue3-extended-multiselect` version: **2.3.9**
 
 ***
 
@@ -510,3 +510,7 @@ Adding descriptive comments for some types in typings.
 * Fixing bug with search field flickering when selecting an option if some option was selected.
 * Fixing bug with the generation of a layout shift that occurred when automatically calculating the height of the options block.
 * Removal of unnecessary "loading" prop in ExtendedMultiselectLoader component.
+
+### 2.3.9 (2025-05-01)
+
+* Fixing bug with incorrect multiple option blocks height.
