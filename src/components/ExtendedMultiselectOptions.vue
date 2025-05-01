@@ -1041,12 +1041,14 @@ const optionHighlightClasses = (option) => {
  * Selects option 
  * @function
  * @emits extended:deselect-option
+ * @emits extended:preserve-search-field
  * @param {UnionPropType} option - option to select
  * @param {MouseEvent|KeyboardEvent} clickEvent - MouseEvent or KeyboardEvent instance
  */
 const selectOption = (option, clickEvent) => {
 
   emitter.value.emit("extended:trigger-selection", false);
+  emitter.value.emit("extended:preserve-search-field", false);
 
   if (!clickEvent) return;
   if (keyBlocker(clickEvent)) return;
@@ -1143,11 +1145,14 @@ const showCurrentMarker = (option) => {
  * to search field before option selection
  * @function
  * @emits extended:trigger-selection
+ * @emits extended:preserve-search-field
  */
 const triggerOptionBeforeSelection = () => {
   if (fieldWasShown.value) {
     emitter.value.emit("extended:trigger-selection", true);
   }
+
+  emitter.value.emit("extended:preserve-search-field", true);
 };
 
 /**

@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **2.3.7**
+Current `vue3-extended-multiselect` version: **2.3.8**
 
 ***
 
@@ -503,3 +503,10 @@ Adding descriptive comments for some types in typings.
 
 * Removal of unnecessary identifiers.
 * Changing default value of "--icons-align-self" css-variable to "center".
+
+### 2.3.8 (2025-05-01)
+
+* Fixing bug with a working cancel button during loading.
+* Fixing bug with search field flickering when selecting an option if some option was selected.
+* Fixing bug with the generation of a layout shift that occurred when automatically calculating the height of the options block.
+* Removal of unnecessary "loading" prop in ExtendedMultiselectLoader component.

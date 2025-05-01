@@ -446,11 +446,12 @@ const blurSkip = ref(false);
 const reversePrevented = ref(false);
 const searchFieldFocused = ref(false);
 const optionWillBeTriggered = ref(false);
+const searchFieldPreserving = ref(false);
+const searchPlaceholderPreserving = ref(false);
 const searchValue = ref("");
 const singleLabel = ref("");
 const blurSkipByToggleIcon = ref(0);
 const blurSkipByBlock = ref(0);
-const labelBlocks = ref([]);
 const searchDebounce = ref(new DebounceConstructor.value(() => {
   const searchPattern = searchValue.value ? new RegExp(`${searchValue.value}`, "i") : null;
   if (externalOptionsLoader.value) {
@@ -541,6 +542,10 @@ const searchFieldClass = computed(() => {
     searchFieldClasses.push("extended__multiselect-input--trigger-option");
   }
 
+  if (searchPlaceholderPreserving.value) {
+    searchFieldClasses.push("extended__multiselect-input--preserved");
+  }
+
   searchFieldClasses.push(mainClass);
       
   return searchFieldClasses;
@@ -553,7 +558,9 @@ const searchFieldClass = computed(() => {
  * @returns {boolean} display
  */
 const searchFieldForwarding = computed(() => {
-  return searchFieldFocused.value || optionWillBeTriggered.value;
+  return searchFieldFocused.value 
+    || optionWillBeTriggered.value 
+    || searchFieldPreserving.value;
 });
 
 /**
@@ -689,6 +696,7 @@ const search = () => {
  * @listens extended:skip-block-blur
  * @listens extended:skip-block-blur-zeroing
  * @listens extended:trigger-selection
+ * @listens extended:preserve-search-field
  */
 onBeforeMount(() => {
   emitter.value.on("extended:rollup-options", (internalRollup) => {
@@ -745,6 +753,14 @@ onBeforeMount(() => {
       searchFieldFocused.value = false;
     }
     optionWillBeTriggered.value = triggerState;
+  });
+
+  emitter.value.on("extended:preserve-search-field", (preserveState) => {
+    if (!multiple.value && selectedOptions.value.length) {
+      searchFieldPreserving.value = preserveState;
+    }
+
+    searchPlaceholderPreserving.value = preserveState;
   });
 });
 

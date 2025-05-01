@@ -296,7 +296,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 2.3.7
+ * @version 2.3.8
  */
 const props = defineProps({
   /**
@@ -2203,7 +2203,6 @@ defineExpose({
 
 .extended__multiselect-input,
 .extended__multiselect-block {
-  min-height: var(--min-block-height);
   width: var(--max-size);
   border: none;
   outline: none;
@@ -2217,14 +2216,12 @@ defineExpose({
 .extended__multiselect-input {
   cursor: text;
   color: inherit;
+  min-height: var(--min-block-height);
 }
 
-.extended__multiselect-input:focus::placeholder {
-  color: var(--strict);
-  font-weight: var(--wide-text);
-}
-
-.extended__multiselect-input--trigger-option::placeholder {
+.extended__multiselect-input:focus::placeholder,
+.extended__multiselect-input--trigger-option::placeholder,
+.extended__multiselect-input--preserved::placeholder {
   color: var(--strict);
   font-weight: var(--wide-text);
 }
@@ -2235,6 +2232,7 @@ defineExpose({
   align-items: center;
   user-select: none;
   color: inherit;
+  max-height: var(--min-block-height);
 }
 
 .extended__multiselect-input--hidden {

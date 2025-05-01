@@ -1,9 +1,8 @@
-import useSearchValue from './search-value';
-
 export default function useCancel(
-  disabled, 
-  showSearchField, 
-  selectedOptions, 
+  disabled,
+  loading,
+  showSearchField,
+  selectedOptions,
   emitter,
   setSearchValue,
   setSearchPattern,
@@ -17,7 +16,7 @@ export default function useCancel(
    * @emits extended:clean-options
    */
   const cancel = () => {
-    if (disabled.value) return;
+    if (disabled.value || loading.value) return;
 
     const deselectedOptions = selectedOptions.value;
       

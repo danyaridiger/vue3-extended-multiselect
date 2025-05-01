@@ -126,6 +126,7 @@ const {
 
 const { cancel } = useCancel(
   disabled,
+  loading,
   showSearchField,
   selectedOptions,
   emitter,

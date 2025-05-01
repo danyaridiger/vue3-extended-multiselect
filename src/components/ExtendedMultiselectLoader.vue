@@ -1,7 +1,6 @@
 <template>
   <div class="extended__multiselect-loader">
     <loader-icon
-      v-if="!loading"
       :class="[iconFilterClass, iconSizeClass, 'extended__multiselect-loader-animate']"
     />
     <svg
@@ -137,7 +136,7 @@ const props = defineProps({
 
 const loaderIconFilter = inject("loaderIconFilter");
 
-const { iconSize } = toRefs(props);
+const { loading, iconSize } = toRefs(props);
 
 const { iconSizeClass } = useSizes(iconSize);
 
