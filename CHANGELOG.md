@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **2.3.10**
+Current `vue3-extended-multiselect` version: **2.3.11**
 
 ***
 
@@ -515,7 +515,11 @@ Adding descriptive comments for some types in typings.
 
 * Fixing bug with incorrect multiple option blocks height.
 
-
 ### 2.3.10 (2025-05-01)
 
 * Fixing last build version.
+
+### 2.3.11 (2025-07-02)
+
+* Updating dependencies and dev-dependencies.
+* Updating eslint config file for 8x compatibility.

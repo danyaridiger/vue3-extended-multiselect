@@ -1,6 +1,6 @@
 {
   "name": "vue3-extended-multiselect",
-  "version": "2.3.10",
+  "version": "2.3.11",
   "description": "Extended multiselect component for applications based on Vue 3 framework",
   "keywords": [
     "multiselect",
@@ -29,34 +29,34 @@
     "build": "rollup -c"
   },
   "dependencies": {
-    "core-js": "^3.35.0",
-    "extended-click-outside": "^1.1.1",
-    "vue": "^3.4.13"
+    "core-js": "^3.43.0",
+    "extended-click-outside": "^2.0.1",
+    "vue": "^3.5.17"
   },
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.23.7",
-    "@babel/runtime": "^7.24.1",
+    "@babel/plugin-transform-runtime": "^7.27.4",
+    "@babel/runtime": "^7.27.6",
     "@rollup/plugin-babel": "^6.0.4",
-    "@testing-library/vue": "^8.0.1",
+    "@testing-library/vue": "^8.1.0",
     "@vue/cli-plugin-babel": "~5.0.8",
     "@vue/cli-plugin-eslint": "^5.0.8",
     "@vue/cli-plugin-unit-jest": "~5.0.8",
     "@vue/cli-plugin-vuex": "~5.0.8",
     "@vue/cli-service": "~5.0.8",
-    "@vue/compiler-sfc": "^3.4.13",
-    "@vue/test-utils": "^2.4.3",
-    "@vue/vue3-jest": "^29.2.6",
+    "@vue/compiler-sfc": "^3.5.17",
+    "@vue/test-utils": "^2.4.6",
+    "@vue/vue3-jest": "^27.0.0-alpha.3",
     "babel-eslint": "^10.1.0",
-    "babel-jest": "^29.7.0",
-    "babel-plugin-transform-import-meta": "^2.2.1",
-    "eslint": "^8.56.0",
-    "eslint-plugin-vue": "^9.20.1",
-    "postcss": "^8.4.33",
+    "babel-jest": "^27.5.1",
+    "babel-plugin-transform-import-meta": "^2.3.3",
+    "eslint": "^8.57.1",
+    "eslint-plugin-vue": "^10.2.0",
+    "postcss": "^8.5.6",
     "resize-observer-polyfill": "^1.5.1",
-    "rollup": "^4.9.5",
-    "rollup-plugin-dts": "^6.1.0",
+    "rollup": "^4.44.1",
+    "rollup-plugin-dts": "^6.2.1",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-vue": "^6.0.0",
-    "typescript": "~5.3.3"
+    "typescript": "~5.8.3"
   }
 }
