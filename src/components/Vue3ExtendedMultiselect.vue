@@ -53,15 +53,8 @@
           :external-options-loader="externalOptionsLoader"
           :input-id="inputId"
         >
-          <template
-            v-if="slots.labelBlock"
-            #labelBlock="{ labelBlockValue }"
-          >
-            <slot
-              name="labelBlock"
-              :label-block-value="labelBlockValue"
-            >
-            </slot>
+          <template v-if="slots.labelBlock" #labelBlock="{ labelBlockValue }">
+            <slot name="labelBlock" :label-block-value="labelBlockValue"> </slot>
           </template>
           <template
             v-if="slots.multipleBlocks"
@@ -78,7 +71,7 @@
             v-if="slots.optionBlock"
             #optionBlock="{ label, deselectBlock, index }"
           >
-            <slot 
+            <slot
               name="optionBlock"
               :label="label"
               :index="index"
@@ -86,29 +79,16 @@
             >
             </slot>
           </template>
-          <template
-            v-if="slots.maxElements"
-            #maxElements
-          >
+          <template v-if="slots.maxElements" #maxElements>
             <slot name="maxElements"></slot>
           </template>
-          <template
-            v-if="toggleMultipleBlocksLimit"
-            #showMore="{ showMoreOptions }"
-          >
-            <slot 
-              name="showMore"
-              :show-more-options="showMoreOptions"
-            >
-            </slot>
+          <template v-if="toggleMultipleBlocksLimit" #showMore="{ showMoreOptions }">
+            <slot name="showMore" :show-more-options="showMoreOptions"> </slot>
           </template>
         </extended-multiselect-input>
       </div>
       <div class="extended__multiselect-toggle_wrapper">
-        <slot 
-          name="toggle"
-          :toggle-options-list="toggleOptionsList"
-        >
+        <slot name="toggle" :toggle-options-list="toggleOptionsList">
           <extended-multiselect-toggle
             ref="extendedMultiselectToggle"
             :tabindex="attrs.tabindex"
@@ -124,10 +104,7 @@
         </slot>
       </div>
       <div class="extended__multiselect-cancel_wrapper">
-        <slot
-          name="cancel"
-          :cancel="cancel"
-        >
+        <slot name="cancel" :cancel="cancel">
           <extended-multiselect-cancel
             v-if="showClearIcon"
             :tabindex="attrs.tabindex"
@@ -142,10 +119,7 @@
         </slot>
       </div>
     </div>
-    <transition
-      name="extended-toggle"
-      type="transition"
-    >
+    <transition name="extended-toggle" type="transition">
       <extended-multiselect-options
         ref="extendedMultiselectOptions"
         v-if="dropdownActive"
@@ -183,61 +157,33 @@
         :create-custom-option-label="createCustomOptionLabel"
         :external-options-loader="externalOptionsLoader"
       >
-        <template
-          v-if="slots.listHeader"
-          #listHeader
-        >
+        <template v-if="slots.listHeader" #listHeader>
           <slot name="listHeader"></slot>
         </template>
-        <template
-          v-if="maxOptionsCount"
-          #moreThanLimit
-        >
+        <template v-if="maxOptionsCount" #moreThanLimit>
           <slot name="moreThanLimit"></slot>
         </template>
-        <template
-          v-if="minOptionsCount"
-          #lessThanLimit
-        >
+        <template v-if="minOptionsCount" #lessThanLimit>
           <slot name="lessThanLimit"></slot>
         </template>
-        <template
-          v-if="slots.option"
-          #option="{ option, createCustomOptionLabel }"
-        >
-          <slot 
+        <template v-if="slots.option" #option="{ option, createCustomOptionLabel }">
+          <slot
             name="option"
             :option="option"
             :create-custom-option-label="createCustomOptionLabel"
           >
           </slot>
         </template>
-        <template 
-          v-if="slots.marker"
-          #marker="{ selected }"
-        >
-          <slot 
-            name="marker"
-            :selected="selected"
-          >
-          </slot>
+        <template v-if="slots.marker" #marker="{ selected }">
+          <slot name="marker" :selected="selected"> </slot>
         </template>
-        <template
-          v-if="noResultsBlockShown"
-          #noResults
-        >
+        <template v-if="noResultsBlockShown" #noResults>
           <slot name="noResults"></slot>
         </template>
-        <template
-          v-if="slots.noOptions"
-          #noOptions
-        >
+        <template v-if="slots.noOptions" #noOptions>
           <slot name="noOptions"></slot>
         </template>
-        <template
-          v-if="slots.listFooter"
-          #listFooter
-        >
+        <template v-if="slots.listFooter" #listFooter>
           <slot name="listFooter"></slot>
         </template>
       </extended-multiselect-options>
@@ -291,12 +237,12 @@ import ExtendedMultiselectOptions from "./ExtendedMultiselectOptions.vue";
 import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
- * @todo Mark optional arguments of functions
+ * @todo Mark optional arguments of the functions
  */
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 2.3.11
+ * @version 3.0.0
  */
 const props = defineProps({
   /**
@@ -332,7 +278,7 @@ const props = defineProps({
   },
 
   /**
-   * Allows user to create new options from search field 
+   * Allows user to create new options from search field
    * @default false
    * @property {boolean} createOnTheGo
    */
@@ -370,7 +316,7 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-    
+
   /**
    * Switches options highlighting while hovering
    * @default true
@@ -410,7 +356,7 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-    
+
   /**
    * Determines whether to clear search field by selection/deselection of options
    * @default true
@@ -651,7 +597,7 @@ const props = defineProps({
       return loaderThemeTypes.includes(value);
     },
   },
-    
+
   /**
    * Placeholder for search field to be used if
    * user is not allowed to create new options
@@ -675,7 +621,7 @@ const props = defineProps({
   },
 
   /**
-   * Defines overall color theme for extended multiselect 
+   * Defines overall color theme for extended multiselect
    * @default "basic"
    * @property {string} themeType
    */
@@ -722,7 +668,7 @@ const props = defineProps({
     type: Number,
     default: 5,
   },
-    
+
   /**
    * Maximal limit of selected options
    * @default null
@@ -790,13 +736,13 @@ const props = defineProps({
    */
   createOptionFields: {
     type: Array,
-      default: () => ["label"],
-      validator(value) {
-        return !value.some((field) => {
-          return typeof field !== "string";
-        });
-      },
+    default: () => ["label"],
+    validator(value) {
+      return !value.some((field) => {
+        return typeof field !== "string";
+      });
     },
+  },
 
   /**
    * Defines a list of primitive types for options.
@@ -809,9 +755,12 @@ const props = defineProps({
     default: () => [],
     validator(value) {
       return value.every((option) => {
-        return typeof option === "string" || typeof option === "number" 
-         || typeof option === "boolean"
-         || typeof option === "function";
+        return (
+          typeof option === "string" ||
+          typeof option === "number" ||
+          typeof option === "boolean" ||
+          typeof option === "function"
+        );
       });
     },
   },
@@ -838,10 +787,12 @@ const props = defineProps({
     type: Array,
     default: () => [],
     validator(value) {
-      return value.length < 5
-      && !value.some((padding) => {
-        return typeof padding !== "number";
-      });
+      return (
+        value.length < 5 &&
+        !value.some((padding) => {
+          return typeof padding !== "number";
+        })
+      );
     },
   },
 
@@ -888,11 +839,11 @@ const props = defineProps({
    */
   createCustomOptionLabel: {
     type: Function,
-    default: (option) => null,
+    default: () => null,
   },
 
   /**
-   * Defines function that creates notification when maximal limit 
+   * Defines function that creates notification when maximal limit
    * of selected options has been reached
    * @default (number)=>string
    * @property {Function} multipleBlocksLimitMessage
@@ -902,7 +853,6 @@ const props = defineProps({
     default: (number) => `and ${number} more items`,
   },
 
-  
   /**
    * Defines "height" css-property for each option in options list
    * @default 30
@@ -992,11 +942,7 @@ const {
   createCustomOptionLabel,
 } = toRefs(props);
 
-const {
-  searchState,
-  setSearchValue,
-  setSearchPattern,
-} = useSearchValue();
+const { searchState, setSearchValue, setSearchPattern } = useSearchValue();
 
 provide("loaderIconFilter", loaderIconFilter.value);
 provide("searchState", searchState);
@@ -1005,11 +951,7 @@ provide("setSearchPattern", setSearchPattern);
 
 const { emitter } = useEmitter();
 const { clickOutside } = useClickOutside();
-const { toggleOptionsList } = useToggle(
-  loading,
-  disabled,
-  emitter,
-);
+const { toggleOptionsList } = useToggle(loading, disabled, emitter);
 const { cancel } = useCancel(
   disabled,
   showSearchField,
@@ -1024,13 +966,13 @@ const { createLabel, optionTypeRestrictor } = usePreselectedOptions(
   showInsertWarnings,
 );
 const { optionCreateLabel } = useLabels(
-  label, 
-  createCustomOptionLabel, 
+  label,
+  createCustomOptionLabel,
   emptyObjectsPlaceholder,
 );
 const attrs = useAttrs();
 const slots = useSlots();
- 
+
 /**
  * Defines a list of extended multiselect wrapper classes
  * @function
@@ -1040,7 +982,7 @@ const classes = computed(() => {
   let theme;
   const localClassList = [];
 
-  switch(themeType.value) {
+  switch (themeType.value) {
     case "basic":
       theme = "extended__multiselect";
       break;
@@ -1056,18 +998,19 @@ const classes = computed(() => {
     case "strict":
       theme = "extended__multiselect-strict";
       break;
-    default: theme = "extended__multiselect";
+    default:
+      theme = "extended__multiselect";
   }
 
   localClassList.push(theme);
 
   const clear = showClearIcon.value
-   ? "extended__multiselect-clear--active"
-   : "extended__multiselect-clear--locked";
+    ? "extended__multiselect-clear--active"
+    : "extended__multiselect-clear--locked";
 
   localClassList.push(clear);
   localClassList.push("extended__multiselect-container");
-      
+
   return localClassList;
 });
 
@@ -1080,7 +1023,10 @@ const disabledPrimitiveOptionsConverted = computed(() => {
   if (!disabledPrimitiveOptions.value) return null;
 
   return disabledPrimitiveOptions.value.map((disabledOption) => {
-    if (Array.isArray(disabledOption) || typeof disabledOption === "object") {
+    if (
+      disabledOption &&
+      (Array.isArray(disabledOption) || typeof disabledOption === "object")
+    ) {
       return null;
     }
 
@@ -1094,7 +1040,7 @@ const disabledPrimitiveOptionsConverted = computed(() => {
  * @returns {Object|null} styles
  */
 const displayWrongValue = computed(() => {
-  return wrongCurrentValue.value ? { borderColor: errorBorderColor.value } : null; 
+  return wrongCurrentValue.value ? { borderColor: errorBorderColor.value } : null;
 });
 
 /**
@@ -1107,12 +1053,12 @@ const expanded = computed(() => {
 
   if (chosenToggleAppearanceSide.value === "atop") {
     borderStyles = {
-      borderTopLeftRadius: 0, 
+      borderTopLeftRadius: 0,
       borderTopRightRadius: 0,
     };
   } else {
     borderStyles = {
-      borderBottomLeftRadius: 0, 
+      borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
     };
   }
@@ -1148,10 +1094,10 @@ const mappedOptions = computed(() => {
  */
 const restrictedOptions = computed(() => {
   if (!rawOptions.value) return [];
-  
+
   return optionsCountRestriction.value
-   ? rawOptions.value.filter((_, index) => index + 1 <= optionsCountRestriction.value)
-   : rawOptions.value;
+    ? rawOptions.value.filter((_, index) => index + 1 <= optionsCountRestriction.value)
+    : rawOptions.value;
 });
 
 /**
@@ -1180,8 +1126,8 @@ const tabindexIfSearch = computed(() => {
  */
 const wrapperClasses = computed(() => {
   return disabled.value && !internalLoading.value
-   ? "extended__multiselect-wrapper--disabled"
-   : "extended__multiselect-wrapper";
+    ? "extended__multiselect-wrapper--disabled"
+    : "extended__multiselect-wrapper";
 });
 
 /**
@@ -1200,18 +1146,22 @@ watch(dropdownActive, (value) => {
  * Changes selected options based on external modelValue changes
  * @function
  */
-watch(modelValue, (value, prevValue) => {
-  if (
-    JSON.stringify(toRaw(value)) === JSON.stringify(toRaw(prevValue)) 
-     || skipNextRemoval.value
-  ) {
-    skipNextRemoval.value = false;
+watch(
+  modelValue,
+  (value, prevValue) => {
+    if (
+      JSON.stringify(toRaw(value)) === JSON.stringify(toRaw(prevValue)) ||
+      skipNextRemoval.value
+    ) {
+      skipNextRemoval.value = false;
 
-    return;
-  }
+      return;
+    }
 
-  setPreselectedOptionsByModelValue(true);
-}, { deep: true });
+    setPreselectedOptionsByModelValue(true);
+  },
+  { deep: true },
+);
 
 /**
  * Emits "active" when dropdown options list is active
@@ -1219,9 +1169,11 @@ watch(modelValue, (value, prevValue) => {
  * @emits active
  */
 const activeEmitter = () => {
-  const eventData = simpleEvents.value ? null : {
-    inputId: inputId.value,
-  };
+  const eventData = simpleEvents.value
+    ? null
+    : {
+        inputId: inputId.value,
+      };
 
   /**
    * @event active
@@ -1238,8 +1190,8 @@ const activeEmitter = () => {
  */
 const closeEmitter = () => {
   const eventData = simpleEvents.value
-   ? selectedOptions.value
-   : createEventFields(selectedOptions.value, "options");
+    ? selectedOptions.value
+    : createEventFields(selectedOptions.value, "options");
 
   /**
    * @event close
@@ -1248,7 +1200,7 @@ const closeEmitter = () => {
    * @property {Array} options - array of selected options
    */
   emit("close", eventData);
-}
+};
 
 /**
  * Creates payload for events that can be listened by outer listeners
@@ -1287,7 +1239,10 @@ const fieldFocus = (mouseEvent) => {
 
   const customFilteredCancel = toggleCustomRestrictor(mouseEvent, 2);
   const customFilteredSelf = toggleCustomRestrictor(mouseEvent, 1);
-  const filteredHasCancel = toggleDetector(mouseEvent, /^extended__multiselect-cancel_wrapper/i);
+  const filteredHasCancel = toggleDetector(
+    mouseEvent,
+    /^extended__multiselect-cancel_wrapper/i,
+  );
   const filteredHasToggle = toggleDetector(mouseEvent, togglePattern);
 
   if (customFilteredCancel) return;
@@ -1306,8 +1261,10 @@ const fieldFocus = (mouseEvent) => {
  */
 const loadOptionsByExternalLoader = (pattern, initialValue) => {
   externalOptionsLoader.value = options.value;
-  options.value(pattern).then(options => {
+
+  options.value(pattern).then((options) => {
     rawOptions.value = options;
+
     if (initialValue) setPreselectedOptionsByConditions();
   });
 };
@@ -1329,7 +1286,7 @@ const removeSelectedOptions = (single = false) => {
   } else {
     if (!modelValue.value) cancel();
   }
-}
+};
 
 /**
  * Emits event whose listener resets index of "enter" key pressing
@@ -1347,6 +1304,7 @@ const resetEnterIndex = () => {
  */
 const rollUp = () => {
   dropdownActive.value = false;
+
   emitter.value.emit("extended:rollup-options");
 };
 
@@ -1381,20 +1339,24 @@ const setPreselectedOption = (preselectedOption, restriction = true) => {
   const mappedSelectedOptions = selectedOptions.value.map((selectedOption) => {
     return JSON.stringify(selectedOption);
   });
-        
+
   if (!availableOptionType) return;
+
   if (
-    (!mappedOptions.value.includes(JSON.stringify(preselectedOption)) && restriction)
-    && !mappedSelectedOptions.includes(JSON.stringify(preselectedOption))
+    !mappedOptions.value.includes(JSON.stringify(preselectedOption)) &&
+    restriction &&
+    !mappedSelectedOptions.includes(JSON.stringify(preselectedOption))
   ) {
     if (showInsertWarnings.value) {
-      console.warn("vue-extended-multiselect: option in «preselectedOption» property should be the same as analogue in «options» property");
+      console.warn(
+        "vue-extended-multiselect: option in «preselectedOption» property should be the same as analogue in «options» property",
+      );
     }
 
     return;
   }
 
-  const isObjectOrArray = typeof preselectedOption === "object";
+  const isObjectOrArray = preselectedOption && typeof preselectedOption === "object";
   const label = createLabel(isObjectOrArray, preselectedOption);
 
   emitter.value.emit("extended:preselect-option", {
@@ -1404,7 +1366,7 @@ const setPreselectedOption = (preselectedOption, restriction = true) => {
 };
 
 /**
- * Sets preselected options provided by "preselectedOptions" prop 
+ * Sets preselected options provided by "preselectedOptions" prop
  * if "multiple" prop equals true
  * @function
  * @emits extended:preselect-option
@@ -1424,10 +1386,10 @@ const setPreselectedOptions = async (preselectedOptions, restriction = true) => 
     if (selectedOptions.value.includes(preselectedOption)) return;
 
     if (
-      (mappedOptions.value.includes(JSON.stringify(preselectedOption)) || !restriction)
-       && !mappedSelectedOptions.includes(JSON.stringify(preselectedOption))
+      (mappedOptions.value.includes(JSON.stringify(preselectedOption)) || !restriction) &&
+      !mappedSelectedOptions.includes(JSON.stringify(preselectedOption))
     ) {
-      const isObjectOrArray = typeof option === "object";
+      const isObjectOrArray = preselectedOption && typeof preselectedOption === "object";
       const label = createLabel(isObjectOrArray, preselectedOption);
 
       allOptionsWereSelected++;
@@ -1440,7 +1402,9 @@ const setPreselectedOptions = async (preselectedOptions, restriction = true) => 
   });
 
   if (allOptionsWereSelected !== preselectedOptions.length && showInsertWarnings.value) {
-    console.warn("vue-extended-multiselect: options in «preselectedOptions» property should be the same as analogues in «options» property");
+    console.warn(
+      "vue-extended-multiselect: options in «preselectedOptions» property should be the same as analogues in «options» property",
+    );
   }
 };
 
@@ -1469,15 +1433,19 @@ const setPreselectedOptionsByModelValue = (withRemoval = false) => {
   if (withRemoval) {
     updateModelValue();
 
-    selectedOptionsWatcher.value = watch(selectedOptions, () => {
-      updateModelValue();
+    selectedOptionsWatcher.value = watch(
+      selectedOptions,
+      () => {
+        updateModelValue();
 
-      if (resetSearchByValue.value) {
-        emitter.value.emit("extended:clear-field");
-      }
-    }, { deep: true });
+        if (resetSearchByValue.value) {
+          emitter.value.emit("extended:clear-field");
+        }
+      },
+      { deep: true },
+    );
   }
-}
+};
 
 /**
  * Determines conditions that control preselected options installattion
@@ -1513,11 +1481,12 @@ const toggleAppearanceRestrictor = () => {
   if (!window || !extendedMultiselectOptions.value.$el) return "under";
 
   const innerHeight = window.innerHeight;
-  const offsetHeight = extendedMultiselectOptions.value.$el.offsetHeight
-   + extendedMultiselect.value.offsetHeight;
+  const offsetHeight =
+    extendedMultiselectOptions.value.$el.offsetHeight +
+    extendedMultiselect.value.offsetHeight;
   const offsetTop = extendedMultiselect.value
-   ? extendedMultiselect.value.getBoundingClientRect().y
-   : 0;
+    ? extendedMultiselect.value.getBoundingClientRect().y
+    : 0;
   const difference = innerHeight - offsetTop;
 
   if (difference > offsetHeight) {
@@ -1533,9 +1502,10 @@ const toggleAppearanceRestrictor = () => {
  */
 const toggleAppearanceRestrictorActivate = () => {
   if (dropdownActive.value) {
-    chosenToggleAppearanceSide.value = toggleAppearanceSide.value !== "auto"
-     ? toggleAppearanceSide.value
-     : toggleAppearanceRestrictor();
+    chosenToggleAppearanceSide.value =
+      toggleAppearanceSide.value !== "auto"
+        ? toggleAppearanceSide.value
+        : toggleAppearanceRestrictor();
   }
 };
 
@@ -1546,11 +1516,19 @@ const toggleAppearanceRestrictorActivate = () => {
  * @param {MouseEvent} mouseEvent - MouseEvent instance
  * @returns {boolean} toggling
  */
- const toggleBlockRestrictor = (mouseEvent) => {
+const toggleBlockRestrictor = (mouseEvent) => {
   let generalRestriction;
   let filteredCustomSelf;
-  const filteredHasBlock = toggleDetector(mouseEvent, /^extended__multiselect-block/i, true);
-  const filteredHasSlot = toggleDetector(mouseEvent, /^extended__multiselect-options(?!_option)/i, true)
+  const filteredHasBlock = toggleDetector(
+    mouseEvent,
+    /^extended__multiselect-block/i,
+    true,
+  );
+  const filteredHasSlot = toggleDetector(
+    mouseEvent,
+    /^extended__multiselect-options(?!_option)/i,
+    true,
+  );
   const filteredSelf = toggleDetector(mouseEvent, /^extended__multiselect-clear/i, true);
 
   if (filteredSelf.length || filteredHasBlock.length || filteredHasSlot.length) {
@@ -1560,22 +1538,25 @@ const toggleAppearanceRestrictorActivate = () => {
   }
 
   if (extendedMultiselectToggle.value) {
-    generalRestriction = (filteredHasBlock.length && dropdownActive.value && filteredCustomSelf)
-     || (filteredSelf.length && dropdownActive.value && filteredCustomSelf)
-     || (filteredHasSlot.length && dropdownActive.value && filteredCustomSelf);
+    generalRestriction =
+      (filteredHasBlock.length && dropdownActive.value && filteredCustomSelf) ||
+      (filteredSelf.length && dropdownActive.value && filteredCustomSelf) ||
+      (filteredHasSlot.length && dropdownActive.value && filteredCustomSelf);
   } else {
-    generalRestriction = (filteredHasBlock.length && dropdownActive.value)
-     || (filteredSelf.length && dropdownActive.value)
-     || (filteredHasSlot.length && dropdownActive.value);
+    generalRestriction =
+      (filteredHasBlock.length && dropdownActive.value) ||
+      (filteredSelf.length && dropdownActive.value) ||
+      (filteredHasSlot.length && dropdownActive.value);
   }
-  
+
   if (generalRestriction) {
     emitter.value.emit("extended:skip-block-blur");
+
     return true;
   }
 
   return false;
-}
+};
 
 /**
  * Restricts toggling of dropdown options list by clicking
@@ -1589,8 +1570,8 @@ const toggleCustomRestrictor = (mouseEvent, blockType) => {
   let eventTarget = mouseEvent.target;
   const toggleWrapper = extendedMultiselect.value;
   const customToggle = toggleWrapper.children[blockType];
-     
-  while(eventTarget) {
+
+  while (eventTarget) {
     if (eventTarget === customToggle) return true;
 
     eventTarget = eventTarget.parentNode;
@@ -1615,14 +1596,12 @@ const toggleDetector = (mouseEvent, pattern, mode) => {
     return pattern.test(className) === true;
   });
 
-  while(
-    target
-    && (target.classList 
-      && !target.classList.contains("extended__multiselect-wrapper")
-      || target.classList 
-      && !target.classList.length)
-    && mode
-    && !filteredHasToggle.length
+  while (
+    target &&
+    ((target.classList && !target.classList.contains("extended__multiselect-wrapper")) ||
+      (target.classList && !target.classList.length)) &&
+    mode &&
+    !filteredHasToggle.length
   ) {
     filteredHasToggle = Array.prototype.filter.call(target.classList, (className) => {
       return pattern.test(className) === true;
@@ -1630,11 +1609,13 @@ const toggleDetector = (mouseEvent, pattern, mode) => {
 
     if (target.classList.contains("extended__multiselect-options_container")) {
       filteredHasToggle.push("extended__multiselect-options_container");
+
       return filteredHasToggle;
     }
 
     if (target.classList.contains("extended__multiselect-toggle_wrapper")) {
       filteredHasToggle.push("extended__multiselect-toggle_wrapper");
+
       return filteredHasToggle;
     }
 
@@ -1670,21 +1651,21 @@ const toggleOptions = () => {
  * by selecting/deselecting option
  * @function
  * @param {MouseEvent} mouseEvent - MouseEvent instance
- * @returns {boolean} restriction 
+ * @returns {boolean} restriction
  */
 const toggleOptionsRestrictor = (mouseEvent) => {
   try {
     let eventTarget = mouseEvent.target;
     const optionsWrapper = optionsWrapper.value;
 
-    while(eventTarget) {
+    while (eventTarget) {
       if (eventTarget === optionsWrapper) return true;
 
       eventTarget = eventTarget.parentNode;
     }
 
     return false;
-  } catch(e) {
+  } catch (e) {
     return false;
   }
 };
@@ -1706,13 +1687,12 @@ const toggleRestrictor = (mouseEvent) => {
   const filteredHasToggle = toggleDetector(mouseEvent, togglePattern);
 
   if (filteredHasToggle.length && dropdownActive.value) {
-
     emitter.value.emit("extended:skip-blur");
   }
 };
 
 /**
- * Triggers modelValue updating when v-model has 
+ * Triggers modelValue updating when v-model has
  * been changed programmatically
  * @function
  * @emits update:modelValue
@@ -1723,7 +1703,7 @@ const updateModelValue = () => {
   } else {
     emit("update:modelValue", selectedOptions.value[0]);
   }
-}
+};
 
 /**
  * "onBeforeMount" hook of the Vue3ExtendedMultiselect component
@@ -1745,13 +1725,17 @@ const updateModelValue = () => {
  * @listens extended:search-pattern-changed
  */
 onBeforeMount(() => {
-  selectedOptionsWatcher.value = watch(selectedOptions, (value) => {
-    updateModelValue();
+  selectedOptionsWatcher.value = watch(
+    selectedOptions,
+    () => {
+      updateModelValue();
 
-    if (resetSearchByValue.value) {
-      emitter.value.emit("extended:clear-field");
-    }
-  }, { deep: true });
+      if (resetSearchByValue.value) {
+        emitter.value.emit("extended:clear-field");
+      }
+    },
+    { deep: true },
+  );
 
   chosenToggleAppearanceSide.value = toggleAppearanceSide.value;
 
@@ -1765,6 +1749,7 @@ onBeforeMount(() => {
     if (!dropdownActive.value) return;
 
     closeEmitter();
+
     dropdownActive.value = false;
   });
 
@@ -1774,8 +1759,8 @@ onBeforeMount(() => {
 
   emitter.value.on("extended:select-option", (option) => {
     const eventData = simpleEvents.value
-     ? option.option
-     : createEventFields(option.option, "option");
+      ? option.option
+      : createEventFields(option.option, "option");
 
     if (multiple.value) {
       selectedOptions.value.push(option.option);
@@ -1808,13 +1793,13 @@ onBeforeMount(() => {
   });
 
   emitter.value.on("extended:deselect-option", (payload) => {
-    if (multiple.value && (payload && !payload.clearAll)) {
+    if (multiple.value && payload && !payload.clearAll) {
       const deselectedOption = selectedOptions.value[payload.index];
 
       const eventData = simpleEvents.value
-       ? deselectedOption
-       : createEventFields(deselectedOption, "option");
-  
+        ? deselectedOption
+        : createEventFields(deselectedOption, "option");
+
       /**
        * @event clean
        * @type {Object}
@@ -1835,25 +1820,25 @@ onBeforeMount(() => {
       if (!selectedOptions.value.length) return;
 
       const deselectedOption = payload.deselectedOptions
-       ? payload.deselectedOptions
-       : selectedOptions.value;
-      
-      const eventData = simpleEvents.value
-       ? deselectedOption
-       : createEventFields(deselectedOption, "option");
+        ? payload.deselectedOptions
+        : selectedOptions.value;
 
-       /**
-        * @event clean
-        * @type {Object}
-        * @property {string} inputId - id of search field set by "id" prop
-        * @property {UnionPropType} options - just now deselected options
-        */
+      const eventData = simpleEvents.value
+        ? deselectedOption
+        : createEventFields(deselectedOption, "option");
+
+      /**
+       * @event clean
+       * @type {Object}
+       * @property {string} inputId - id of search field set by "id" prop
+       * @property {UnionPropType} options - just now deselected options
+       */
       emit("clean", eventData);
 
       selectedOptions.value = [];
       updateModelValue();
     }
-    
+
     if (toggleOptionsBySelect.value) {
       emitter.value.emit("extended:rollup-options");
     }
@@ -1861,8 +1846,8 @@ onBeforeMount(() => {
 
   emitter.value.on("extended:create-option", (createdOption) => {
     const eventData = simpleEvents.value
-     ? createdOption
-     : createEventFields(createdOption, "option");
+      ? createdOption
+      : createEventFields(createdOption, "option");
 
     /**
      * @event option-created
@@ -1887,8 +1872,8 @@ onBeforeMount(() => {
 
   emitter.value.on("extended:loader-pattern-changed", (pattern) => {
     const eventData = simpleEvents.value
-     ? pattern 
-     : createEventFields(pattern, "pattern");
+      ? pattern
+      : createEventFields(pattern, "pattern");
 
     /**
      * @event pattern-changed
@@ -1901,8 +1886,8 @@ onBeforeMount(() => {
 
   emitter.value.on("extended:search-pattern-changed", (pattern) => {
     const eventData = simpleEvents.value
-     ? pattern 
-     : createEventFields(pattern, "pattern");
+      ? pattern
+      : createEventFields(pattern, "pattern");
 
     /**
      * @event pattern-changed
@@ -1925,16 +1910,13 @@ onMounted(() => {
     loadOptionsByExternalLoader(null, true);
   } else {
     rawOptions.value = options.value;
+
     setPreselectedOptionsByConditions();
   }
 
   setPreselectedOptionsByModelValue();
 
-  if (
-    defaultExpanded.value
-    && !disabled.value
-    && typeof options.value !== "function"
-  ) {
+  if (defaultExpanded.value && !disabled.value && typeof options.value !== "function") {
     dropdownActive.value = true;
 
     nextTick(() => {
@@ -1944,7 +1926,7 @@ onMounted(() => {
 
   emitter.value.on("extended:expand-options", () => {
     if (dropdownActive.value || dropdownDisabled.value) return;
-    
+
     dropdownActive.value = true;
 
     nextTick(() => {
@@ -1953,8 +1935,8 @@ onMounted(() => {
     activeEmitter();
   });
 
-  emitter.value.on("extended:loader-pattern-changed", async (pattern) => {
-    await loadOptionsByExternalLoader(pattern, false);
+  emitter.value.on("extended:loader-pattern-changed", (pattern) => {
+    loadOptionsByExternalLoader(pattern, false);
   });
 
   clickOutside.value.init(extendedMultiselectWrapper.value, () => {
@@ -1978,22 +1960,22 @@ defineExpose({
 .extended__multiselect-wrapper--disabled {
   --basic-color: #708090;
   --basic-transparent: rgba(112, 128, 144, 0.6);
-  --cancel: #B22222;
+  --cancel: #b22222;
   --cancel-backgound-color: rgba(179, 33, 33, 0.1);
-  --dark-slate-blue: #483D8B;
+  --dark-slate-blue: #483d8b;
   --dark-slate-blue-transparent: rgba(72, 61, 139, 0.6);
-  --dark-slate-grey: #2F4F4F;
+  --dark-slate-grey: #2f4f4f;
   --dark-slate-grey-transparent: rgba(47, 79, 79, 0.6);
   --disabled: rgba(176, 176, 176, 0.6);
-  --hover-color: #FFFFFF;
-  --default-color: #FFFFFF;
-  --loader-color: #00BFFF;
+  --hover-color: #ffffff;
+  --default-color: #ffffff;
+  --loader-color: #00bfff;
   --placeholder: #808080;
   --strict: #000000;
   --strict-transparent: rgba(0, 0, 0, 0.6);
   --teal: #008080;
   --teal-transparent: rgba(0, 128, 128, 0.6);
-  
+
   --block-border-radius: 4px;
   --block-cancel-padding: 4px;
   --block-gap: 6px;
@@ -2024,8 +2006,9 @@ defineExpose({
   --icons-align-self: center;
   --icons-justify-self: center;
   --pointer-cursor: pointer;
-  --wrapper-transition: border-top-left-radius 250ms ease 0s, border-top-right-radius 250ms ease 0s,
-                        border-bottom-left-radius 250ms ease-out, border-bottom-right-radius 250ms ease-out;
+  --wrapper-transition: border-top-left-radius 250ms ease 0s,
+    border-top-right-radius 250ms ease 0s, border-bottom-left-radius 250ms ease-out,
+    border-bottom-right-radius 250ms ease-out;
 }
 
 .extended-toggle-enter-active,
@@ -2037,7 +2020,7 @@ defineExpose({
 .extended-toggle-leave-to {
   opacity: 0;
 }
-  
+
 @keyframes loading {
   0% {
     transform: rotate(0deg);
@@ -2053,7 +2036,6 @@ defineExpose({
   width: var(--max-size);
   height: auto;
   cursor: var(--pointer-cursor);
-
 }
 
 .extended__multiselect-wrapper *,
@@ -2116,7 +2098,7 @@ defineExpose({
 .extended__multiselect-slate-blue .extended__multiselect-increaser:active {
   border-color: var(--dark-slate-blue);
 }
-  
+
 .extended__multiselect-teal,
 .extended__multiselect-teal .extended__multiselect-increaser:active {
   border-color: var(--teal);
@@ -2152,11 +2134,26 @@ defineExpose({
   -webkit-overflow-scrolling: touch;
 }
 
-.extended__multiselect-options > *:not([class^=extended__multiselect-options_option]):not([class=extended__multiselect-options_container]),
-.extended__multiselect-options-slate-grey > *:not([class^=extended__multiselect-options_option]):not([class=extended__multiselect-options_container]),
-.extended__multiselect-options-slate-blue > *:not([class^=extended__multiselect-options_option]):not([class=extended__multiselect-options_container]),
-.extended__multiselect-options-teal > *:not([class^=extended__multiselect-options_option]):not([class=extended__multiselect-options_container]),
-.extended__multiselect-options-strict > *:not([class^=extended__multiselect-options_option]):not([class=extended__multiselect-options_container]) {
+.extended__multiselect-options
+  > *:not([class^="extended__multiselect-options_option"]):not(
+    [class="extended__multiselect-options_container"]
+  ),
+.extended__multiselect-options-slate-grey
+  > *:not([class^="extended__multiselect-options_option"]):not(
+    [class="extended__multiselect-options_container"]
+  ),
+.extended__multiselect-options-slate-blue
+  > *:not([class^="extended__multiselect-options_option"]):not(
+    [class="extended__multiselect-options_container"]
+  ),
+.extended__multiselect-options-teal
+  > *:not([class^="extended__multiselect-options_option"]):not(
+    [class="extended__multiselect-options_container"]
+  ),
+.extended__multiselect-options-strict
+  > *:not([class^="extended__multiselect-options_option"]):not(
+    [class="extended__multiselect-options_container"]
+  ) {
   padding: var(--root-padding);
 }
 
@@ -2167,7 +2164,7 @@ defineExpose({
   border-bottom-left-radius: 0;
   border-top: var(--border);
 }
-    
+
 .extended__multiselect-clear--active {
   grid-template-columns: var(--grid-columns);
 }
@@ -2175,7 +2172,7 @@ defineExpose({
 .extended__multiselect-clear--locked {
   grid-template-columns: var(--grid-rows);
 }
-  
+
 .extended__multiselect,
 .extended__multiselect-options {
   border-color: var(--basic-color);
@@ -2225,7 +2222,7 @@ defineExpose({
   color: var(--strict);
   font-weight: var(--wide-text);
 }
-      
+
 .extended__multiselect-block {
   display: flex;
   flex-flow: row nowrap;
@@ -2243,7 +2240,7 @@ defineExpose({
   opacity: 0;
   padding: 0;
 }
-    
+
 .extended__multiselect-toggle,
 .extended__multiselect-toggle--disabled,
 .extended__multiselect-cancel,
@@ -2332,7 +2329,7 @@ defineExpose({
   padding: var(--cancel-padding);
 }
 
-.extended__multiselect-cancel:active  {
+.extended__multiselect-cancel:active {
   border-color: var(--cancel);
   border-radius: var(--border-radius-small);
   background-color: var(--cancel-backgound-color);
@@ -2463,8 +2460,12 @@ defineExpose({
   border-color: transparent;
 }
 
-.extended__multiselect-container + .extended__multiselect-options--marker > span:not([id^=option-label]),
-.extended__multiselect-container + .extended__multiselect-options--marker > .extended__multiselect-option-create {
+.extended__multiselect-container
+  + .extended__multiselect-options--marker
+  > span:not([id^="option-label"]),
+.extended__multiselect-container
+  + .extended__multiselect-options--marker
+  > .extended__multiselect-option-create {
   padding-left: 30px;
 }
 

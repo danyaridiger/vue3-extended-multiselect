@@ -1,0 +1,182 @@
+name: Publish to npm and Create Release
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check-commit:
+    name: Check commit message
+    runs-on: ubuntu-latest
+    outputs:
+      should_release: ${{ steps.check-commit.outputs.should_release }}
+      version: ${{ steps.check-commit.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check commit message and extract version
+        id: check-commit
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          if [[ "$COMMIT_MSG" =~ ^(chore|feat)\(release\):\ release\ vue3-extended-multiselect\ v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+            echo "should_release=true" >> $GITHUB_OUTPUT
+            echo "version=${BASH_REMATCH[2]}" >> $GITHUB_OUTPUT
+          else
+            echo "should_release=false" >> $GITHUB_OUTPUT
+            echo "version=" >> $GITHUB_OUTPUT
+            echo "Commit message must match pattern 'chore(release): release vue3-extended-multiselect vX.X.X' or 'feat(release): release vue3-extended-multiselect vX.X.X'"
+          fi
+
+  test:
+    name: Run Unit Tests
+    needs: check-commit
+    if: needs.check-commit.outputs.should_release == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test -- --coverage
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        if: success()
+
+  publish:
+    name: Publish to npm and Create Release
+    needs: [check-commit, test]
+    if: needs.check-commit.outputs.should_release == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies (including devDependencies)
+        run: npm ci --include=dev
+
+      - name: Build package
+        run: npm run build
+
+      - name: Verify package
+        run: |
+          npm pack --dry-run
+          npx pkg-ok
+
+      - name: Create git tag
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          VERSION="v${{ needs.check-commit.outputs.version }}"
+          TAG_MESSAGE="Version $VERSION\n\nPlease refer to [CHANGELOG.md](https://github.com/danyaridiger/vue3-extended-multiselect/blob/master/CHANGELOG.md) for details."
+          git tag -a "$VERSION" -m "$(echo -e "$TAG_MESSAGE")"
+          git push origin "$VERSION"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Extract latest changelog section for release
+        id: extract_changelog
+        run: |
+          # Python script to extract the last changelog section
+          cat > extract_changelog.py << 'EOF'
+          import re
+          import sys
+
+          def extract_latest_changelog_section():
+              try:
+                  with open('CHANGELOG.md', 'r', encoding='utf-8') as file:
+                      content = file.read()
+                  
+                  # Pattern to match version headers like: ### 3.1.0 (2025-10-01)
+                  pattern = r'(^### \d+\.\d+\.\d+ \(\d{4}-\d{2}-\d{2}\)$(?:\r?\n)(?:.*?(?=^### |\Z)))'
+                  
+                  matches = re.findall(pattern, content, re.MULTILINE | re.DOTALL)
+                  
+                  if matches:
+                      latest_section = matches[-1].strip()
+                      version_match = re.search(r'^### (\d+\.\d+\.\d+)', latest_section, re.MULTILINE)
+                      
+                      if version_match:
+                          changelog_version = version_match.group(1)
+                          current_version = "${{ needs.check-commit.outputs.version }}"
+                          
+                          if changelog_version == current_version:
+                              print(latest_section)
+                              return True
+                          else:
+                              print(f"Version mismatch: CHANGELOG has {changelog_version}, releasing {current_version}")
+                              return False
+                      else:
+                          print("Could not extract version from changelog section")
+                          return False
+                  else:
+                      print("No version sections found in CHANGELOG.md")
+                      return False
+                      
+              except Exception as e:
+                  print(f"Error reading CHANGELOG.md: {e}")
+                  return False
+
+          if __name__ == "__main__":
+              success = extract_latest_changelog_section()
+              exit(0 if success else 1)
+          EOF
+
+          python extract_changelog.py > latest_section.md || echo "Extraction failed"
+
+          if [ -s latest_section.md ]; then
+            echo "✅ Found latest changelog section for version ${{ needs.check-commit.outputs.version }}"
+            RELEASE_BODY=$(cat latest_section.md)
+            echo "body<<EOF" >> $GITHUB_OUTPUT
+            echo "$RELEASE_BODY" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+            echo "found=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ No matching changelog section found for version ${{ needs.check-commit.outputs.version }}"
+            echo "found=false" >> $GITHUB_OUTPUT
+            
+            FALLBACK_BODY="## v${{ needs.check-commit.outputs.version }}
+
+          No changelog entry found for this version in CHANGELOG.md.
+          Please check the [CHANGELOG.md](https://github.com/danyaridiger/vue3-extended-multiselect/blob/master/CHANGELOG.md) file for details about this release."
+                
+                echo "body=$FALLBACK_BODY" >> $GITHUB_OUTPUT
+              fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ needs.check-commit.outputs.version }}
+          name: Release v${{ needs.check-commit.outputs.version }}
+          body: ${{ steps.extract_changelog.outputs.body }}
+          draft: false
+          prerelease: false
+          generate_release_notes: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

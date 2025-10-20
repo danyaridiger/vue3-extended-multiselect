@@ -1,10 +1,6 @@
 import { fireEvent } from "@testing-library/dom";
-import { 
-  mountComponent, 
-  wrapperProvides,
-  SEARCH_PATTERN,
-} from "../utils/mount";
-import { 
+import { mountComponent, wrapperProvides, SEARCH_PATTERN } from "../utils/mount";
+import {
   mockOptionSelection,
   mockOptionsLoader,
   createNewOptionsWrapper,
@@ -21,27 +17,25 @@ describe("events", () => {
     const propsData = {
       options: globalThis.OPTIONS,
     };
-    
+
     wrapper = await mountComponent(Vue3ExtendedMultiselect, true, propsData);
 
-    wrapper.vm.emitter.emit(
-      "extended:search-pattern-changed", 
-      globalThis.SEARCH_VALUE,
-    );
+    wrapper.vm.emitter.emit("extended:search-pattern-changed", globalThis.SEARCH_VALUE);
 
-    expect(wrapper.emitted()['pattern-changed'][0][0]).toEqual(globalThis.SEARCH_VALUE);
+    expect(wrapper.emitted()["pattern-changed"][0][0]).toEqual(globalThis.SEARCH_VALUE);
 
     propsData.options = mockOptionsLoader;
     wrapper = await mountComponent(Vue3ExtendedMultiselect, true, propsData);
 
     wrapper.vm.emitter.emit(
-      "extended:loader-pattern-changed", 
+      "extended:loader-pattern-changed",
       globalThis.SEARCH_VALUE_WITH_RESULTS,
     );
 
-    expect(wrapper.emitted()['pattern-changed'][0][0]).toEqual(globalThis.SEARCH_VALUE_WITH_RESULTS);
+    expect(wrapper.emitted()["pattern-changed"][0][0]).toEqual(
+      globalThis.SEARCH_VALUE_WITH_RESULTS,
+    );
   });
-
 
   it("correctly emits 'select' event", async () => {
     const propsData = {
@@ -55,7 +49,7 @@ describe("events", () => {
     wrapper = await mountComponent(Vue3ExtendedMultiselect, false, propsData);
 
     expect(wrapper.emitted().select).not.toBeDefined();
-    
+
     const multipleWrapper = wrapper.find(".extended__multiselect-block--multiple > div");
 
     expect(multipleWrapper.element.children).toHaveLength(1);
@@ -65,7 +59,6 @@ describe("events", () => {
     expect(wrapper.emitted().select[0][0].option.label).toEqual("First Option");
     expect(wrapper.emitted().select[0][0].inputId).toEqual(globalThis.INPUT_ID);
   });
-
 
   it("correctly emits 'clean' event", async () => {
     const propsData = {
@@ -77,14 +70,12 @@ describe("events", () => {
     wrapper = await mountComponent(Vue3ExtendedMultiselect, false, propsData);
 
     const cleanButton = wrapper.find(".extended__multiselect-cancel");
-    
-    await mockOptionSelection(wrapper);
 
+    await mockOptionSelection(wrapper);
     await fireEvent.click(cleanButton.element);
 
     expect(wrapper.emitted().clean).toBeDefined();
   });
-  
 
   it("correctly emits 'option-created' event", async () => {
     const propsData = {
@@ -94,17 +85,16 @@ describe("events", () => {
     };
 
     wrapper = await mountComponent(
-      Vue3ExtendedMultiselect, 
-      false, 
-      propsData, 
+      Vue3ExtendedMultiselect,
+      false,
+      propsData,
       wrapperProvides(globalThis.SEARCH_VALUE, SEARCH_PATTERN),
     );
 
     await fireEvent.mouseDown(createNewOptionsWrapper(wrapper).element);
-    
+
     expect(wrapper.emitted()["option-created"][0][0]).toEqual(globalThis.SEARCH_VALUE);
   });
-
 
   it("correctly emits 'active' event", async () => {
     wrapper = await mountComponent(Vue3ExtendedMultiselect, false);
@@ -116,7 +106,6 @@ describe("events", () => {
 
     expect(wrapper.emitted().active[0][0]).toBeNull();
   });
-
 
   it("correctly emits 'close' event", async () => {
     const propsData = {
@@ -133,11 +122,10 @@ describe("events", () => {
     expect(wrapper.emitted().close[0][0].inputId).toEqual(globalThis.INPUT_ID);
     expect(wrapper.emitted().close[0][0].options).toHaveLength(1);
   });
-  
 
   it("correctly emits 'increase' event", async () => {
     expect.assertions(1);
-    
+
     const propsData = {
       multiple: true,
       toggleMultipleBlocksLimit: true,
@@ -151,7 +139,7 @@ describe("events", () => {
     const increaserWrapper = multipleWrapper.find(".extended__multiselect-increaser");
 
     await fireEvent.click(increaserWrapper.element);
-      
+
     expect(wrapper.emitted().increase[0][0]).toEqual(2);
   });
 });

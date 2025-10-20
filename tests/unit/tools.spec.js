@@ -19,10 +19,14 @@ describe("tools", () => {
     setTimeout(() => {
       const input = wrapper.find("input");
       const optionsWrapper = wrapper.findComponent(ExtendedMultiselectOptions);
-      const optionsListWrapper = optionsWrapper.find(".extended__multiselect-options_container");
-  
-      fireEvent.input(input.element, { target: { value: globalThis.SEARCH_VALUE_WITH_RESULTS } });
-  
+      const optionsListWrapper = optionsWrapper.find(
+        ".extended__multiselect-options_container",
+      );
+
+      fireEvent.input(input.element, {
+        target: { value: globalThis.SEARCH_VALUE_WITH_RESULTS },
+      });
+
       expect(optionsListWrapper.element.children).toHaveLength(4);
 
       setTimeout(() => {
@@ -32,7 +36,6 @@ describe("tools", () => {
       }, 1000);
     }, 1000);
   });
-
 
   it("correctly handles outside clicks", async () => {
     const propsData = {

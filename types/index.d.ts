@@ -1,7 +1,15 @@
 /**
  * General type for any kind of option
  */
-export type UnionOptionType = string | number | boolean | object | Array<unknown> | Function | null | undefined;
+export type UnionOptionType =
+  | string
+  | number
+  | boolean
+  | object
+  | Array<unknown>
+  | ((...args: unknown[]) => unknown)
+  | null
+  | undefined;
 
 /**
  * Method types provided by slot-scope

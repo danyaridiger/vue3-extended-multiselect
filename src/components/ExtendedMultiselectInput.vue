@@ -24,17 +24,11 @@
       v-show="!searchFieldForwarding && !multiple && !placeholderBlockShown"
       @click="expand"
     >
-      <slot 
-        name="labelBlock"
-        :label-block-value="singleLabel"
-      >
+      <slot name="labelBlock" :label-block-value="singleLabel">
         <span>{{ singleLabel }}</span>
       </slot>
     </div>
-    <span
-      v-if="placeholderBlockShown"
-      class="extended__multiselect-placeholder"
-    >
+    <span v-if="placeholderBlockShown" class="extended__multiselect-placeholder">
       {{ appropriatePlaceholder }}
     </span>
     <extended-multiselect-multiple
@@ -64,7 +58,7 @@
         </slot>
       </template>
       <template #optionBlock="{ label, deselectBlock, index }">
-        <slot 
+        <slot
           name="optionBlock"
           :label="label"
           :index="index"
@@ -75,15 +69,8 @@
       <template #maxElements>
         <slot name="maxElements"></slot>
       </template>
-      <template
-        v-if="toggleMultipleBlocksLimit"
-        #showMore="{ showMoreOptions }"
-      >
-        <slot 
-          name="showMore"
-          :show-more-options="showMoreOptions"
-        >
-        </slot>
+      <template v-if="toggleMultipleBlocksLimit" #showMore="{ showMoreOptions }">
+        <slot name="showMore" :show-more-options="showMoreOptions"> </slot>
       </template>
     </extended-multiselect-multiple>
   </div>
@@ -115,7 +102,7 @@
         </slot>
       </template>
       <template #optionBlock="{ label, deselectBlock, index }">
-        <slot 
+        <slot
           name="optionBlock"
           :label="label"
           :index="index"
@@ -123,14 +110,8 @@
         >
         </slot>
       </template>
-      <template
-        v-if="toggleMultipleBlocksLimit"
-        #showMore="{ showMoreOptions }"
-      >
-        <slot 
-          name="showMore"
-          :show-more-options="showMoreOptions"
-        ></slot>
+      <template v-if="toggleMultipleBlocksLimit" #showMore="{ showMoreOptions }">
+        <slot name="showMore" :show-more-options="showMoreOptions"></slot>
       </template>
     </extended-multiselect-multiple>
     <input
@@ -141,20 +122,11 @@
       @focus.prevent="expand"
     />
   </div>
-  <div
-    class="extended__multiselect-block"
-    v-else
-  >
-    <span
-      v-if="hintBlockShown"
-      class="extended__multiselect-placeholder"
-    >
+  <div class="extended__multiselect-block" v-else>
+    <span v-if="hintBlockShown" class="extended__multiselect-placeholder">
       {{ appropriatePlaceholder }}
     </span>
-    <slot
-      name="labelBlock"
-      :label-block-value="singleLabel"
-    >
+    <slot name="labelBlock" :label-block-value="singleLabel">
       <span>{{ singleLabel }}</span>
     </slot>
     <input
@@ -215,7 +187,7 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
-    
+
   /**
    * Provides "loading" state of component
    * to ExtendedMultiselectMultiple child component
@@ -225,9 +197,9 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
-    
+
   /**
-   * Determines whether to use ExtendedMultiselectMultiple 
+   * Determines whether to use ExtendedMultiselectMultiple
    * child component and some other related functionality
    * @property {boolean} multiple
    */
@@ -260,13 +232,13 @@ const props = defineProps({
    * @default true
    * @property {boolean} showDeselectIconLoader
    */
-   showDeselectIconLoader: {
+  showDeselectIconLoader: {
     type: Boolean,
     default: true,
   },
 
   /**
-   * Determines whether to allow user to increase limit of shown 
+   * Determines whether to allow user to increase limit of shown
    * elements with selected options by special icon
    * @property {boolean} toggleMultipleBlocksLimit
    */
@@ -341,7 +313,7 @@ const props = defineProps({
     type: String,
     required: true,
   },
-    
+
   /**
    * Provides current theme of extended multiselect
    * to ExtendedMultiselectMultiple child component
@@ -393,7 +365,7 @@ const props = defineProps({
 
   /**
    * Provides function that creates custom label for
-   * block with selected option to ExtendedMultiselectMultiple 
+   * block with selected option to ExtendedMultiselectMultiple
    * child component
    * @property {Function} createCustomOptionLabel
    */
@@ -443,7 +415,6 @@ const emitter = toRef(props, "emitter");
 const { DebounceConstructor } = useDebounce();
 
 const blurSkip = ref(false);
-const reversePrevented = ref(false);
 const searchFieldFocused = ref(false);
 const optionWillBeTriggered = ref(false);
 const searchFieldPreserving = ref(false);
@@ -452,15 +423,19 @@ const searchValue = ref("");
 const singleLabel = ref("");
 const blurSkipByToggleIcon = ref(0);
 const blurSkipByBlock = ref(0);
-const searchDebounce = ref(new DebounceConstructor.value(() => {
-  const searchPattern = searchValue.value ? new RegExp(`${searchValue.value}`, "i") : null;
-  if (externalOptionsLoader.value) {
-    emitter.value.emit("extended:loader-pattern-changed", searchValue.value);
-  } else {
-    emitter.value.emit("extended:search-pattern-changed", searchValue.value);
-    setSearchPattern(searchPattern);
-  }
-}, 250));
+const searchDebounce = ref(
+  new DebounceConstructor.value(() => {
+    const searchPattern = searchValue.value
+      ? new RegExp(`${searchValue.value}`, "i")
+      : null;
+    if (externalOptionsLoader.value) {
+      emitter.value.emit("extended:loader-pattern-changed", searchValue.value);
+    } else {
+      emitter.value.emit("extended:search-pattern-changed", searchValue.value);
+      setSearchPattern(searchPattern);
+    }
+  }, 250),
+);
 
 /**
  * Element references
@@ -534,8 +509,8 @@ const placeholderBlockShown = computed(() => {
  */
 const searchFieldClass = computed(() => {
   const mainClass = searchFieldForwarding.value
-   ? "extended__multiselect-input"
-   : "extended__multiselect-input--hidden";
+    ? "extended__multiselect-input"
+    : "extended__multiselect-input--hidden";
   const searchFieldClasses = [];
 
   if (optionWillBeTriggered.value) {
@@ -547,7 +522,7 @@ const searchFieldClass = computed(() => {
   }
 
   searchFieldClasses.push(mainClass);
-      
+
   return searchFieldClasses;
 });
 
@@ -558,21 +533,22 @@ const searchFieldClass = computed(() => {
  * @returns {boolean} display
  */
 const searchFieldForwarding = computed(() => {
-  return searchFieldFocused.value 
-    || optionWillBeTriggered.value 
-    || searchFieldPreserving.value;
+  return (
+    searchFieldFocused.value || optionWillBeTriggered.value || searchFieldPreserving.value
+  );
 });
 
 /**
  * Determines whether option shall be triggered before selection
  * @function
  * @emits extended:renew-field-forwarding
- * @param {boolean} searchFieldForwarding - restrictor of triggered option 
+ * @param {boolean} searchFieldForwarding - restrictor of triggered option
  */
 watch(searchFieldForwarding, (value) => {
   if (value && autoSelectSearchValue.value && !multiple.value && singleLabel.value) {
     searchValue.value = singleLabel.value;
   }
+
   emitter.value.emit("extended:renew-field-forwarding", value);
 });
 
@@ -581,13 +557,17 @@ watch(searchFieldForwarding, (value) => {
  * @function
  * @param {string} pattern - pattern of internal search for available options
  */
-watch(searchState, (prevState, state) => {
-  if (state.searchPattern === prevState.searchPattern) return;
+watch(
+  searchState,
+  (prevState, state) => {
+    if (state.searchPattern === prevState.searchPattern) return;
 
-  if (searchFilterActive.value) {
-    setSearchPattern(state.pattern);
-  }
-}, { deep: true });
+    if (searchFilterActive.value) {
+      setSearchPattern(state.pattern);
+    }
+  },
+  { deep: true },
+);
 
 /**
  * Sets value of search field from search field to store
@@ -605,10 +585,11 @@ watch(searchValue, (value) => {
  * @function
  * @emits extended:expand-options
  */
-const expand = (event) => {
+const expand = () => {
   if (disabled.value) return;
-      
+
   searchFieldFocused.value = true;
+
   emitter.value.emit("extended:expand-options");
 };
 
@@ -620,6 +601,7 @@ const expand = (event) => {
 const multipleBlur = () => {
   if (!multiple.value) {
     searchFieldFocused.value = false;
+
     return;
   }
 };
@@ -636,17 +618,20 @@ const rollUp = () => {
 
   if (!togglingSavesSearchValue.value) {
     searchValue.value = "";
+
     setSearchValue(null);
     setSearchPattern(null);
   }
 
   if (blurSkipByToggleIcon.value > 0) {
     blurSkipByToggleIcon.value = 0;
+
     return;
   }
 
   if (blurSkipByBlock.value > 0) {
     blurSkipByBlock.value = 0;
+
     return;
   }
 
@@ -673,7 +658,7 @@ const rollupIfSelected = (option) => {
   } else {
     singleLabel.value = option.label;
   }
-}
+};
 
 /**
  * Activates debounced version of options list filter
@@ -708,7 +693,7 @@ onBeforeMount(() => {
     if (internalRollup) {
       return;
     }
-      
+
     rollUp();
   });
 
@@ -752,6 +737,7 @@ onBeforeMount(() => {
     if (!toggleOptionsBySelect.value) {
       searchFieldFocused.value = false;
     }
+
     optionWillBeTriggered.value = triggerState;
   });
 

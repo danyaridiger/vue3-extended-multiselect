@@ -9,12 +9,7 @@
     @click.stop.middle="toggleOptionsList"
     @keypress.stop="toggleOptionsList($event)"
   >
-    <component
-      v-if="!loading"
-      :class="classesSummary"
-      :is="icon"
-      :key="icon"
-    />
+    <component v-if="!loading" :class="classesSummary" :is="icon" :key="icon" />
     <extended-multiselect-loader
       v-else
       :icon-filter="loaderIconFilter"
@@ -28,47 +23,17 @@
       height="0"
     >
       <defs>
-        <filter
-          x="0"
-          y="0"
-          width="1"
-          height="1"
-          id="basicFilter"
-        >
-          <feFlood flood-color="#BDBDBD"/>
-          <feComposite
-            out="SourceGraphic"
-            in2="SourceGraphic"
-            operator="in"
-          />
+        <filter x="0" y="0" width="1" height="1" id="basicFilter">
+          <feFlood flood-color="#BDBDBD" />
+          <feComposite out="SourceGraphic" in2="SourceGraphic" operator="in" />
         </filter>
-        <filter 
-          x="0" 
-          y="0" 
-          width="1" 
-          height="1" 
-          id="blackFilter"
-        >
-          <feFlood flood-color="#000000"/>
-          <feComposite 
-            out="SourceGraphic" 
-            in2="SourceGraphic" 
-            operator="in" 
-          />
+        <filter x="0" y="0" width="1" height="1" id="blackFilter">
+          <feFlood flood-color="#000000" />
+          <feComposite out="SourceGraphic" in2="SourceGraphic" operator="in" />
         </filter>
-        <filter 
-          x="0" 
-          y="0" 
-          width="1" 
-          height="1" 
-          id="greenFilter"
-        >
-          <feFlood flood-color="#068504"/>
-          <feComposite 
-            out="SourceGraphic" 
-            in2="SourceGraphic" 
-            operator="in" 
-          />
+        <filter x="0" y="0" width="1" height="1" id="greenFilter">
+          <feFlood flood-color="#068504" />
+          <feComposite out="SourceGraphic" in2="SourceGraphic" operator="in" />
         </filter>
       </defs>
     </svg>
@@ -76,11 +41,7 @@
 </template>
 
 <script setup>
-import {
-  computed,
-  defineProps,
-  toRefs,
-} from "vue";
+import { computed, defineProps, toRefs } from "vue";
 
 import useToggle from "../composition/toggle";
 import useSizes from "../composition/sizes";
@@ -127,13 +88,13 @@ const props = defineProps({
    * Defines a svg-filter for loader icons
    * @property {string} loaderIconFilter
    */
-   loaderIconFilter: {
+  loaderIconFilter: {
     type: String,
     required: true,
   },
-      
+
   /**
-   * Provides size to create special size-class 
+   * Provides size to create special size-class
    * for each kind of icon
    * @property {string} iconSize
    */
@@ -192,11 +153,7 @@ const {
   toggleIcon,
 } = toRefs(props);
 
-const { toggleSlotClass, toggleOptionsList } = useToggle(
-  loading,
-  disabled,
-  emitter,
-);
+const { toggleSlotClass, toggleOptionsList } = useToggle(loading, disabled, emitter);
 const { iconSizeClass } = useSizes(iconSize);
 
 /**
@@ -205,11 +162,7 @@ const { iconSizeClass } = useSizes(iconSize);
  * @returns {Array} classes
  */
 const classesSummary = computed(() => {
-  return [
-    iconFilterClass.value,
-    iconSizeClass.value,
-    iconFilterRotationClass.value
-  ];
+  return [iconFilterClass.value, iconSizeClass.value, iconFilterRotationClass.value];
 });
 
 /**
@@ -219,7 +172,7 @@ const classesSummary = computed(() => {
  * @returns {string} icon
  */
 const icon = computed(() => {
-  switch(toggleIcon.value) {
+  switch (toggleIcon.value) {
     case "base-arrow":
       return BaseArrowIcon;
     case "double-arrow":
@@ -234,7 +187,7 @@ const icon = computed(() => {
       return TriangleArrowIcon;
     case "triangle-circle-arrow":
       return TriangleCircleArrowIcon;
-    default: 
+    default:
       return BaseArrowIcon;
   }
 });
@@ -247,7 +200,7 @@ const icon = computed(() => {
 const iconFilterClass = computed(() => {
   const basicFilter = "extended__multiselect-filter";
 
-  switch(iconFilter.value) {
+  switch (iconFilter.value) {
     case "basic":
       return `${basicFilter}_basic`;
     case "black":
@@ -267,8 +220,8 @@ const iconFilterClass = computed(() => {
  */
 const iconFilterRotationClass = computed(() => {
   return dropdownActive.value
-   ? "extended__multiselect-toggle--active" 
-   : "extended__multiselect-toggle--locked";
+    ? "extended__multiselect-toggle--active"
+    : "extended__multiselect-toggle--locked";
 });
 
 /**

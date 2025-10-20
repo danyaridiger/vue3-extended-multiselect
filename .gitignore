@@ -1,25 +1,47 @@
-.DS_Store
-node_modules
+node_modules/
 
-# local env files
-.env.local
-.env.*.local
-
-# Log files
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
 
-# Editor directories and files
-.idea
-.vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+pids
+*.pid
+*.seed
+*.pid.lock
 
-#local QA tests
+coverage/
+*.lcov
+
+.npm
+
+.eslintcache
+
+*.tgz
+
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+tmp/
+temp/
+
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+junit.xml
+test-results.json
 qa
 expose.js

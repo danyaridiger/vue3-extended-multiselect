@@ -18,7 +18,7 @@ export default function useLabels(
     const customOptionLabel = createCustomOptionLabel.value(option);
 
     if (customOptionLabel) return customOptionLabel;
-  
+
     if (Array.isArray(option) && option.length > 0) {
       return option.join(", ");
     }
@@ -30,9 +30,11 @@ export default function useLabels(
     }
 
     const hasLabel = Object.getOwnPropertyNames(option).includes(label.value);
-  
+
     if (hasLabel) {
-      return typeof option[label.value] === "object" ? JSON.stringify(option[label.value]) : option[label.value];
+      return option[label.value] && typeof option[label.value] === "object"
+        ? JSON.stringify(option[label.value])
+        : option[label.value];
     }
 
     return "";

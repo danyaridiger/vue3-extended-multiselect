@@ -1,0 +1,26 @@
+{
+  "name": "vue3-extended-multiselect",
+  "files": [
+    {
+      "path": "./dist/index.cjs.js",
+      "maxSize": "20 kB"
+    },
+    {
+      "path": "./dist/index.esm.js",
+      "maxSize": "20 kB"
+    },
+    {
+      "path": "./dist/index.umd.js",
+      "maxSize": "20 kB"
+    }
+  ],
+  "compression": "gzip",
+  "normalization": {
+    "path": ["./dist/"],
+    "stripHash": true
+  },
+  "settings": {
+    "enableMarkdownReport": false,
+    "failOnMissingFiles": false
+  }
+}

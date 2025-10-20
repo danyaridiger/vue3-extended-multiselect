@@ -1,10 +1,5 @@
 <template>
-  <div
-    ref="optionsWrapper"
-    tabindex="-1"
-    :class="classes"
-    :style="styles"
-  >
+  <div ref="optionsWrapper" tabindex="-1" :class="classes" :style="styles">
     <slot name="listHeader"></slot>
     <div
       v-if="showCreateNewOptionBlock"
@@ -14,24 +9,14 @@
     >
       {{ searchState.searchValue }}
     </div>
-    <slot
-      name="moreThanLimit"
-      v-if="maxOptionsWereSelected"
-    >
+    <slot name="moreThanLimit" v-if="maxOptionsWereSelected">
       <span>Maximum limit of selected options was achieved</span>
     </slot>
-    <slot
-      name="lessThanLimit"
-      v-if="minOptionsWereNotSelected"
-    >
+    <slot name="lessThanLimit" v-if="minOptionsWereNotSelected">
       <span>Minimum amount of selected options was not achieved</span>
     </slot>
     <div class="extended__multiselect-options_container">
-      <div
-        role="listbox"
-        v-for="(option, index) in availableOptions"
-        :key="index"
-      >
+      <div role="listbox" v-for="(option, index) in availableOptions" :key="index">
         <div
           v-if="option"
           :aria-setsize="availableOptions.length"
@@ -53,21 +38,16 @@
             :create-custom-option-label="createCustomOptionLabel"
           >
             <div class="extended__multiselect-marker">
-              <slot 
-                name="marker"
-                :selected="showCurrentMarker(option)"
-              >
+              <slot name="marker" :selected="showCurrentMarker(option)">
                 <div
                   v-if="showMarker && showCurrentMarker(option)"
                   :class="markerShapeClass(option)"
                   :style="markerShapeMargin"
-                >
-                </div>
-                <div 
+                ></div>
+                <div
                   v-else-if="showMarker"
                   class="extended__multiselect-marker-shape-only"
-                >
-                </div>
+                ></div>
               </slot>
             </div>
             <span :id="`option-label-${index}`">
@@ -77,16 +57,10 @@
         </div>
       </div>
     </div>
-    <slot
-      name="noResults"
-      v-if="emptySearchResult"
-    >
+    <slot name="noResults" v-if="emptySearchResult">
       <span>No results were found by search</span>
     </slot>
-    <slot
-      name="noOptions"
-      v-if="emptyOptionsList"
-    >
+    <slot name="noOptions" v-if="emptyOptionsList">
       <span>Options list is empty</span>
     </slot>
     <slot name="listFooter"></slot>
@@ -341,7 +315,7 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-      
+
   /**
    * List of options which should be selected by default
    * if "multiple" prop equals true
@@ -485,8 +459,8 @@ const { createLabel, optionTypeRestrictor } = usePreselectedOptions(
   showInsertWarnings,
 );
 const { optionCreateLabel } = useLabels(
-  label, 
-  createCustomOptionLabel, 
+  label,
+  createCustomOptionLabel,
   emptyObjectsPlaceholder,
 );
 
@@ -506,7 +480,7 @@ const availableOptions = computed(() => {
     if (!lookForSimpleOptions(option)) return false;
 
     if (selectedOptionsShown.value) return true;
-            
+
     return lookForObjectOptions(option);
   });
 
@@ -527,7 +501,7 @@ const availableOptions = computed(() => {
 const classes = computed(() => {
   let theme = [];
 
-  switch(themeType.value) {
+  switch (themeType.value) {
     case "basic":
       theme.push("extended__multiselect-options");
       break;
@@ -564,8 +538,12 @@ const classes = computed(() => {
  * @returns {boolean} emptiness
  */
 const emptyOptionsList = computed(() => {
-  return (!options.value.length || !options.value.filter((option) => !!option).length
-   || !availableOptions.value.length) && !searchState.searchValue;
+  return (
+    (!options.value.length ||
+      !options.value.filter((option) => !!option).length ||
+      !availableOptions.value.length) &&
+    !searchState.searchValue
+  );
 });
 
 /**
@@ -574,7 +552,9 @@ const emptyOptionsList = computed(() => {
  * @returns {boolean} emptiness
  */
 const emptySearchResult = computed(() => {
-  return !availableOptions.value.length && !createOnTheGo.value && searchState.searchValue;
+  return (
+    !availableOptions.value.length && !createOnTheGo.value && searchState.searchValue
+  );
 });
 
 /**
@@ -585,7 +565,7 @@ const emptySearchResult = computed(() => {
  */
 const heightFromProps = computed(() => {
   let heightRecord = {};
-      
+
   if (chosenToggleAppearanceSide.value === "atop") {
     Object.defineProperty(heightRecord, "top", {
       enumerable: true,
@@ -601,8 +581,10 @@ const heightFromProps = computed(() => {
   if (toggleMinHeight.value) {
     if (toggleMinHeight.value > toggleMaxHeight.value) {
       if (showInsertWarnings.value) {
-        let errorMessage = "vue-extended-multiselect: «toggleMinHeight» property can not be greater than «toggleMaxHeight» property.";
-        errorMessage += "«toggleMaxHeight» property was reset to default value of 400 pixels.";
+        let errorMessage =
+          "vue-extended-multiselect: «toggleMinHeight» property can not be greater than «toggleMaxHeight» property.";
+        errorMessage +=
+          "«toggleMaxHeight» property was reset to default value of 400 pixels.";
         console.warn(errorMessage);
       }
 
@@ -624,13 +606,17 @@ const heightFromProps = computed(() => {
  * @returns {boolean} reaching
  */
 const maxOptionsWereSelected = computed(() => {
-  return maxOptionsCount.value && multiple.value && selectedOptions.value.length === maxOptionsCount.value;
+  return (
+    maxOptionsCount.value &&
+    multiple.value &&
+    selectedOptions.value.length === maxOptionsCount.value
+  );
 });
 
 /**
  * Defines styles for "margin-top" css-property of marker element
  * @function
- * @returns {Object} styles 
+ * @returns {Object} styles
  */
 const markerShapeMargin = computed(() => {
   return { marginTop: "2px" };
@@ -642,7 +628,11 @@ const markerShapeMargin = computed(() => {
  * @returns {boolean} reaching
  */
 const minOptionsWereNotSelected = computed(() => {
-  return minOptionsCount.value && multiple.value && selectedOptions.value.length < minOptionsCount.value;
+  return (
+    minOptionsCount.value &&
+    multiple.value &&
+    selectedOptions.value.length < minOptionsCount.value
+  );
 });
 
 /**
@@ -654,7 +644,9 @@ const minOptionsWereNotSelected = computed(() => {
 const optionHeightByProps = computed(() => {
   const heightNumeric = typeof anyOptionWrapperBlockHeight.value === "number";
   let height = {
-    height: heightNumeric ? `${anyOptionWrapperBlockHeight.value}px` : `${anyOptionWrapperBlockHeight.value}`,
+    height: heightNumeric
+      ? `${anyOptionWrapperBlockHeight.value}px`
+      : `${anyOptionWrapperBlockHeight.value}`,
   };
 
   if (optionsPadding.value.length) {
@@ -683,20 +675,20 @@ const showCreateNewOptionBlock = computed(() => {
 /**
  * Summarizes styles for options wrapper in combined collection
  * @function
- * @returns {Array} styles 
+ * @returns {Array} styles
  */
 
 const styles = computed(() => {
   return [
-    heightFromProps.value, 
-    heightFromMounted, 
-    atopWithScroll.value, 
-    underWithScroll.value
+    heightFromProps.value,
+    heightFromMounted,
+    atopWithScroll.value,
+    underWithScroll.value,
   ];
 });
 
 /**
- * Toggles "border-bottom-right-radius", "border-bottom-right-radius" 
+ * Toggles "border-bottom-right-radius", "border-bottom-right-radius"
  * and "top" css-properties of options wrapper
  * @function
  * @param {boolean} afterLoading - loading state flag
@@ -704,7 +696,7 @@ const styles = computed(() => {
 const calculateTopOffset = (afterLoading = false) => {
   nextTick(() => {
     if (!optionsWrapper.value) return;
-    
+
     const offsetHeight = optionsWrapper.value.offsetHeight;
     const scrollHeight = optionsWrapper.value.scrollHeight;
 
@@ -737,15 +729,16 @@ const compareWithSelected = (calculatedOptionLabel) => {
   return !selectedOptions.value.find((selectedOption) => {
     let calculatedSelectedOptionLabel;
 
-    if (typeof selectedOption === "object") {
+    if (selectedOption && typeof selectedOption === "object") {
       if (Object.keys(selectedOption).length === 0) {
         calculatedSelectedOptionLabel = emptyObjectsPlaceholder.value;
       } else if (Array.isArray(selectedOption)) {
         calculatedSelectedOptionLabel = selectedOption.join(", ");
       } else {
-        calculatedSelectedOptionLabel = typeof selectedOption[label.value] === "object"
-         ? JSON.stringify(selectedOption[label.value])
-         : selectedOption[label.value].toString();
+        calculatedSelectedOptionLabel =
+          selectedOption[label.value] && typeof selectedOption[label.value] === "object"
+            ? JSON.stringify(selectedOption[label.value])
+            : selectedOption[label.value].toString();
       }
     } else {
       calculatedSelectedOptionLabel = selectedOption.toString();
@@ -766,7 +759,7 @@ const createNewOption = () => {
 
   let newOption;
 
-  switch(createOptionType.value) {
+  switch (createOptionType.value) {
     case "primitive":
       newOption = searchState.searchValue;
       break;
@@ -797,7 +790,9 @@ const createNewOption = () => {
 const createObjectOption = () => {
   if (!createOptionFields.value) {
     if (showInsertWarnings.value) {
-      console.warn("vue-extended-multiselect: if option should be object — option fields should not be empty");
+      console.warn(
+        "vue-extended-multiselect: if option should be object — option fields should not be empty",
+      );
     }
 
     return searchState.searchValue;
@@ -824,9 +819,10 @@ const createObjectOption = () => {
  * @returns {boolean} prohibition
  */
 const defineDisabledOption = (option) => {
-  if (typeof option === "object" && !Array.isArray(option)) return false;
+  if (option && typeof option === "object" && !Array.isArray(option)) return false;
 
   let convertedOption;
+
   if (Array.isArray(option) && !option.length) {
     convertedOption = emptyObjectsPlaceholder.value;
   } else {
@@ -846,9 +842,11 @@ const defineDisabledOption = (option) => {
  */
 const filterBySearchPattern = (optionsList) => {
   return optionsList.filter((option) => {
-    if (typeof option === "object") {
+    if (option && typeof option === "object") {
       if (Array.isArray(option)) {
-        return searchState.searchPattern.test(option.length ? option.join(", ") : emptyObjectsPlaceholder.value);
+        return searchState.searchPattern.test(
+          option.length ? option.join(", ") : emptyObjectsPlaceholder.value,
+        );
       }
 
       let internalSearchResult;
@@ -887,7 +885,7 @@ const keyBlocker = (keyboardEvent) => {
   if (shiftKeyBlock && keyboardEvent.shiftKey) return true;
 
   return false;
-}
+};
 
 /**
  * Searchs for already selected options in particular
@@ -897,7 +895,7 @@ const keyBlocker = (keyboardEvent) => {
  * @returns {boolean} selected
  */
 const lookForObjectOptions = (option) => {
-  if (typeof option === "object") {
+  if (option && typeof option === "object") {
     let calculatedOptionLabel;
 
     if (Array.isArray(option) && !!option.length) {
@@ -906,9 +904,10 @@ const lookForObjectOptions = (option) => {
       const hasLabel = Object.getOwnPropertyNames(option).includes(label.value);
 
       if (hasLabel) {
-        calculatedOptionLabel = typeof option[label.value] === "object" 
-         ? JSON.stringify(option[label.value]) 
-         : option[label.value].toString();
+        calculatedOptionLabel =
+          option[label.value] && typeof option[label.value] === "object"
+            ? JSON.stringify(option[label.value])
+            : option[label.value].toString();
       } else {
         calculatedOptionLabel = JSON.stringify(option);
       }
@@ -932,9 +931,11 @@ const lookForObjectOptions = (option) => {
  * @returns {boolean} selected
  */
 const lookForSimpleOptions = (option) => {
-  if (typeof option === "object" && Object.keys(option).length === 0) {
+  if (option && typeof option === "object" && Object.keys(option).length === 0) {
     const emptyObject = selectedOptions.value.find((emptyObject) => {
-      return typeof emptyObject === "object" && !Object.keys(emptyObject).length;
+      return (
+        emptyObject && typeof emptyObject === "object" && !Object.keys(emptyObject).length
+      );
     });
 
     if (!emptyObject || selectedOptionsShown.value) return true;
@@ -943,10 +944,12 @@ const lookForSimpleOptions = (option) => {
   }
 
   if (
-    typeof option === "object"
-     && !Array.isArray(option)
-     && !Object.keys(option).includes(label.value)
-  ) return false;
+    option &&
+    typeof option === "object" &&
+    !Array.isArray(option) &&
+    !Object.keys(option).includes(label.value)
+  )
+    return false;
 
   return true;
 };
@@ -963,7 +966,7 @@ const markerShapeClass = (option) => {
   }
 
   return "extended__multiselect-marker-shape";
-}
+};
 
 /**
  * Creates role of every option element for accessible applications
@@ -989,7 +992,7 @@ const optionIsDisabled = (option) => {
   if (option[disableByField.value] || defineDisabledOption(option)) return true;
 
   return false;
-}
+};
 
 /**
  * Defines various classes for options dependent from props
@@ -1001,7 +1004,7 @@ const optionHighlightClasses = (option) => {
   let theme = [];
 
   if (highlightOptions.value) {
-    switch(themeType.value) {
+    switch (themeType.value) {
       case "basic":
         theme.push("extended__multiselect-options_option");
         break;
@@ -1017,12 +1020,12 @@ const optionHighlightClasses = (option) => {
       case "strict":
         theme.push("extended__multiselect-options_option-strict");
         break;
-      default: 
+      default:
         theme.push("extended__multiselect-options_option");
     }
   }
 
-  if (showMarker) {
+  if (showMarker.value) {
     theme.push("extended__multiselect-options_option--marker");
   }
 
@@ -1038,7 +1041,7 @@ const optionHighlightClasses = (option) => {
 };
 
 /**
- * Selects option 
+ * Selects option
  * @function
  * @emits extended:deselect-option
  * @emits extended:preserve-search-field
@@ -1046,7 +1049,6 @@ const optionHighlightClasses = (option) => {
  * @param {MouseEvent|KeyboardEvent} clickEvent - MouseEvent or KeyboardEvent instance
  */
 const selectOption = (option, clickEvent) => {
-
   emitter.value.emit("extended:trigger-selection", false);
   emitter.value.emit("extended:preserve-search-field", false);
 
@@ -1056,11 +1058,13 @@ const selectOption = (option, clickEvent) => {
   if (maxOptionsWereSelected.value) return;
   if (option[disableByField.value] || defineDisabledOption(option)) return;
   if (
-    clickEvent.target.classList && (clickEvent.target.classList.contains("extended__multiselect-toggle")
-     || clickEvent.target.classList.contains("extended__multiselect-toggle--disabled")
-     || clickEvent.target.classList.contains("extended__multiselect-cancel")
-     || clickEvent.target.classList.contains("extended__multiselect-cancel--disabled"))
-  ) return;
+    clickEvent.target.classList &&
+    (clickEvent.target.classList.contains("extended__multiselect-toggle") ||
+      clickEvent.target.classList.contains("extended__multiselect-toggle--disabled") ||
+      clickEvent.target.classList.contains("extended__multiselect-cancel") ||
+      clickEvent.target.classList.contains("extended__multiselect-cancel--disabled"))
+  )
+    return;
 
   if (selectedOptionsShown.value || externalOptionsLoader.value) {
     const optionDeselected = lookForObjectOptions(option);
@@ -1071,12 +1075,12 @@ const selectOption = (option, clickEvent) => {
       });
 
       emitter.value.emit("extended:deselect-option", { skipNextRemoval: true, index });
-      
+
       return;
     }
   }
 
-  const isObject = typeof option === "object" && !Array.isArray(option);
+  const isObject = option && typeof option === "object" && !Array.isArray(option);
 
   if (isObject && !Object.keys(option).includes(label.value)) {
     if (showInsertWarnings.value) {
@@ -1096,9 +1100,9 @@ const selectOption = (option, clickEvent) => {
  * @param {UnionPropType} - option to select
  */
 const selectOptionEmitter = (option) => {
-  const isObjectOrArray = typeof option === "object";
+  const isObjectOrArray = option && typeof option === "object";
   const label = createLabel(isObjectOrArray, option);
-      
+
   if (multiple.value) {
     if (clearBySelectWhenMultiple.value) {
       emitter.value.emit("extended:clear-field");
@@ -1107,7 +1111,7 @@ const selectOptionEmitter = (option) => {
     emitter.value.emit("extended:select-option", {
       label,
       option,
-     });
+    });
   } else {
     emitter.value.emit("extended:select-option", {
       label,
@@ -1156,7 +1160,7 @@ const triggerOptionBeforeSelection = () => {
 };
 
 /**
- * Triggers appearance side restrictor to set a position 
+ * Triggers appearance side restrictor to set a position
  * of dropdown appearance
  * @function
  * @emits extended:available-options
@@ -1175,17 +1179,25 @@ onBeforeMount(() => {
   const objectFields = restrictedOptions.value.filter((option) => {
     if (!option) return false;
 
-    return typeof option === "object" && typeof option[label.value] === "object";
+    return (
+      option &&
+      typeof option === "object" &&
+      option[label.value] &&
+      typeof option[label.value] === "object"
+    );
   });
 
   if (objectFields.length && showInsertWarnings.value) {
-    console.warn("vue-extended-multiselect: «label» property can not be of type «object»");
+    console.warn(
+      "vue-extended-multiselect: «label» property can not be of type «object»",
+    );
   }
 
   emitter.value.on("extended:select-enter", (keyboardEvent) => {
     if (!enterIndex.value) return;
 
     const option = availableOptions.value[enterIndex.value];
+
     selectOption(option, keyboardEvent);
   });
 

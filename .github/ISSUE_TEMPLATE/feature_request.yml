@@ -1,0 +1,89 @@
+name: Feature Request
+description: Suggest a new feature or enhancement for vue3-extended-multiselect
+title: "[FEATURE]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Feature Request Template
+
+        Thank you for suggesting a new feature! Please provide the following information to help us understand your request.
+
+        Before submitting, please:
+        - Check existing issues to avoid duplicates
+        - For large changes, consider discussing in an issue first
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Description
+      description: What problem are you trying to solve? Please describe the current limitation.
+      placeholder: "Currently, the library doesn't handle X scenario which causes Y issue..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe your proposed feature or enhancement. How should it work?
+      placeholder: "I suggest adding a new option called 'future-option' that would..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternative Solutions
+      description: Have you considered any alternative solutions or workarounds?
+      placeholder: "I tried using X workaround but it has limitations because..."
+
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: Use Cases
+      description: What are the specific use cases for this feature? Provide examples.
+      placeholder: |
+        - Use case 1: When building a dropdown menu that needs to...
+        - Use case 2: For modal dialogs that require special handling of...
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature to you?
+      options:
+        - Low (nice to have)
+        - Medium (would significantly improve my workflow)
+        - High (blocking my current project)
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution Interest
+      description: Would you be interested in contributing to this feature?
+      options:
+        - label: I'd be willing to help implement this feature
+        - label: I can help with testing or documentation
+        - label: I can provide more details or use cases
+        - label: Just suggesting, not able to contribute code
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context, screenshots, or examples here.
+      placeholder: "Screenshots, code examples, or links to similar implementations..."
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Development Notes (for maintainers)
+
+        - **Branch naming**: `feat/feature-name`
+        - **Commit format**: `feat(scope): description #issue-number`
+        - **Testing**: Ensure unit tests cover new functionality
+        - **Documentation**: Update README and any relevant docs

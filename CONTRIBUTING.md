@@ -1,57 +1,70 @@
 # Contributing to vue3-extended-multiselect
 
-First off, thanks for taking the time to contribute! ❤️
+Thank you for considering contributing! I welcome all forms of contributions, including:
 
-All types of contributions are encouraged and valued. Please make sure to read the relevant section before making your contribution. It will make it a lot easier for us maintainers and smooth out the experience for all involved. The community looks forward to your contributions. 🎉
+- 🐛 Bug reports
+- 🚀 Feature requests
+- 📚 Documentation improvements
+- 💻 Code contributions
+- 🧪 Test cases
+- 🔍 Code reviews
 
-> And if you like the project, but just don't have time to contribute, that's fine. There are other easy ways to support the project and show your appreciation, which i would also be very happy about:
-> - Star the project
-> - Start watching this project
-> - Refer this project in your project's readme
-> - Mention the project at local meetups and tell your friends/colleagues
+## Before You Start
 
-## You Have a Question
+1. **Read our [Code of Conduct](CODE_OF_CONDUCT.md)** — I enforce it strictly
+2. **Check existing issues** — Avoid duplicates
+3. **For large changes**, open an issue first to discuss
 
-> If you want to ask a question, i assume that you have read the available [Documentation](https://github.com/danyaridiger/vue3-extended-multiselect/blob/master/README.md).
+## Development Setup
 
-Before you ask a question, it is best to search for existing [Issues](https://github.com/danyaridiger/vue3-extended-multiselect/issues) that might help you. In case you have found a suitable issue and still need clarification, you can write your question in this issue. It is also advisable to search the internet for answers first.
+### Prerequisites
 
-If you then still feel the need to ask a question and need clarification, i recommend the following:
+- Node.js 18+
+- npm 8+
+- Git
 
-- Open an [Issue](https://github.com/danyaridiger/vue3-extended-multiselect/issues/new).
-- Provide as much context as you can about what you're running into.
-- Provide project and platform versions (nodejs, npm, etc), depending on what seems relevant.
+### Development Setup
 
-I will then take care of the issue as soon as possible.
+1. Fork the repository
+2. Clone your fork
+3. Install dependencies: `npm ci`
+4. Create a feature branch
 
+### Branch Naming
 
-## You Want To Contribute
+Common types:
 
-> ### Legal Notice
-> When contributing to this project, you must agree that you have authored 100% of the content, that you have the necessary rights to the content and that the content you contribute may be provided under the project license.
+- `feat/` — New features
+- `fix/` — Bug fixes
+- `docs/` — Documentation
+- `chore/` — Maintenance tasks
 
+Examples:
 
-### Suggesting Enhancements
+- `feat/new-component-prop`
+- `fix/issue-123-null-check`
+- `docs/update-readme`
 
-This section guides you through submitting an enhancement suggestion for **vue3-extended-multiselect**, including completely new features and minor improvements to existing functionality. Following these guidelines will help maintainers and the community to understand your suggestion and find related suggestions.
+### Commit Guidelines
 
+- Use conventional commits format
+- Reference issues with #issue-number
+- Keep commits atomic
 
-#### Before Submitting an Enhancement
+Example: `feat(diff): add new component prop "future-prop"`
 
-- Make sure that you are using the latest version.
-- Read the [documentation](https://github.com/danyaridiger/vue3-extended-multiselect/blob/master/README.md) carefully and find out if the functionality is already covered, maybe by an individual configuration.
-- Perform a [search](https://github.com/danyaridiger/vue3-extended-multiselect/issues) to see if the enhancement has already been suggested. If it has, add a comment to the existing issue instead of opening a new one.
-- Find out whether your idea fits with the scope and aims of the project. It's up to you to make a strong case to convince the project's developers of the merits of this feature. Keep in mind that i want features that will be useful to the majority of our users and not just a small subset. If you're just targeting a minority of users, consider writing an add-on/plugin library.
+### Pull Requests
 
+1. Ensure tests pass (`npm run test:unit`)
+2. Update documentation
+3. Keep PRs focused on single feature/bug
+4. Include test cases
 
-#### How Do You Submit a Good Enhancement Suggestion?
+**Description** should include:
 
-Enhancement suggestions are tracked as [GitHub issues](https://github.com/danyaridiger/vue3-extended-multiselect/issues).
+- Purpose of changes
+- Related issues (use `#123`)
+- Testing performed
+- Screenshots if applicable
 
-- Use a **clear and descriptive title** for the issue to identify the suggestion.
-- Provide a **step-by-step description of the suggested enhancement** in as many details as possible.
-- **Describe the current behavior** and **explain which behavior you expected to see instead** and why. At this point you can also tell which alternatives do not work for you.
-- You may want to **include screenshots and animated GIFs** which help you demonstrate the steps or point out the part which the suggestion is related to.
-- **Explain why this enhancement would be useful** to most **vue3-extended-multiselect** users. You may also want to point out the other projects that solved it better and which could serve as inspiration.
-
-
+## Thanks for contributing! ✨

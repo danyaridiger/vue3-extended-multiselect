@@ -1,11 +1,10 @@
 /**
  * Debounce functions generator
- * @class 
+ * @class
  */
 class Debounce {
-
   _localTimeout = null;
-  _callback = null; 
+  _callback = null;
   _timer = 0;
 
   /**

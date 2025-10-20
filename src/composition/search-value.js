@@ -27,7 +27,7 @@ export default function useSearchValue() {
   };
 
   return {
-    searchState: readonly(searchState), 
+    searchState: readonly(searchState),
     setSearchValue,
     setSearchPattern,
   };

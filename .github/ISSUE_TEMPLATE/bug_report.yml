@@ -1,0 +1,95 @@
+name: Bug Report
+description: Report a bug or unexpected behavior
+title: "[BUG]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Bug Report Template
+
+        Before submitting, please:
+        - Check existing issues to avoid duplicates
+        - Ensure you're using the latest version
+        - Provide a minimal reproduction
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: Clearly describe the bug and what you expected to happen
+      placeholder: |
+        **What happened?**
+
+        **What did you expect to happen?**
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction Steps
+      description: Step-by-step instructions to reproduce the issue
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: code
+    attributes:
+      label: Code Example
+      description: Provide a minimal code example that demonstrates the issue
+      placeholder: |
+        ```javascript
+        import Vue3ExtendedMultiselect from "vue3-extended-multiselect";
+
+        // Your code here
+        ```
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Library Version
+      description: What version of vue3-extended-multiselect are you using?
+      placeholder: "e.g., 1.2.0"
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser/Environment
+      description: What browser, Node.js version, or environment are you using?
+      placeholder: "e.g., Chrome 115, Node.js 18.17.0"
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console Logs/Errors
+      description: If there are any error messages or console logs, please include them
+      placeholder: |
+        ```
+        Error: Cannot read properties of null (reading 'contains')
+        ```
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context about the problem here
+      placeholder: "Screenshots, related issues, etc."
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-submission Checks
+      options:
+        - label: I've searched existing issues and haven't found a duplicate
+        - label: I've provided a minimal reproduction
+        - label: I've included all relevant versions and environment info

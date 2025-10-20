@@ -7,10 +7,7 @@
     @click="cancel"
     @keypress.stop="cancel"
   >
-    <cancel-icon
-      v-if="!loading"
-      :class="iconSizeClass"
-    />
+    <cancel-icon v-if="!loading" :class="iconSizeClass" />
     <extended-multiselect-loader
       v-else
       :icon-filter="loaderIconFilter"
@@ -20,13 +17,7 @@
 </template>
 
 <script setup>
-import {
-  computed,
-  defineProps,
-  inject,
-  ref,
-  toRefs,
-} from "vue";
+import { computed, defineProps, inject, toRefs } from "vue";
 
 import useCancel from "../composition/cancel";
 import useSizes from "../composition/sizes";
@@ -52,9 +43,9 @@ const props = defineProps({
     type: String,
     required: true,
   },
-      
+
   /**
-   * Provides size to create special size-class 
+   * Provides size to create special size-class
    * for each kind of icon
    * @property {string} iconSize
    */
@@ -142,9 +133,9 @@ const { iconSizeClass } = useSizes(iconSize);
  * @returns {string} class
  */
 const classes = computed(() => {
-  return (loading.value || disabled.value)
-   ? "extended__multiselect-cancel--disabled"
-   : "extended__multiselect-cancel";
+  return loading.value || disabled.value
+    ? "extended__multiselect-cancel--disabled"
+    : "extended__multiselect-cancel";
 });
 
 /**

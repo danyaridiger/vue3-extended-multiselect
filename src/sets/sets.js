@@ -2,22 +2,13 @@
  * Set of background- and border- style variants
  * @constant {Array} themeTypes
  */
-export const themeTypes = [
-  "basic",
-  "slate-grey",
-  "slate-blue",
-  "teal",
-  "strict"
-];
+export const themeTypes = ["basic", "slate-grey", "slate-blue", "teal", "strict"];
 
 /**
  * Set of color-style variants for loader
  * @constant {Array} loaderThemeTypes
  */
-export const loaderThemeTypes = [
-  "loader-default",
-  ...themeTypes
-];
+export const loaderThemeTypes = ["loader-default", ...themeTypes];
 
 /**
  * Set of icon filenames
@@ -30,58 +21,38 @@ export const toggleIcons = [
   "circle-arrow",
   "inner-arrow",
   "triangle-arrow",
-  "triangle-circle-arrow"
+  "triangle-circle-arrow",
 ];
 
 /**
  * Set of icon colors filtered by svg
  * @constant {Array} iconFilters
  */
-export const iconFilters = [
-  "basic",
-  "black",
-  "green"
-];
+export const iconFilters = ["basic", "black", "green"];
 
 /**
  * Set of icons sizes filtered by css
  * @constant {Array} iconSizes
  */
-export const iconSizes = [
-  "large",
-  "medium",
-  "small"
-];
+export const iconSizes = ["large", "medium", "small"];
 
 /**
  * Set of types for options created by user
  * @constant {Array} createOptionTypes
  */
-export const createOptionTypes = [
-  "primitive",
-  "array",
-  "object"
-];
+export const createOptionTypes = ["primitive", "array", "object"];
 
 /**
  * Set of keys to combine with cliks on options list and blocking choice
  * @constant {Array} specialKeysToBlock
  */
-export const specialKeysToBlock = [
-  "alt",
-  "ctrl",
-  "shift"
-];
+export const specialKeysToBlock = ["alt", "ctrl", "shift"];
 
 /**
  * Set of appearance variants of options list
  * @constant {Array} toggleAppearenceSides
  */
-export const toggleAppearenceSides = [
-  "auto",
-  "atop",
-  "under"
-];
+export const toggleAppearenceSides = ["auto", "atop", "under"];
 
 /**
  * Set of available types for options
@@ -96,5 +67,5 @@ export const UnionPropType = [
   Object,
   Function,
   null,
-  undefined
+  undefined,
 ];

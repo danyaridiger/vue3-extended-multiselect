@@ -16,7 +16,7 @@ export const mountComponent = (component, shallow, propsData, options) => {
 };
 
 export const wrapperProvides = (searchValue, searchPattern) => {
-  return { 
+  return {
     provide: {
       searchState: reactive({
         searchValue: searchValue,

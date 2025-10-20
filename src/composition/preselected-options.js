@@ -1,6 +1,6 @@
 export default function usePreselectedOptions(
-  label, 
-  emptyObjectsPlaceholder, 
+  label,
+  emptyObjectsPlaceholder,
   showInsertWarnings,
 ) {
   /**
@@ -18,9 +18,10 @@ export default function usePreselectedOptions(
       if (Array.isArray(option) && option.length > 0) {
         createdLabel = option.join(", ");
       } else {
-        createdLabel = typeof option[label.value] === "object" 
-         ? JSON.stringify(option[label.value]) 
-         : option[label.value];
+        createdLabel =
+          option[label.value] && typeof option[label.value] === "object"
+            ? JSON.stringify(option[label.value])
+            : option[label.value];
       }
 
       if (Object.keys(option).length === 0) {
@@ -42,10 +43,10 @@ export default function usePreselectedOptions(
   const optionTypeRestrictor = (option) => {
     if (!option) return false;
 
-    const isObjectArrayInstance = Object.getPrototypeOf(option).constructor.name 
-     !== "Object"
-     && Object.getPrototypeOf(option).constructor.name !== "Array";
-    const isAnyInstance = typeof option === "object" && isObjectArrayInstance;
+    const isObjectArrayInstance =
+      Object.getPrototypeOf(option).constructor.name !== "Object" &&
+      Object.getPrototypeOf(option).constructor.name !== "Array";
+    const isAnyInstance = option && typeof option === "object" && isObjectArrayInstance;
     const isSymbol = typeof option === "symbol";
 
     if (isSymbol && showInsertWarnings.value) {
@@ -53,7 +54,9 @@ export default function usePreselectedOptions(
     }
 
     if (isAnyInstance && showInsertWarnings.value) {
-      console.warn("vue-extended-multiselect: option can not be an instance of any constructor function");
+      console.warn(
+        "vue-extended-multiselect: option can not be an instance of any constructor function",
+      );
     }
 
     if (isSymbol || isAnyInstance) return false;

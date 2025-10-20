@@ -4,7 +4,6 @@
  */
 
 class LocalEmitter {
-
   _eventsStack = {
     payload: null,
   };
@@ -17,10 +16,12 @@ class LocalEmitter {
    * @param {} payload - data of event
    */
   emit(eventName, payload = null) {
-    const proxies = this._eventsRegistered.filter(event => event.eventName === eventName);
+    const proxies = this._eventsRegistered.filter(
+      (event) => event.eventName === eventName,
+    );
 
     if (!proxies.length) return;
-        
+
     proxies.forEach((proxy) => {
       this._eventsStack.payload = payload;
       proxy.proxy.payload = payload;
@@ -39,6 +40,7 @@ class LocalEmitter {
       proxy: new Proxy(this._eventsStack, {
         set(target) {
           callback(target.payload);
+
           return target;
         },
       }),

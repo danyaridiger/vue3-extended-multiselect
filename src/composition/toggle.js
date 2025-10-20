@@ -9,8 +9,8 @@ export default function useToggle(loading, disabled, emitter) {
    */
   const toggleSlotClass = computed(() => {
     return loading.value || disabled.value
-     ? "extended__multiselect-toggle--disabled"
-     : "extended__multiselect-toggle";
+      ? "extended__multiselect-toggle--disabled"
+      : "extended__multiselect-toggle";
   });
 
   /**
@@ -21,7 +21,7 @@ export default function useToggle(loading, disabled, emitter) {
    */
   const toggleOptionsList = (event) => {
     if (event && event.code === "Tab") return;
-      
+
     emitter.value.emit("extended:toggle-options");
   };
 

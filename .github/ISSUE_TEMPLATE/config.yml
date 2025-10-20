@@ -1,0 +1,9 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "❓ Questions"
+    url: "https://github.com/danyaridiger/vue3-extended-multiselect/discussions"
+    about: "Ask general questions in Discussions"
+
+templates:
+  - bug_report.yml
+  - feature_request.yml

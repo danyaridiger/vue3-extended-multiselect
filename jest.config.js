@@ -1,7 +1,17 @@
 module.exports = {
   preset: "@vue/cli-plugin-unit-jest",
-  transform: {
-    "^.+\\.vue$": "@vue/vue3-jest"
+  collectCoverageFrom: [
+    "src/**/*.{js,jsx}",
+    "!src/**/*.test.{js,jsx}",
+    "!src/**/index.js",
+  ],
+  coverageThreshold: {
+    global: {
+      branches: 70,
+      functions: 85,
+      lines: 85,
+      statements: 85,
+    },
   },
   expand: true,
   displayName: {
@@ -15,6 +25,7 @@ module.exports = {
       { label: "Second Option" },
       { label: "Third Option", searchByField: "First" },
       126,
+      null,
     ],
     INPUT_ID: "vue3-extended-multiselect-input-1",
     SEARCH_VALUE: "Search for options",
@@ -22,23 +33,11 @@ module.exports = {
     MORE_THAN_LIMIT: "You have to select no more than one option",
     LESS_THAN_LIMIT: "You have to select at least two options",
   },
-  include: [
-    "<rootDir>/components/ExtendedMultiselectOptions.vue",
-  ],
   injectGlobals: true,
-  moduleFileExtensions: [
-    "ts",
-    "tsx",
-    "js",
-    "json",
-    "jsx",
-    "mjs",
-    "node",
-    "vue"
-  ],
+  moduleFileExtensions: ["js", "ts", "json", "mjs", "node", "vue"],
   moduleNameMapper: {
-    "\\.svg$" : "<rootDir>/tests/utils/stubs",
-    "\\.scss$" : "identity-obj-proxy",
+    "\\.svg$": "<rootDir>/tests/utils/stubs",
+    "\\.scss$": "identity-obj-proxy",
   },
   resetModules: true,
   resetMocks: true,
@@ -47,15 +46,11 @@ module.exports = {
   slowTestThreshold: 20,
   testEnvironment: "jsdom",
   testLocationInResults: true,
-  testMatch: [
-    "**/tests/**/*.[jt]s?(x)",
-    "**/?(*.)+(spec|test).[tj]s?(x)"
-  ],
-  testPathIgnorePatterns: [
-    "tests/utils"
-  ],
-  transformIgnorePatterns: [
-    "<rootDir>/node_modules/"
-  ],
+  testMatch: ["**/tests/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[tj]s?(x)"],
+  testPathIgnorePatterns: ["tests/utils"],
   timers: "real",
-}
+  transform: {
+    "^.+\\.vue$": "@vue/vue3-jest",
+  },
+  transformIgnorePatterns: ["<rootDir>/node_modules/"],
+};

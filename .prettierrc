@@ -1,0 +1,11 @@
+{
+  "experimentalOperatorPosition": "end",
+  "printWidth": 90,
+  "tabWidth": 2,
+  "semi": true,
+  "quoteProps": "consistent",
+  "singleQuote": false,
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "arrowParens": "always"
+}

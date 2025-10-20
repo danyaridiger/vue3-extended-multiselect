@@ -1,9 +1,6 @@
 <template>
   <div class="extended__multiselect-block extended__multiselect-block--multiple">
-    <span
-      v-if="placeholderBlockShown"
-      class="extended__multiselect-placeholder"
-    >
+    <span v-if="placeholderBlockShown" class="extended__multiselect-placeholder">
       {{ appropriatePlaceholder }}
     </span>
     <div>
@@ -12,10 +9,7 @@
         :selected-options="limitRestriction"
         :deselect-block="deselectBlock"
       >
-        <div
-          v-for="(option, index) in limitRestriction"
-          :key="index"
-        >
+        <div v-for="(option, index) in limitRestriction" :key="index">
           <slot
             name="optionBlock"
             :label="optionCreateLabel(option)"
@@ -24,10 +18,7 @@
           >
             <div :class="classes">
               <span>{{ optionCreateLabel(option) }}</span>
-              <div 
-                :class="deselectClasses" 
-                @click.stop="deselectBlock(index)"
-              >
+              <div :class="deselectClasses" @click.stop="deselectBlock(index)">
                 <CancelIcon
                   class="extended__multiselect_deselect-block-icon"
                   v-if="!showLoaderIcon"
@@ -52,10 +43,7 @@
           v-if="optionIncreaserAvailable"
           :show-more-options="showMoreOptions"
         >
-          <div 
-            :class="[classes, increaserClass]"
-            @click.stop="showMoreOptions"
-          >
+          <div :class="[classes, increaserClass]" @click.stop="showMoreOptions">
             Show more options
           </div>
         </slot>
@@ -65,14 +53,7 @@
 </template>
 
 <script setup>
-import {
-  computed,
-  defineProps,
-  onBeforeMount,
-  ref,
-  toRefs,
-  watch,
-} from "vue";
+import { computed, defineProps, onBeforeMount, ref, toRefs, watch } from "vue";
 
 import useLabels from "../composition/labels";
 
@@ -99,7 +80,7 @@ const props = defineProps({
   },
 
   /**
-   * Determines whether to show extended multiselect 
+   * Determines whether to show extended multiselect
    * placeholder element
    * @property {boolean} placeholderBlockShown
    */
@@ -121,7 +102,7 @@ const props = defineProps({
 
   /**
    * Allows to increase limit of displayed selected option blocks
-   * @property {boolean} toggleMultipleBlocksLimit 
+   * @property {boolean} toggleMultipleBlocksLimit
    */
   toggleMultipleBlocksLimit: {
     type: Boolean,
@@ -129,7 +110,7 @@ const props = defineProps({
   },
 
   /**
-   * Defines placeholder for extended multiselect 
+   * Defines placeholder for extended multiselect
    * placeholder element
    * @property {string} appropriatePlaceholder
    */
@@ -251,8 +232,8 @@ const optionsLimitIncreaser = ref(null);
 const increaserClass = ref("extended__multiselect-increaser");
 
 const { optionCreateLabel } = useLabels(
-  label, 
-  createCustomOptionLabel, 
+  label,
+  createCustomOptionLabel,
   emptyObjectsPlaceholder,
 );
 
@@ -265,7 +246,7 @@ const { optionCreateLabel } = useLabels(
 const classes = computed(() => {
   const basicClassName = "extended__multiselect--multiple";
 
-  switch(themeType.value) {
+  switch (themeType.value) {
     case "basic":
       return `${basicClassName}-basic`;
     case "slate-grey":
@@ -276,7 +257,7 @@ const classes = computed(() => {
       return `${basicClassName}-teal`;
     case "strict":
       return `${basicClassName}-strict`;
-    default: 
+    default:
       return `${basicClassName}-basic`;
   }
 });
@@ -289,8 +270,8 @@ const classes = computed(() => {
  */
 const deselectClasses = computed(() => {
   return loading.value
-   ? "extended__multiselect-block_cancel-wrapper--loading"
-   : "extended__multiselect-block_cancel-wrapper";
+    ? "extended__multiselect-block_cancel-wrapper--loading"
+    : "extended__multiselect-block_cancel-wrapper";
 });
 
 /**
@@ -302,9 +283,10 @@ const limitRestriction = computed(() => {
   if (!optionsLimitIncreaser.value) return selectedOptions.value;
 
   return selectedOptions.value.filter((_, index) => {
-    const limit = typeof optionsLimitIncreaser.value === "number"
-     ? optionsLimitIncreaser.value
-     : optionsLimitIncreaser.value.value;
+    const limit =
+      typeof optionsLimitIncreaser.value === "number"
+        ? optionsLimitIncreaser.value
+        : optionsLimitIncreaser.value.value;
 
     return ++index <= limit;
   });
@@ -326,7 +308,10 @@ const optionIncreaserAvailable = computed(() => {
  * @returns {boolean} reaching
  */
 const optionsLimitAchieved = computed(() => {
-  return optionsLimitIncreaser.value && selectedOptions.value.length > optionsLimitIncreaser.value;
+  return (
+    optionsLimitIncreaser.value &&
+    selectedOptions.value.length > optionsLimitIncreaser.value
+  );
 });
 
 /**
@@ -337,7 +322,7 @@ const optionsLimitAchieved = computed(() => {
  */
 const overLimitOptionsCount = computed(() => {
   if (selectedOptions.value.length <= optionsLimitIncreaser.value) return null;
-  
+
   return selectedOptions.value.length - optionsLimitIncreaser.value;
 });
 
@@ -357,14 +342,18 @@ const showLoaderIcon = computed(() => {
  * @function
  * @param {Array} - array of selected options
  */
-watch(selectedOptions, (value) => {
-  if (!value.length || value.length <= multipleBlocksLimit.value) {
-    optionsLimitIncreaser.value = multipleBlocksLimit.value;
-  }
-}, { deep: true });
+watch(
+  selectedOptions,
+  (value) => {
+    if (!value.length || value.length <= multipleBlocksLimit.value) {
+      optionsLimitIncreaser.value = multipleBlocksLimit.value;
+    }
+  },
+  { deep: true },
+);
 
 /**
- * Deselects option by users click on its element cancel icon 
+ * Deselects option by users click on its element cancel icon
  * if "multiple" prop equals true
  * @function
  * @emits extended:deselect-option
@@ -378,13 +367,14 @@ const deselectBlock = (index) => {
 
 /**
  * Shows next hidden options
- * This behavior restricts by "toggleMultipleBlocksLimit" prop 
+ * This behavior restricts by "toggleMultipleBlocksLimit" prop
  * if "multiple" prop equals true
  * @function
  * @emits extended:increase-display
  */
 const showMoreOptions = () => {
   optionsLimitIncreaser.value += increaseDisplayBy.value;
+
   emitter.value.emit("extended:increase-display", optionsLimitIncreaser.value);
 };
 
