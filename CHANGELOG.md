@@ -554,7 +554,7 @@ Adding descriptive comments for some types in typings.
 - Removed explicit installation of "core-js" dependency.
 - Removed unnecessary "iconFilter" prop in ExtendedMultiselectLoader component.
 
-### 3.0.1
+### 3.0.1 (2025-10-21)
 
 - Changed security audit workflow with proper vulnerability handling.
 - Fixed a bug with layout shifting when using the optional "dropdownDisabled" prop together with the optional "iconSize" prop.
