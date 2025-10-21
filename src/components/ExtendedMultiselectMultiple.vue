@@ -1,8 +1,8 @@
 <template>
   <div class="extended__multiselect-block extended__multiselect-block--multiple">
-    <span v-if="placeholderBlockShown" class="extended__multiselect-placeholder">
+    <div v-if="placeholderBlockShown" class="extended__multiselect-placeholder">
       {{ appropriatePlaceholder }}
-    </span>
+    </div>
     <div>
       <slot
         name="multipleBlocks"

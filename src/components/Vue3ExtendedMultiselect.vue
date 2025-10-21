@@ -242,7 +242,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 3.0.0
+ * @version 3.0.1
  */
 const props = defineProps({
   /**
@@ -2510,6 +2510,10 @@ defineExpose({
 
 .extended__multiselect-placeholder {
   color: var(--placeholder);
+  min-height: var(--min-block-height);
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
   margin-left: 2px;
 }
 </style>

@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **2.3.11**
+Current `vue3-extended-multiselect` version: **3.0.1**
 
 ---
 
@@ -544,7 +544,6 @@ Adding descriptive comments for some types in typings.
 - Added coverage configuration for unit testing.
 - Added banner with package information to all output variants.
 - Added enhanced null checking mechanism to pre-selected options.
-- Changed rollup output format and added UMD output variant.
 - Changed main documentation and documentation for contributors.
 - Changed package keywords.
 - Changed Node.js platform version and added a treshold for the node platform versions.
@@ -554,3 +553,9 @@ Adding descriptive comments for some types in typings.
 - Removed "publish" workflow in favor of the new "release" workflow for automatically creating Github tags and releases.
 - Removed explicit installation of "core-js" dependency.
 - Removed unnecessary "iconFilter" prop in ExtendedMultiselectLoader component.
+
+### 3.0.1
+
+- Changed security audit workflow with proper vulnerability handling.
+- Fixed a bug with layout shifting when using the optional "dropdownDisabled" prop together with the optional "iconSize" prop.
+- Fixed runtime errors in UMD file output variant by reconfiguring the "babel" plugin for rollup.

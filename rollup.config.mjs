@@ -29,18 +29,34 @@ export default [
         file: "./dist/index.umd.js",
         format: "umd",
         name: LIB_NAME,
+        exports: "named",
         sourcemap: true,
+        globals: {
+          vue: "Vue",
+        },
       },
     ],
+    external: ["vue"],
     plugins: [
+      vue({
+        preprocessStyles: true,
+      }),
+      postcss({
+        minimize: true,
+      }),
+      commonjs(),
       babel({
         exclude: ["./node_modules/**", "./qa/**"],
         babelHelpers: "runtime",
         plugins: [
-          "@babel/plugin-transform-arrow-functions",
-          "@babel/plugin-proposal-class-properties",
-          "@babel/plugin-transform-classes",
-          "transform-imports",
+          [
+            "@babel/plugin-transform-runtime",
+            {
+              helpers: true,
+              regenerator: false,
+              useESModules: false,
+            },
+          ],
         ],
       }),
       banner(() => {
@@ -54,14 +70,11 @@ export default [
  */
         `;
       }),
-      vue({
-        preprocessStyles: true,
+      terser({
+        mangle: {
+          reserved: ["_classCallCheck", "_createClass", "_defineProperty", "_inherits"],
+        },
       }),
-      postcss({
-        minimize: true,
-      }),
-      commonjs(),
-      terser(),
     ],
   },
   {

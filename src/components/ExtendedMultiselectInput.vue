@@ -28,9 +28,9 @@
         <span>{{ singleLabel }}</span>
       </slot>
     </div>
-    <span v-if="placeholderBlockShown" class="extended__multiselect-placeholder">
+    <div v-if="placeholderBlockShown" class="extended__multiselect-placeholder">
       {{ appropriatePlaceholder }}
-    </span>
+    </div>
     <extended-multiselect-multiple
       v-show="multiple && !!selectedOptions.length"
       :style="multipleBlocksMargin"
@@ -123,9 +123,9 @@
     />
   </div>
   <div class="extended__multiselect-block" v-else>
-    <span v-if="hintBlockShown" class="extended__multiselect-placeholder">
+    <div v-if="hintBlockShown" class="extended__multiselect-placeholder">
       {{ appropriatePlaceholder }}
-    </span>
+    </div>
     <slot name="labelBlock" :label-block-value="singleLabel">
       <span>{{ singleLabel }}</span>
     </slot>

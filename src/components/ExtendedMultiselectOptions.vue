@@ -42,7 +42,6 @@
                 <div
                   v-if="showMarker && showCurrentMarker(option)"
                   :class="markerShapeClass(option)"
-                  :style="markerShapeMargin"
                 ></div>
                 <div
                   v-else-if="showMarker"
@@ -611,15 +610,6 @@ const maxOptionsWereSelected = computed(() => {
     multiple.value &&
     selectedOptions.value.length === maxOptionsCount.value
   );
-});
-
-/**
- * Defines styles for "margin-top" css-property of marker element
- * @function
- * @returns {Object} styles
- */
-const markerShapeMargin = computed(() => {
-  return { marginTop: "2px" };
 });
 
 /**

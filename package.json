@@ -1,6 +1,6 @@
 {
   "name": "vue3-extended-multiselect",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Extended multiselect dropdown component for Vue 3 with search, tagging, async options and flexible customization.",
   "keywords": [
     "multiselect",
