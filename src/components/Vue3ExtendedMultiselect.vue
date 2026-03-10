@@ -54,7 +54,7 @@
           :input-id="inputId"
         >
           <template v-if="slots.labelBlock" #labelBlock="{ labelBlockValue }">
-            <slot name="labelBlock" :label-block-value="labelBlockValue"> </slot>
+            <slot name="labelBlock" :label-block-value="labelBlockValue"></slot>
           </template>
           <template
             v-if="slots.multipleBlocks"
@@ -83,7 +83,7 @@
             <slot name="maxElements"></slot>
           </template>
           <template v-if="toggleMultipleBlocksLimit" #showMore="{ showMoreOptions }">
-            <slot name="showMore" :show-more-options="showMoreOptions"> </slot>
+            <slot name="showMore" :show-more-options="showMoreOptions"></slot>
           </template>
         </extended-multiselect-input>
       </div>
@@ -175,7 +175,7 @@
           </slot>
         </template>
         <template v-if="slots.marker" #marker="{ selected }">
-          <slot name="marker" :selected="selected"> </slot>
+          <slot name="marker" :selected="selected"></slot>
         </template>
         <template v-if="noResultsBlockShown" #noResults>
           <slot name="noResults"></slot>
@@ -242,7 +242,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 3.0.1
+ * @version 3.0.2
  */
 const props = defineProps({
   /**
@@ -838,7 +838,7 @@ const props = defineProps({
    * @property {Function} createCustomOptionLabel
    */
   createCustomOptionLabel: {
-    type: Function,
+    type: [Function, null],
     default: () => null,
   },
 
@@ -983,9 +983,6 @@ const classes = computed(() => {
   const localClassList = [];
 
   switch (themeType.value) {
-    case "basic":
-      theme = "extended__multiselect";
-      break;
     case "slate-grey":
       theme = "extended__multiselect-slate-grey";
       break;
@@ -1795,7 +1792,6 @@ onBeforeMount(() => {
   emitter.value.on("extended:deselect-option", (payload) => {
     if (multiple.value && payload && !payload.clearAll) {
       const deselectedOption = selectedOptions.value[payload.index];
-
       const eventData = simpleEvents.value
         ? deselectedOption
         : createEventFields(deselectedOption, "option");
@@ -1822,7 +1818,6 @@ onBeforeMount(() => {
       const deselectedOption = payload.deselectedOptions
         ? payload.deselectedOptions
         : selectedOptions.value;
-
       const eventData = simpleEvents.value
         ? deselectedOption
         : createEventFields(deselectedOption, "option");
@@ -1836,6 +1831,7 @@ onBeforeMount(() => {
       emit("clean", eventData);
 
       selectedOptions.value = [];
+
       updateModelValue();
     }
 

@@ -6,12 +6,12 @@ import {
   SEARCH_PATTERN,
   NO_OPTIONS_PATTERN,
   FIRST_OPTION_PATTERN,
-} from "../utils/mount";
+} from "../tools/mount.tool";
 import {
   mockOptionSelection,
   expandOptionsList,
   createNewOptionsWrapper,
-} from "../utils/utils";
+} from "../tools/utils.tool";
 
 import Vue3ExtendedMultiselect from "../../src/components/Vue3ExtendedMultiselect.vue";
 import ExtendedMultiselectMultiple from "../../src/components/ExtendedMultiselectMultiple.vue";
@@ -898,7 +898,6 @@ describe("props", () => {
       createOptionFields: ["label", "id"],
       defaultExpanded: true,
     };
-
     const createdOption = {
       label: "label-Search for options",
       id: "id-Search for options",

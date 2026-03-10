@@ -368,7 +368,7 @@ const props = defineProps({
    * @property {Function} createCustomOptionLabel
    */
   createCustomOptionLabel: {
-    type: Function,
+    type: [Function, null],
     required: true,
   },
 
@@ -379,7 +379,7 @@ const props = defineProps({
    * @param {string} value - value of search field
    */
   externalOptionsLoader: {
-    type: Function,
+    type: [Function, null],
     default: null,
   },
 
@@ -501,9 +501,6 @@ const classes = computed(() => {
   let theme = [];
 
   switch (themeType.value) {
-    case "basic":
-      theme.push("extended__multiselect-options");
-      break;
     case "slate-grey":
       theme.push("extended__multiselect-options-slate-grey");
       break;
@@ -995,9 +992,6 @@ const optionHighlightClasses = (option) => {
 
   if (highlightOptions.value) {
     switch (themeType.value) {
-      case "basic":
-        theme.push("extended__multiselect-options_option");
-        break;
       case "slate-grey":
         theme.push("extended__multiselect-options_option-slate-grey");
         break;

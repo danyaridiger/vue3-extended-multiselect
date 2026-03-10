@@ -102,7 +102,6 @@ jobs:
             console.log(`::set-output name=moderate::${moderate}`);
             console.log(`::set-output name=low::${low}`);
             
-            // Create a summary string
             const summary = `Critical: ${critical}, High: ${high}, Moderate: ${moderate}, Low: ${low}, Total: ${total}`;
             console.log(`::set-output name=summary::${summary}`);
             
@@ -195,7 +194,7 @@ jobs:
                 const { data: newIssue } = await github.rest.issues.create({
                   owner,
                   repo,
-                  title: `🔒 Security Audit: Vulnerabilities Detected - ${new Date().toISOString().split('T')[0]}`,
+                  title: `🔒 Security Audit: Vulnerabilities Detected — ${new Date().toISOString().split('T')[0]}`,
                   body: `## 🔒 Security Audit Report
                   
                   ${vulnerabilityDetails}
@@ -226,7 +225,6 @@ jobs:
               }
             } catch (error) {
               console.log('Error creating/updating issue:', error.message);
-              // Don't fail the workflow if issue creation fails
             }
 
       - name: Comment on PR with vulnerabilities
@@ -277,7 +275,6 @@ jobs:
               console.log('Successfully created PR comment');
             } catch (error) {
               console.log('Error creating PR comment:', error.message);
-              // Don't fail the workflow if comment creation fails
             }
 
       - name: Show vulnerability warning

@@ -6,7 +6,6 @@ export default function useLabels(
   /**
    * Creates label of any kind of option
    * @function
-   * @param {string} label - label field in options of type "object"
    * @param {option} UnionPropType
    * @returns {string} label
    */
@@ -15,9 +14,9 @@ export default function useLabels(
 
     if (!option && isFunction) return "";
 
-    const customOptionLabel = createCustomOptionLabel.value(option);
-
-    if (customOptionLabel) return customOptionLabel;
+    if (createCustomOptionLabel.value) {
+      return createCustomOptionLabel.value(option);
+    }
 
     if (Array.isArray(option) && option.length > 0) {
       return option.join(", ");

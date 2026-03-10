@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **3.0.1**
+Current `vue3-extended-multiselect` version: **3.0.2**
 
 ---
 
@@ -538,6 +538,7 @@ Adding descriptive comments for some types in typings.
 - Added lint-staged to perform linting and formatting tasks.
 - Added husky with "pre-commit" and "commit-msg" hooks.
 - Added SECURITY.md file for package security policy.
+- Added "types" section to package.json file.
 - Added editor configuration file.
 - Added .gitattributes configuration file.
 - Added some new scripts to package.json file.
@@ -553,9 +554,20 @@ Adding descriptive comments for some types in typings.
 - Removed "publish" workflow in favor of the new "release" workflow for automatically creating Github tags and releases.
 - Removed explicit installation of "core-js" dependency.
 - Removed unnecessary "iconFilter" prop in ExtendedMultiselectLoader component.
+- Renamed "typings" directory to "types" and type declaration file to "index.d.ts".
 
 ### 3.0.1 (2025-10-21)
 
 - Changed security audit workflow with proper vulnerability handling.
 - Fixed a bug with layout shifting when using the optional "dropdownDisabled" prop together with the optional "iconSize" prop.
 - Fixed runtime errors in UMD file output variant by reconfiguring the "babel" plugin for rollup.
+
+### 3.0.2 (2026-03-10)
+
+- Added some new rules overrides for Vue templates in .eslintrc.json file.
+- Changed line endings in .gitattributes configuration file.
+- Fixed bug with creating an incorrect custom option label if the "createCustomOptionLabel" property was not specified.
+- Renamed unit-tests helper directory from "utils" to "tools".
+- Renamed unit-tests tools with addition of the "tool" postfix.
+- Removed unnecessary duplicate blocks from the .eslintrc.json configuration file.
+- Removed unnecessary extensions from Jest coverage configuration.

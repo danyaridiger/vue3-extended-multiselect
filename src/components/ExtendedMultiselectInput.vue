@@ -370,7 +370,7 @@ const props = defineProps({
    * @property {Function} createCustomOptionLabel
    */
   createCustomOptionLabel: {
-    type: Function,
+    type: [Function, null],
     required: true,
   },
 
@@ -381,7 +381,7 @@ const props = defineProps({
    * @param {string} value - value of search field
    */
   externalOptionsLoader: {
-    type: Function,
+    type: [Function, null],
     default: null,
   },
 
@@ -398,7 +398,7 @@ const props = defineProps({
   /**
    * "id" attribute of search field
    * @default null
-   * @property {string|number} inputId
+   * @property {string|number|null} inputId
    */
   inputId: {
     type: [String, Number],
@@ -687,12 +687,11 @@ onBeforeMount(() => {
   emitter.value.on("extended:rollup-options", (internalRollup) => {
     if (blurSkip.value === true) {
       blurSkip.value = false;
+
       return;
     }
 
-    if (internalRollup) {
-      return;
-    }
+    if (internalRollup) return;
 
     rollUp();
   });

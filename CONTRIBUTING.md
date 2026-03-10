@@ -55,7 +55,7 @@ Example: `feat(diff): add new component prop "future-prop"`
 
 ### Pull Requests
 
-1. Ensure tests pass (`npm run test:unit`)
+1. Ensure tests pass (`npm run test`)
 2. Update documentation
 3. Keep PRs focused on single feature/bug
 4. Include test cases

@@ -24,8 +24,6 @@ export default function useSizes(iconSize) {
     }
 
     switch (iconSize.value) {
-      case "large":
-        return `${basicIconSize}-large`;
       case "medium":
         return `${basicIconSize}-medium`;
       case "small":

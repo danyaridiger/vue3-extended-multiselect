@@ -75,9 +75,6 @@ const iconFilterClass = computed(() => {
   let basicFilter = "extended__multiselect-loader";
 
   switch (loaderIconFilter) {
-    case "default-loader":
-      basicFilter = `${basicFilter}_default-loader`;
-      break;
     case "basic":
       basicFilter = `${basicFilter}_basic`;
       break;

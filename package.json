@@ -1,6 +1,6 @@
 {
   "name": "vue3-extended-multiselect",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Extended multiselect dropdown component for Vue 3 with search, tagging, async options and flexible customization.",
   "keywords": [
     "multiselect",
@@ -22,7 +22,7 @@
   "types": "./dist/types/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/danyaridiger/vue3-extended-multiselect.git"
+    "url": "git+https://github.com/danyaridiger/vue3-extended-multiselect.git"
   },
   "author": "Ridiger Daniil Dmitrievich <extendedmultiselect@yandex.ru>",
   "license": "MIT",

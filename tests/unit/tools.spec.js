@@ -1,6 +1,6 @@
 import { fireEvent } from "@testing-library/dom";
 
-import { mountComponent } from "../utils/mount";
+import { mountComponent } from "../tools/mount.tool";
 
 import Vue3ExtendedMultiselect from "../../src/components/Vue3ExtendedMultiselect.vue";
 import ExtendedMultiselectOptions from "../../src/components/ExtendedMultiselectOptions.vue";

@@ -1,10 +1,10 @@
 import { fireEvent } from "@testing-library/dom";
-import { mountComponent, wrapperProvides, SEARCH_PATTERN } from "../utils/mount";
+import { mountComponent, wrapperProvides, SEARCH_PATTERN } from "../tools/mount.tool";
 import {
   mockOptionSelection,
   mockOptionsLoader,
   createNewOptionsWrapper,
-} from "../utils/utils";
+} from "../tools/utils.tool";
 
 import Vue3ExtendedMultiselect from "../../src/components/Vue3ExtendedMultiselect.vue";
 import ExtendedMultiselectInput from "../../src/components/ExtendedMultiselectInput.vue";

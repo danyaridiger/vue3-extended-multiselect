@@ -199,7 +199,7 @@ const props = defineProps({
    * @property {Function} createCustomOptionLabel
    */
   createCustomOptionLabel: {
-    type: Function,
+    type: [Function, null],
     required: true,
   },
 
@@ -247,8 +247,6 @@ const classes = computed(() => {
   const basicClassName = "extended__multiselect--multiple";
 
   switch (themeType.value) {
-    case "basic":
-      return `${basicClassName}-basic`;
     case "slate-grey":
       return `${basicClassName}-slate-grey`;
     case "slate-blue":

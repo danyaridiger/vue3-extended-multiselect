@@ -19,8 +19,8 @@ export const wrapperProvides = (searchValue, searchPattern) => {
   return {
     provide: {
       searchState: reactive({
-        searchValue: searchValue,
-        searchPattern: searchPattern,
+        searchValue,
+        searchPattern,
       }),
     },
   };

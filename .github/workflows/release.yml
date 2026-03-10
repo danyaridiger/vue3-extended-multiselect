@@ -103,7 +103,6 @@ jobs:
       - name: Extract latest changelog section for release
         id: extract_changelog
         run: |
-          # Python script to extract the last changelog section
           cat > extract_changelog.py << 'EOF'
           import re
           import sys

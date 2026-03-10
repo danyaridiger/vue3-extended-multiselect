@@ -173,8 +173,6 @@ const classesSummary = computed(() => {
  */
 const icon = computed(() => {
   switch (toggleIcon.value) {
-    case "base-arrow":
-      return BaseArrowIcon;
     case "double-arrow":
       return DoubleArrowIcon;
     case "wide-arrow":
