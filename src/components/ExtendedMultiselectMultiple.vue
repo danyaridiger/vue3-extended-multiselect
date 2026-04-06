@@ -23,11 +23,7 @@
                   class="extended__multiselect_deselect-block-icon"
                   v-if="!showLoaderIcon"
                 />
-                <extended-multiselect-loader
-                  v-else
-                  :icon-filter="iconFilter"
-                  icon-size="deselect"
-                />
+                <extended-multiselect-loader v-else icon-size="deselect" />
               </div>
             </div>
           </slot>
@@ -125,15 +121,6 @@ const props = defineProps({
    * @property {string} emptyObjectsPlaceholder
    */
   emptyObjectsPlaceholder: {
-    type: String,
-    required: true,
-  },
-
-  /**
-   * Defines a svg-filter for icons
-   * @property {string} iconFilter
-   */
-  iconFilter: {
     type: String,
     required: true,
   },

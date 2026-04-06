@@ -646,6 +646,12 @@ describe("props", () => {
     expect(loaderWrapper.classes()).toContain(
       "extended__multiselect-loader_default-loader",
     );
+
+    await wrapper.setProps({
+      loaderIconFilter: "teal",
+    });
+
+    expect(loaderWrapper.classes()).toContain("extended__multiselect-loader_teal");
   });
 
   it("correctly handles 'placeholder' prop value", async () => {

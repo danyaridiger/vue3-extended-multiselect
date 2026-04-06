@@ -10,11 +10,7 @@
     @keypress.stop="toggleOptionsList($event)"
   >
     <component v-if="!loading" :class="classesSummary" :is="icon" :key="icon" />
-    <extended-multiselect-loader
-      v-else
-      :icon-filter="loaderIconFilter"
-      :icon-size="iconSize"
-    />
+    <extended-multiselect-loader v-else :icon-size="iconSize" />
     <svg
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
@@ -85,15 +81,6 @@ const props = defineProps({
   },
 
   /**
-   * Defines a svg-filter for loader icons
-   * @property {string} loaderIconFilter
-   */
-  loaderIconFilter: {
-    type: String,
-    required: true,
-  },
-
-  /**
    * Provides size to create special size-class
    * for each kind of icon
    * @property {string} iconSize
@@ -146,7 +133,6 @@ const {
   dropdownActive,
   emitter,
   iconFilter,
-  loaderIconFilter,
   iconSize,
   loading,
   tabindex,

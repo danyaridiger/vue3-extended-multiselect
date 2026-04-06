@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **3.0.2**
+Current `vue3-extended-multiselect` version: **3.0.3**
 
 ---
 
@@ -189,7 +189,7 @@ Adding descriptive comments for some types in typings.
 - Removal of dependency "uuid".
 - Adding "events" prop to child components using LocalEmitter.
 - Adding emitter.js file to composition directory with reactive LocalEmitter instace.
-- Removal of "emitterUniqueId" prop from child components.
+- Removal of "emitterUniqueId" prop from all child components.
 - Removal of emitter.js file from events directory.
 - Changing event emitter invocations in some of unit tests.
 
@@ -571,3 +571,10 @@ Adding descriptive comments for some types in typings.
 - Renamed unit-tests tools with addition of the "tool" postfix.
 - Removed unnecessary duplicate blocks from the .eslintrc.json configuration file.
 - Removed unnecessary extensions from Jest coverage configuration.
+
+### 3.0.3 (2026-04-06)
+
+- Fixed a bug with incorrect icon filter for toggle icon.
+- Fixed a bug with incorrect dynamic svg-filter with color settings for loader icon.
+- Removed "loaderIconFilter" prop from all child components.
+- Removed "iconFilter" prop from some child components.

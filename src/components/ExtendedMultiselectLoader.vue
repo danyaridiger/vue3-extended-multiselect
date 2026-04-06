@@ -74,7 +74,7 @@ const { iconSizeClass } = useSizes(iconSize);
 const iconFilterClass = computed(() => {
   let basicFilter = "extended__multiselect-loader";
 
-  switch (loaderIconFilter) {
+  switch (loaderIconFilter.value) {
     case "basic":
       basicFilter = `${basicFilter}_basic`;
       break;

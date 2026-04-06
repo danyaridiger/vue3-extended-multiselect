@@ -31,7 +31,6 @@
           :create-on-the-go="createOnTheGo"
           :disabled="disabled"
           :loading="internalLoading"
-          :loader-icon-filter="loaderIconFilter"
           :multiple="multiple"
           :search-filter-active="searchFilterActive"
           :show-deselect-icon-loader="showDeselectIconLoader"
@@ -96,7 +95,6 @@
             :dropdown-active="dropdownActive"
             :loading="internalLoading"
             :icon-filter="iconFilter"
-            :loader-icon-filter="loaderIconFilter"
             :icon-size="iconSize"
             :toggle-icon="toggleIcon"
             :emitter="emitter"
@@ -111,7 +109,6 @@
             :disabled="disabled"
             :show-search-field="showSearchField"
             :loading="internalLoading"
-            :loader-icon-filter="loaderIconFilter"
             :icon-size="iconSize"
             :selected-options="selectedOptions"
             :emitter="emitter"
@@ -242,7 +239,7 @@ import ExtendedMultiselectToggle from "./ExtendedMultiselectToggle.vue";
 
 /**
  * @author Ridiger Daniil Dmitrievich, 2022
- * @version 3.0.2
+ * @version 3.0.3
  */
 const props = defineProps({
   /**
@@ -944,7 +941,7 @@ const {
 
 const { searchState, setSearchValue, setSearchPattern } = useSearchValue();
 
-provide("loaderIconFilter", loaderIconFilter.value);
+provide("loaderIconFilter", loaderIconFilter);
 provide("searchState", searchState);
 provide("setSearchValue", setSearchValue);
 provide("setSearchPattern", setSearchPattern);

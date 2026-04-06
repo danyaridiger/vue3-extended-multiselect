@@ -45,3 +45,5 @@ junit.xml
 test-results.json
 qa
 expose.js
+
+.npmrc

@@ -8,11 +8,7 @@
     @keypress.stop="cancel"
   >
     <cancel-icon v-if="!loading" :class="iconSizeClass" />
-    <extended-multiselect-loader
-      v-else
-      :icon-filter="loaderIconFilter"
-      :icon-size="iconSize"
-    />
+    <extended-multiselect-loader v-else :icon-size="iconSize" />
   </div>
 </template>
 
@@ -32,15 +28,6 @@ const props = defineProps({
    */
   disabled: {
     type: Boolean,
-    required: true,
-  },
-
-  /**
-   * Defines a svg-filter for loader icons
-   * @property {string} loaderIconFilter
-   */
-  loaderIconFilter: {
-    type: String,
     required: true,
   },
 
@@ -107,7 +94,6 @@ const setSearchPattern = inject("setSearchPattern");
 const {
   disabled,
   emitter,
-  loaderIconFilter,
   iconSize,
   loading,
   selectedOptions,

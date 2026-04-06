@@ -36,7 +36,6 @@
       :style="multipleBlocksMargin"
       :disabled="disabled"
       :loading="loading"
-      :icon-filter="loaderIconFilter"
       :show-deselect-icon-loader="showDeselectIconLoader"
       :toggle-multiple-blocks-limit="toggleMultipleBlocksLimit"
       :empty-objects-placeholder="emptyObjectsPlaceholder"
@@ -78,7 +77,6 @@
     <extended-multiselect-multiple
       :disabled="disabled"
       :loading="loading"
-      :icon-filter="loaderIconFilter"
       :placeholder-block-shown="!selectedOptions.length"
       :show-deselect-icon-loader="showDeselectIconLoader"
       :toggle-multiple-blocks-limit="toggleMultipleBlocksLimit"
@@ -283,15 +281,6 @@ const props = defineProps({
    * @property {string} emptyObjectsPlaceholder
    */
   emptyObjectsPlaceholder: {
-    type: String,
-    required: true,
-  },
-
-  /**
-   * Defines a svg-filter for loader icons
-   * @property {string} loaderIconFilter
-   */
-  loaderIconFilter: {
     type: String,
     required: true,
   },
