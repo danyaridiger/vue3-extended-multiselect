@@ -1136,6 +1136,12 @@ watch(dropdownActive, (value) => {
   }
 });
 
+watch(disabled, (value) => {
+  if (value && dropdownActive.value) {
+    emitter.value.emit("extended:rollup-options");
+  }
+});
+
 /**
  * Changes selected options based on external modelValue changes
  * @function
@@ -1752,6 +1758,8 @@ onBeforeMount(() => {
   });
 
   emitter.value.on("extended:select-option", (option) => {
+    if (disabled.value) return;
+
     const eventData = simpleEvents.value
       ? option.option
       : createEventFields(option.option, "option");
@@ -1787,6 +1795,8 @@ onBeforeMount(() => {
   });
 
   emitter.value.on("extended:deselect-option", (payload) => {
+    if (disabled.value && payload?.skipNextRemoval) return;
+
     if (multiple.value && payload && !payload.clearAll) {
       const deselectedOption = selectedOptions.value[payload.index];
       const eventData = simpleEvents.value
@@ -1838,6 +1848,8 @@ onBeforeMount(() => {
   });
 
   emitter.value.on("extended:create-option", (createdOption) => {
+    if (disabled.value) return;
+
     const eventData = simpleEvents.value
       ? createdOption
       : createEventFields(createdOption, "option");
@@ -1918,7 +1930,7 @@ onMounted(() => {
   }
 
   emitter.value.on("extended:expand-options", () => {
-    if (dropdownActive.value || dropdownDisabled.value) return;
+    if (dropdownActive.value || disabled.value || dropdownDisabled.value) return;
 
     dropdownActive.value = true;
 
