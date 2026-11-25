@@ -1,6 +1,6 @@
 # Patch notes
 
-Current `vue3-extended-multiselect` version: **3.0.3**
+Current `vue3-extended-multiselect` version: **3.0.4**
 
 ---
 
@@ -578,3 +578,9 @@ Adding descriptive comments for some types in typings.
 - Fixed a bug with incorrect dynamic svg-filter with color settings for loader icon.
 - Removed "loaderIconFilter" prop from all child components.
 - Removed "iconFilter" prop from some child components.
+
+### 3.0.4 (2026-11-25)
+
+- Fixed a bug with the options list remaining open when the "disabled" prop is set to true.
+- Fixed a bug with opening the options list and selecting or creating options while the component is disabled.
+- Added a unit-test for disabling an open options list and ignoring stale option selection.
